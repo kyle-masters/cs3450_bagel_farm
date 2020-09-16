@@ -1,4 +1,4 @@
-#Summary
+# Summary
 
 We are creating a web application for Dan's Bagel Shop that manages the companies various processes.
 These processes include inventory management, task management, and customer interaction. 
@@ -7,25 +7,25 @@ Customers will be able to track and modify their orders and manage their user ac
 able to manage inventory, process orders, and see high-level transaction information of the company, depending on their position.
 
 
-#Team Organization
+# Team Organization
 
-###Backend Team
+### Backend Team
  - Connor Meads 
  - Kyle Masters
   
-###Frontend team
+### Frontend team
 - Brent Buffenbarger
 - Dallin Larsen
 
-###Spokesperson
+### Spokesperson
 - Brent Buffenbarger
     - Role is to turn in all team assignments
     
-###Designated Meeting Room Booker
+### Designated Meeting Room Booker
  - Connor Meads
 
 
-#Description of the Process
+# Description of the Process
 
 1. Requirement Gathering
 2. High Level Design
@@ -35,7 +35,7 @@ able to manage inventory, process orders, and see high-level transaction informa
 6. Deployment
 
 
-#Policies
+# Policies
 
 - Primary form of communication will be through Discord
 - We will meet weekly on Tuesday at 7:00pm
@@ -43,9 +43,9 @@ able to manage inventory, process orders, and see high-level transaction informa
 - We will track our tasks using the GitHub Projects and Issue features
 
 
-#Risk Analysis:
+# Risk Analysis:
 
-##Requirement Gatherment 
+## Requirement Gatherment 
 ### Risks
 - Miscommunication between the development team and the client
 - Gathering too many or too few requirements
@@ -58,7 +58,7 @@ able to manage inventory, process orders, and see high-level transaction informa
 - Constant flow of communication between developers and the quiet 
 - Be candor and verbose in all communication
 
-##High-level design 
+## High-level design 
 ### Risks
 - Too detailed
 - Leaving out critical parts of the project 
@@ -116,10 +116,10 @@ able to manage inventory, process orders, and see high-level transaction informa
 - Not having a bug-reporting system 
 - Frustrated clients 
 - Hardware issues
- ### Impacts
+### Impacts
  - Angry users 
  - Wasted money/time 
  - No sales 
- ### Workarounds
+### Workarounds
  - Lots of communication between users and developers
  - Lots of real-world testing.
