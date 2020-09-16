@@ -1,0 +1,51 @@
+Requirements
+
+- A web-based app that will run the store
+
+- Worried about inventory and money
+    - Track inventoryi (100 of everything to start with)
+        - Nothing too specific, just high-level things to order
+        - Flavors of bagels can be ordered
+        - Types of schmear can be ordered
+        - All beverages are bottled
+        - Able to order toppings like bacon
+    - Generate a report to see what needs to be ordered
+
+- Actors (chefs, cashier, manager) need to be able to access and use the app
+
+- Everyone needs to register an account (customers don't need approval - staff does)
+    - Manager should be able to give accounts permissions like staff positions
+    - Accounts will be populated with money
+    - New users should have $100
+    - Name, email, password, member number, rewards info
+
+- When a user makes an order, the chefs need to be able to update the status of the orders
+
+- Customers will be able to walk into the store and order from a kiask
+
+- Customers should be able to edit their account on an accoutn page
+    - edit their information
+    - add money to their account (just basic add however much they want)
+
+- Favorites
+
+- Rewards - buy 12 bagels and get 1 free
+
+- email user when order is ready
+
+- 10 mins before bagel order is due it should drop on the chef's tablei
+
+- Order statuses - Ordered, In Preparation, Ready, Completed
+
+- Order stuff by most popular
+
+- Limit how early you can order food
+
+- Customers should be able to cancel orders
+    - Once it drops to the bagel chef, the order cannot be cancelled
+
+- If customers don't come to get the order then the food will be donated
+
+- We COULD/WON'T mark each item with a serial number so we know when each item expires
+
+- 3 people ordering at the same time
