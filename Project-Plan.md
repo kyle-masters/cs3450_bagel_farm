@@ -1,6 +1,6 @@
 # Summary
 
-We are creating a web application for Dan's Bagel Shop that manages the companies various processes.
+This project aims to build a web application for managing the various processes of Dan's Bagel Shop.
 These processes include inventory management, task management, and customer interaction. 
 The application will provide an interface for customers to order bagels and for staff to manage inventory and process orders. 
 Customers will be able to track and modify their orders and manage their user account. The staff will be 
@@ -26,6 +26,8 @@ able to manage inventory, process orders, and see high-level transaction informa
 
 
 # Description of the Process
+
+The process will be broken up into 6 phases. We are going to split up each phase into small tasks and self-assign tasks. Once a group member finishes their tasks, or is unable to because their task depends on another group member to finish something, then that group member will find who needs the most help and provide assistance as needed. Tasks are being tracked using GitHub's Issue and Project features. Tasks are categorized into several categories in the Project tab on GitHub, and once the task is complete the related Issue can be resolved. 
 
 1. Requirement Gathering
 2. High Level Design
