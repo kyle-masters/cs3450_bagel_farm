@@ -1,0 +1,78 @@
+# Requirements
+
+### Introduction & Context:
+We are developing DBSOBMS. This web application will manage all the business processes of Dan's Bagels Shop, such as customer ordering, inventory management, order processing, and promotions. The application will run on a browser and can be customized by the shop manager.
+
+The customers will be able to create an account, place orders, and manage their account preferences. The application is built to make the customers experience streamlined and intuitive. The customers will also be able to send the shop manager feedback.
+
+The chef will have the role of processing and fulfilling orders. The chef's use of the program will be to view active orders and update inventory. The chef will also be responsible for movement of orders from 'Ordered' to 'Available  for pickup'.
+
+The cashier will finish the order lifecycle when a customer collects their order by updating the order status to 'Complete'. If the customer does not collect their order, the cashier is responsible for donating the order to a charity.
+
+The manager will have the role of updating and managing inventory. They will also be able to manage user accounts by updating account permissions. Promotions and notification rules will be another role of the manager. Also, the manager can act as any other staff member.
+
+### Users and their goals:
+- Customer
+    - Streamlined ordering process
+    - Manage account preferences
+- Chef
+    - Process and fill orders
+    - Update inventory
+- Cashier
+    - Complete orders
+    - Donate orders that are not picked up
+- Manager
+    - Update and manage inventory
+    - Assign account permissions
+    - Manage point system
+    - Manage employee roles
+
+### Functional Requirements:
+- Order placement & cancelation functionality
+- Automatic notifications
+    - Email preference
+- Inventory management
+    - Updates
+    - Suggest refills
+        - Base suggestions off of most popular items
+    - Create new inventory items
+- Favorites
+    - Modifications
+        - Removals/Additions
+- Past orders
+    - Archive all orders
+- Rewards
+    - Point system
+- Multi-user ordering
+- Order tracking
+    - Statuses:
+        - Ordered
+        - In Preperation
+        - Ready
+        - Complete
+            - Donate
+- Unique order-IDs
+- User feedback
+
+### Non-functional Requirements:
+- Weekly developer meetings
+- Milestone deadlines
+- Toolset
+    - Django
+    - React.js
+    - Python
+    - SQLite3
+    - GitHub
+    - Creately
+
+### Future Features:
+- Mobile application
+- Order modifications
+- Text message notifications
+- Automate the cashier
+
+### Glossary:
+- DBSOBMS: Dan's Bagel Shop Online Business Management System
+- Donate: Donating food to a charity of Dan's choice
+- Point System: 'Bagel Bucks'
+- Notifications: User will be notified when their order changes status or when there is a current promotion
