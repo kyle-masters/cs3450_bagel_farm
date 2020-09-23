@@ -11,6 +11,12 @@
 ## Version Control Procedures
 
 ## Tool stack description
+- Python
+- Django
+- React
+- SQLite
+- Git
+- Creately
 
 ## Build instructions
 
