@@ -36,6 +36,7 @@ The manager will have the role of updating and managing inventory. They will als
     2.3.2 Suggest refills
         2.3.2.1 Base suggestions off of most popular items
     2.3.3 Create new inventory items
+    2.3.4 There should be approximately 100 of each item in inventory at a given time
 2.4 Favorites
     2.4.1 Modifications
         2.4.1.1 Removals/Additions
@@ -53,6 +54,14 @@ The manager will have the role of updating and managing inventory. They will als
             2.8.1.4.1 Donate
 2.9 Unique order-IDs
 2.10 User feedback
+2.11 Account management
+    2.11.1 Users can edit their personal information
+    2.11.2 Users can add funds to their accoutns
+    2.11.3 Users can switch their account permission type
+        2.11.3.1 Customers are unable to do this
+        2.11.3.2 Chefs and Cashiers can switch between their staff position and Customer
+        2.11.3.3 Managers can switch to any role
+    2.11.4 Users automatically get $100.00 when they create an account
 
 ### 3. Non-functional Requirements:
 3.1 Weekly developer meetings
