@@ -127,4 +127,4 @@ The process will be broken up into 6 phases. We are going to split up each phase
  - Lots of real-world testing.
 
  # Configuration Management Plan:
- Please refer to README.md to see the Configuration Management Plan
+ Please refer to [README.md](https://github.com/brent-buffenbarger/Bagel_Farm/blob/master/README.md) to see the Configuration Management Plan
