@@ -25,7 +25,10 @@
 ## Version Control Procedures
 We are  using GitHub to manage our version control. @brent-buffenbarger has a master repository that the other members of Bagel Farm have forked and work in. When a member of the group has work that is ready to be integrated into the project, a pull requeste is submitted to the master repository and each member of the group will do a code review and approve or deny the pull request.
 
-## Tool stack description
+## Tool stack description & setup procedure
+All of the following items in our toolstack are fairly light-weight, so each developer will install each tool on their local machine and work from there. Developers will be sure to install the latest versions of the tools so we are all working in similar environments. If we want to make sure everybody is working in identical environments, we can use Docker to setup development environments. However, for this project using Docker would be overkill.
+
+
 - **Python**: This will be used as the main back end programming language
 - **Django**: Web server framework we will be using
 - **React**: Front end framework we will be using

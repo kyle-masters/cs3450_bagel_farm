@@ -125,3 +125,6 @@ The process will be broken up into 6 phases. We are going to split up each phase
 ### Workarounds
  - Lots of communication between users and developers
  - Lots of real-world testing.
+
+ # Configuration Management Plan:
+ Please refer to README.md to see the Configuration Management Plan
