@@ -1,0 +1,35 @@
+.ProgressBar {
+    width: 100%;
+    height: 30px;
+    background-color: grey;
+    border-radius: 50px;
+    overflow: hidden;
+    position: relative;
+}
+
+.Filler {
+    border-radius: 50px 0 0 50px;
+    z-index: 80;
+    height: 100%;
+}
+
+.Text {
+    position: absolute;
+    top: 0;
+    z-index: 90;
+    height: 100%;
+    display: table;
+
+}
+
+.Red {
+    background-color: darkred;
+}
+
+.Blue {
+    background-color: #3483eb;
+}
+
+.Yellow {
+    background-color: rgb(172, 160, 0);
+}
