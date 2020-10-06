@@ -20,7 +20,10 @@
     - Role is to turn in all team assignments
     
 ### Designated Meeting Scheduler
- - Connor Meads
+- Connor Meads
+
+### Scrum Master
+- Dallin Larsen
 
 ## Version Control Procedures
 We are  using GitHub to manage our version control. @brent-buffenbarger has a master repository that the other members of Bagel Farm have forked and work in. When a member of the group has work that is ready to be integrated into the project, a pull requeste is submitted to the master repository and each member of the group will do a code review and approve or deny the pull request.

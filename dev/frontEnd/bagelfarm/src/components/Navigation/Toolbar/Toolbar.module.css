@@ -1,0 +1,17 @@
+.Toolbar {
+    height: 50px;
+    width: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    background-color: tan;
+    align-items: center;
+    z-index: 200;
+    
+}
+
+@media (max-width: 600px) {
+    .Desktop {
+        display: none;
+    }
+}
