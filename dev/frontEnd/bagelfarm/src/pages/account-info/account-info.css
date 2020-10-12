@@ -33,8 +33,8 @@
 
 .content-area {
     background-color: white;
-    width: 550px;
-    height: 700px;
+    width: 60%;
+    height: 72%;
     position: fixed;
     top: 49%;
     left: 50%;
@@ -53,8 +53,8 @@
     -webkit-box-shadow: 0px 0px 10px  rgba(0,0,0,0.8);
     -o-box-shadow: 0px 0px 10px  rgba(0,0,0,0.8);
     border-radius: 2px;
-    width: 500px;
-    height: 100px;
+    width: 93%;
+    height: 14%;
     position: absolute;
     top: 10%;
     left: 50%;
@@ -67,8 +67,8 @@
     font-size: 25px;
     font-family: Baskerville Old Face;
     font-weight: lighter;
-    left: 10px;
-    top: -5px;
+    left: 3%;
+    top: -7%;
     border-bottom: 2px solid #3d1c1775;
 }
 
@@ -78,20 +78,20 @@
     font-size: 32px;
     font-family: Baskerville Old Face;
     font-weight: normal;
-    left: 10px;
-    bottom: -10px;
+    left: 3%;
+    bottom: -10%;
 }
 
 #email-address {
-    top: 185px;
+    top: 26.5%;
 }
 
 #password {
-    top: 300px;
+    top: 43%;
 }
 
 #funds {
-    top: 415px;
+    top: 59.5%;
 }
 
 .btn {
@@ -111,50 +111,50 @@
 }
 
 #view-orders-btn {
-    width: 240px;
-    height: 60px;
+    width: 43%;
+    height: 8.5%;
     font-size: 20px;
-    left: 25px;
-    bottom: 100px;
+    left: 5%;
+    bottom: 14%;
 }
 
 #view-tasks-btn {
-    width: 240px;
-    height: 60px;
+    width: 43%;
+    height: 8.5%;
     font-size: 20px;
-    right: 25px;
-    bottom: 100px;
+    right: 5%;
+    bottom: 14%;
 }
 
 #inventory-btn {
-    width: 240px;
-    height: 60px;
+    width: 43%;
+    height: 8.5%;
     font-size: 20px;
-    left: 25px;
-    bottom: 25px;
+    left: 5%;
+    bottom: 3%;
 }
 
 #manage-accounts-btn {
-    width: 240px;
-    height: 60px;
+    width: 43%;
+    height: 8.5%;
     font-size: 20px;
-    right: 25px;
-    bottom: 25px;
+    right: 5%;
+    bottom: 3%;
 }
 
 #add-funds-btn {
-    width: 175px;
-    height: 45px;
+    width: 35%;
+    height: 45%;
     font-size: 20px;
-    right: 10px;
-    bottom: 10px;
+    right: 2%;
+    bottom: 8%;
 }
 
 .footer {
     position:fixed;
     left:0px;
     bottom:0px;
-    height:100px;
+    height:9%;
     width:100%;
     background-color: white;
 }
