@@ -25,7 +25,7 @@ able to manage inventory, process orders, and see high-level transaction informa
  - Connor Meads
 
 ### Scrum Coordinators
-- Brent Buffenbarger
+- Dallin Larsen
 - Kyle Masters
 
 
