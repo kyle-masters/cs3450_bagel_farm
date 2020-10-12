@@ -7,7 +7,7 @@ function AccountInfo() {
 
     return (
         <div className='account-info'>
-            <Layout>
+            <div>
                 <div className="bg-image">
                     <img src={require('../../images/bg-windmill.png')}/>
                 </div>
@@ -36,7 +36,7 @@ function AccountInfo() {
                     <a href="/account"><button className="btn" id="manage-accounts-btn"> Manage Accounts </button></a>
                 </div>
                 <div className="footer"></div>
-            </Layout>
+            </div>
         </div>
     );
 }

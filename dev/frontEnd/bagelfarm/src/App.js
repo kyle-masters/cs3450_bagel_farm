@@ -1,12 +1,9 @@
 import React from 'react';
-<<<<<<< HEAD
 import { Switch, Route } from 'react-router-dom';
 import logo from './logo.svg';
-=======
-import { Switch , Route } from 'react-router-dom';
->>>>>>> hub/development
 import './App.css';
 import Layout from './hoc/Layout/Layout';
+import AccountInfo from './pages/account-info/account-info'
 import LoginPage from './pages/loginpage/logainpage';
 
 function App() {
@@ -15,6 +12,7 @@ function App() {
       <Layout>
         <Switch>
           <Route path='/login' component={LoginPage} />
+          <Route path='/account' component={AccountInfo} />
         </Switch>
       </Layout>
       
