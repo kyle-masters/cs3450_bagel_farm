@@ -1,0 +1,5 @@
+First Name	Last Name	Role
+Dan	Of Dans Bagels	Manager
+Bradley	of Dans Bagels	chef
+Matt	Mullens	Cashier
+Sam	Samuelson	chef
