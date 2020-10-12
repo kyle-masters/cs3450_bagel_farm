@@ -1,27 +1,34 @@
 from django.shortcuts import render
-from django.http import JsonResponse
-
-
-# Create your views here.
-
+from django.http import JsonResponse, HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 from .models import Account
 
+
 def account(request):
-    b = Account.objects.get(id=request.GET.get('id',0))
+    try:
+        b = Account.objects.get(id=request.GET.get('id', 0))
 
-    print("fff")
+        data = {
+            'firstName': b.firstName,
+            'lastName': b.lastName,
+            'email': b.email,
+            'phoneNumber': b.phoneNumber,
+            'rewards': b.rewards,
+            'balance': b.balance,
+            'password': b.password,
+            'type': b.type
+        }
 
-    theID = request.GET.get('id', 2)
+        return JsonResponse(data)
+    except ObjectDoesNotExist:
+        return HttpResponse("Does not exist")
+    except ValueError:
+        return HttpResponse("Invalid id")
+    except:
+        return HttpResponse("Error")
 
-    data = {
-        'firstName': b.firstName,
-        'lastName': b.lastName,
-        'email': b.email,
-        'phoneNumber': b.phoneNumber,
-        'rewards': b.rewards,
-        'balance': b.balance,
-        'password': b.password,
-        'type': b.type
-    }
+def login(request):
+    return HttpResponse(True)
 
-    return JsonResponse(data)
+def register(request):
+    return HttpResponse(True)
