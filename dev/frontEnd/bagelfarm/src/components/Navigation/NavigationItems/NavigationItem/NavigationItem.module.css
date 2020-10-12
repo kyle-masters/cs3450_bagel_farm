@@ -1,11 +1,12 @@
 .NavigationItem {
-    margin: 10px 0;
+    margin: 10px 0px;
     box-sizing: border-box;
     display: block;
     width: 100%;
-    color: black;
+    color: #3d1c17;
     padding: 5px;
     text-align: center;
+    font-family: Baskerville Old Face;
     align-items: center;
 }
 
@@ -20,6 +21,7 @@
 .NavigationItem a:hover,
 .NavigationItem a:active,
 .NavigationItem a.active {
-    color: white;
+    color: rgb(215, 167, 105);
+    transition: all 0.2s ease-out;
 }
 
