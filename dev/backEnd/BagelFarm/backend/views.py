@@ -20,15 +20,11 @@ def account(request):
         }
 
         return JsonResponse(data)
-    except ObjectDoesNotExist:
-        return HttpResponse("Does not exist")
-    except ValueError:
-        return HttpResponse("Invalid id")
     except:
-        return HttpResponse("Error")
+        return JsonResponse({'status':False})
 
 def login(request):
-    return HttpResponse(True)
+    return JsonResponse({'status':False})
 
 def register(request):
-    return HttpResponse(True)
+    return JsonResponse({'status':False})
