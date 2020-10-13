@@ -24,6 +24,10 @@ able to manage inventory, process orders, and see high-level transaction informa
 ### Designated Meeting Room Booker
  - Connor Meads
 
+### Scrum Coordinators
+- Dallin Larsen
+- Kyle Masters
+
 
 # Description of the Process
 
@@ -42,7 +46,7 @@ Once a group member finishes their tasks, or is unable to because their task dep
 # Policies
 
 - Primary form of communication will be through Discord
-- We will meet weekly on Tuesday at 7:00pm
+- We will meet in-person every Monday and Wednesday
 - The main technologies we will be using are GitHub, React, Django, and SQLite
 - We will track our tasks using the GitHub Projects and Issue features
 

@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('firstName', models.CharField(max_length=200)),
                 ('lastName', models.CharField(max_length=200)),
                 ('password', models.CharField(max_length=200)),
-                ('phoneNumber', models.IntegerField()),
+                ('phoneNumber', models.CharField(max_length=200)),
                 ('type', models.IntegerField()),
                 ('balance', models.DecimalField(decimal_places=2, max_digits=20)),
                 ('rewards', models.IntegerField()),

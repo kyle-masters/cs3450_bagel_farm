@@ -1,15 +1,14 @@
 .Button {
-    background-color: transparent;
-    border: none;
-    color: white;
-    outline: none;
-    cursor: pointer;
-    font: inherit;
-    margin: 10px 0;
-    padding: 10px 0;
-    font-weight: bold;
-    text-align: center;
-    box-sizing: border-box;
+    position: fixed;
+    background-color: rgb(198, 167, 132);
+    transition: all 0.2s ease-out;
+    color: #3d1c17;
+    border: 1px solid #3d1c17;
+    border-radius: 3px;
+    font-family: Baskerville Old Face;
+    font-size: 20px;
+    height: 5%;
+    width: 20%;
 }
 
 .Button:first-of-type {
@@ -18,7 +17,8 @@
 }
 
 .Button:hover {
-    color: #3483eb;
+    background-color: rgba(215, 167, 105, 0.151);
+    transition: all 0.2s ease-out;
 }
 
 .Database {

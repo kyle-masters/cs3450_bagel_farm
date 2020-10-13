@@ -2,9 +2,55 @@
 
 from django.db import migrations
 
+from ..models import Account
 
-def populate_db():
+
+def populate_db(apps, schema_editor):
+    MyModel = apps.get_model('backend', 'Account')
+
+    file = open('backend/data/customer_list.txt', 'r')
+    fileLines = file.readlines()
+    for line in fileLines:
+        accountInfo = line.split(',')
+        account = MyModel.objects.all().create(
+            firstName=accountInfo[0],
+            lastName=accountInfo[1],
+            email=accountInfo[2],
+            phoneNumber=accountInfo[3],
+            type=0,
+            password='Password',
+            balance=100,
+            rewards=0,
+        )
+        account.save()
+
+    file = open('backend/data/employee_list.txt', 'r')
+    fileLines = file.readlines()
+    for line in fileLines:
+        accountInfo = line.split(',')
+        theType = 0
+        if accountInfo[2] == 'Cashier':
+            theType = 1
+        if accountInfo[2] == 'chef':
+            theType = 2
+        if accountInfo[2] == 'Manager':
+            theType = 3
+        account = MyModel.objects.all().create(
+            firstName=accountInfo[0],
+            lastName=accountInfo[1],
+            email='',
+            phoneNumber='',
+            type=theType,
+            password='Password',
+            balance=100,
+            rewards=0,
+        )
+        account.save()
+
+
     pass
+
+
 
 
 class Migration(migrations.Migration):
