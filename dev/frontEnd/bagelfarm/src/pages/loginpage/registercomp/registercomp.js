@@ -15,7 +15,7 @@ const registerForm = (props) => {
 
     return (
         <div className={classes.Register}>
-            <form onSubmit={props.submitHandler}>
+            <form className={classes.Form} onSubmit={props.submitHandler}>
                {formElementsArray.map(formElement => (
                    <Input   
                         key={formElement.id}
@@ -28,9 +28,13 @@ const registerForm = (props) => {
                ))}
             </form>
             <Button
+                height={'50px'}
+                width={'200px'}
+                width={'30%'}
+                left={'35%'}
                 clicked={props.submit}
                 btnType={'Submit'}
-                disabled={false}>Register</Button>
+                disabled={false}>Create Account</Button>
         </div>
     )
 }

@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import Layout from './hoc/Layout/Layout';
 import AccountInfo from './pages/account-info/account-info'
-import LoginPage from './pages/loginpage/logainpage';
+import LoginPage from './pages/loginpage/loginpage';
 
 function App() {
   return (

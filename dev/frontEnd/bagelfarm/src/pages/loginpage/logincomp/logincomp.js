@@ -15,7 +15,7 @@ const loginForm = (props) => {
 
     return (
         <div className={classes.Login}>
-            <form onSubmit={props.submitHandler}>
+            <form className={classes.Form} onSubmit={props.submitHandler}>
                {formElementsArray.map(formElement => (
                    <Input   
                         key={formElement.id}
@@ -28,6 +28,9 @@ const loginForm = (props) => {
                ))}
             </form>
             <Button
+                height={'50px'}
+                width={'25%'}
+                left={'37.5%'}
                 clicked={props.submit}
                 btnType={'Submit'}
                 disabled={false}>Login</Button>
