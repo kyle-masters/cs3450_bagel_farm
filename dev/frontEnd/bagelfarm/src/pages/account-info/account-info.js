@@ -1,5 +1,5 @@
 import React from "react"
-import Layout from '../../hoc/Layout/Layout'
+import Button from '../../components/UI/Button/Button'
 import './account-info.css';
 
 function AccountInfo() {
@@ -8,9 +8,6 @@ function AccountInfo() {
     return (
         <div className='account-info'>
             <div>
-                <div className="bg-image">
-                    <img src={require('../../images/bg-windmill.png')}/>
-                </div>
                 <h2 className='account-info-header'> Account Information </h2>
                 <div className="content-area">
                     <div className="content-item">
@@ -28,12 +25,27 @@ function AccountInfo() {
                     <div className="content-item" id="funds">
                         <h1 className="content-header"> Funds </h1>
                         <h1 className="content-info"> $100.00 </h1>
-                        <a href="/account"><button className="btn" id="add-funds-btn"> Add Funds </button></a>
+                        <Button width={"35%"}
+                                height={"45%"}
+                                right={"2%"}
+                                bottom={"8%"}>Add Funds</Button>
                     </div>
-                    <a href="/account"><button className="btn" id="view-orders-btn"> View Orders </button></a>
-                    <a href="/account"><button className="btn" id="view-tasks-btn"> View Tasks </button></a>
-                    <a href="/account"><button className="btn" id="inventory-btn"> Inventory </button></a>
-                    <a href="/account"><button className="btn" id="manage-accounts-btn"> Manage Accounts </button></a>
+                    <Button width={"43%"}
+                                height={"8.5%"}
+                                left={"5%"}
+                                bottom={"14%"}>View Orders</Button>
+                    <Button width={"43%"}
+                                height={"8.5%"}
+                                right={"5%"}
+                                bottom={"14%"}>View Tasks</Button>
+                    <Button width={"43%"}
+                                height={"8.5%"}
+                                left={"5%"}
+                                bottom={"3%"}>Inventory</Button>
+                    <Button width={"43%"}
+                                height={"8.5%"}
+                                right={"5%"}
+                                bottom={"3%"}>Manage Accounts</Button>
                 </div>
                 <div className="footer"></div>
             </div>
