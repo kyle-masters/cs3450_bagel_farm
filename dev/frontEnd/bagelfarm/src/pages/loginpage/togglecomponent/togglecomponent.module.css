@@ -1,0 +1,12 @@
+.ToggleComp {
+    width: 500px;
+    background-color: lightgrey;
+    border: 20px;
+    padding: 20px;
+}
+
+@media (max-width: 600px) {
+    .ToggleComp {
+        width: 70%
+    }
+}

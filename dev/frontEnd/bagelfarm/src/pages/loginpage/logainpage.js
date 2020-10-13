@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import LoginForm from './logincomp/logincomp'
 import RegisterForm from './registercomp/registercomp'
+import ToggleComponent from './togglecomponent/togglecomponent'
 
 class LoginPage extends Component {
     state = {
@@ -106,10 +107,12 @@ class LoginPage extends Component {
         return(
             <div>
                 <h1>This is the Login Page</h1>
-                <LoginForm formElements={this.state.formElementsLogin} />
-                <RegisterForm formElements={this.state.formElementsRegister} />
+                <ToggleComponent 
+                    login={this.state.isLogin} 
+                    formElementsLogin={this.state.formElementsLogin}
+                    formElementsRegister={this.state.formElementsRegister}
+                    />
             </div>
-            
         )
     }
 
