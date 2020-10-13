@@ -2,23 +2,26 @@ import React from 'react'
 
 import LoginForm from '../logincomp/logincomp'
 import RegisterForm from '../registercomp/registercomp'
+import Toggler from '../toggler/toggler'
 
 import classes from './togglecomponent.module.css'
 
 const toggleComponent = (props) => {
-    if (props.login) {
-        return (
-            <div className={classes.ToggleComp}>
-                <LoginForm formElements={props.formElementsLogin}/>
-            </div>
-        )
-    } else {
-        return (
-            <div>
-                <RegisterForm formElements={props.formElementsRegister}/>
-            </div>
-        )
-    }
+    var toggleComp = 
+        <div className={classes.ToggleComp}>
+            <Toggler login={props.login} signin={props.signin} register={props.register}/>
+            {props.login ? <LoginForm 
+                                changed={props.changedLogin}
+                                formElements={props.formElementsLogin}
+                                submit={props.loginClicked}/>
+                            : 
+                            <RegisterForm 
+                                changed={props.changedRegister}
+                                formElements={props.formElementsRegister}
+                                submit={props.createAccountClicked}/>}
+        </div>
+
+    return toggleComp
 }
 
 export default toggleComponent;

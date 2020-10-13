@@ -3,7 +3,6 @@ import Button from '../../components/UI/Button/Button'
 import './account-info.css';
 
 function AccountInfo() {
-    const bg_image = '../../images/bg-windmill.png';
 
     return (
         <div className='account-info'>
