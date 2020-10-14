@@ -42,15 +42,22 @@ def register(request):
                 balance=100,
                 rewards=0,
             )
-            account.save
+            account.save()
 
             newAccount = Account.objects.get(email=request.GET.get('email'))
 
-            return JsonResponse({'status':newAccount.id})
+            response = JsonResponse({'id': newAccount.id})
+            response['Access-Control-Allow-Origin'] = '*'
+            return response
+
         else:
-            return JsonResponse({'status':False})
+            response =  JsonResponse({'status':False})
+            response['Access-Control-Allow-Origin'] = '*'
+            return response
     except ValueError:
-        return JsonResponse({'status':False})
+        response = JsonResponse({'status': False})
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
 
 def validateRegistration(requestInfo):
     for info in requestInfo:
@@ -79,8 +86,12 @@ def login(request):
             acctId = Account.objects.get(email = emailAttempt)
 
             if acctId.password == passwordAttempt:
-                return JsonResponse({'id':acctId.id})
+                response = JsonResponse({'id':acctId.id})
+                response['Access-Control-Allow-Origin'] = '*'
+                return response
             else:
-                return JsonResponse({'status':'False1'})
+                response = JsonResponse({'status':'False1'})
+                response['Access-Control-Allow-Origin'] = '*'
+                return response
     except:
         return JsonResponse({'status':'False2'})
