@@ -13,7 +13,7 @@ function AccountInfo() {
                         <h1 className="content-header" id="first-last-name"> First & Last Name </h1>
                         <Button width={"12%"}
                                 height={"23%"}
-                                right={"38%"}
+                                right={"2%"}
                                 top={"16%"}
                                 fontSize={"15px"}>Edit</Button>
                         <h1 className="content-info"> Brent Buffenbarger </h1>
@@ -22,7 +22,7 @@ function AccountInfo() {
                         <h1 className="content-header"> Email Address </h1>
                         <Button width={"12%"}
                                 height={"23%"}
-                                right={"48%"}
+                                right={"2%"}
                                 top={"16%"}
                                 fontSize={"15px"}>Edit</Button>
                         <h1 className="content-info"> sample@gmail.com </h1>
@@ -31,10 +31,10 @@ function AccountInfo() {
                         <h1 className="content-header"> Password </h1>
                         <Button width={"12%"}
                                 height={"23%"}
-                                right={"60%"}
+                                right={"2%"}
                                 top={"16%"}
                                 fontSize={"15px"}>Edit</Button>
-                        <a href="/account"> <h1 className="content-info"> Change Password (click here)</h1></a>
+                        <a href="/account"> <h1 className="content-info"> Change Password</h1></a>
                     </div>
                     <div className="content-item" id="funds">
                         <h1 className="content-header"> Funds </h1>
