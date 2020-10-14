@@ -137,7 +137,7 @@ class LoginPage extends Component {
     }
 
     loginClickedHandler = () => {
-        axios.get('/login/?' + this.getLoginQuery())
+        axios.get('/login?' + this.getLoginQuery())
             .then((response) => {
                 this.props.setID(response.data['id'])
             })
@@ -163,7 +163,7 @@ class LoginPage extends Component {
     }
 
     creatAccountClickedHandler = () => {
-        axios.get('/register/?' + this.getRegisterQuery())
+        axios.get('/register?' + this.getRegisterQuery())
             .then((response) => {
                 this.props.setID(response.data['id'])
             })
