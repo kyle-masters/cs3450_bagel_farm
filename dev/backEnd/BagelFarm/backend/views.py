@@ -24,19 +24,6 @@ def account(request):
     except:
         return JsonResponse({'status':False})
 
-def login(request):
-    try:
-        emailAttempt = request.GET.get('email', 'example@example.com')
-        passwordAttempt = request.GET.get('password', 'admin')
-        acctId = Account.objects.get(email=emailAttempt)
-
-        if acctId.password == passwordAttempt:
-            return JsonResponse({'id':acctId.id})
-        else:
-            return JsonResponse({'status':False})
-    except:
-        return JsonResponse({'status':False})
-
 def register(request):
 
     try:
@@ -76,3 +63,24 @@ def validateRegistration(requestInfo):
     # Implement data validations
 
     return True
+
+def login(request):
+    try:
+        emailAttempt = request.GET.get('email', 'example@example.com')
+
+        #Validate email using a regex
+        if re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", emailAttempt) == None:
+            return JsonResponse({'status':'SuperFalse'})
+        
+        else:
+            passwordAttempt = request.GET.get('password', 'admin')
+
+            #Validate password using a regex
+            acctId = Account.objects.get(email = emailAttempt)
+
+            if acctId.password == passwordAttempt:
+                return JsonResponse({'id':acctId.id})
+            else:
+                return JsonResponse({'status':'False1'})
+    except:
+        return JsonResponse({'status':'False2'})
