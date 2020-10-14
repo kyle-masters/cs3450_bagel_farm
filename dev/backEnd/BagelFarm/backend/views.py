@@ -25,6 +25,7 @@ def account(request):
         return JsonResponse({'status':False})
 
 def login(request):
+
     return JsonResponse({'status':False})
 
 def register(request):
@@ -46,7 +47,10 @@ def register(request):
                 rewards=0,
             )
             account.save
-            return JsonResponse({'status':True})
+
+            newAccount = Account.objects.get(email=request.GET.get('email'))
+
+            return JsonResponse({'status':newAccount.id})
         else:
             return JsonResponse({'status':False})
     except ValueError:
@@ -56,6 +60,9 @@ def validateRegistration(requestInfo):
     for info in requestInfo:
         if info is None:
             return False
+
+    if Account.objects.filter(email=requestInfo[2]).exists():
+        return False
 
     # Implement data validations
 
