@@ -25,8 +25,17 @@ def account(request):
         return JsonResponse({'status':False})
 
 def login(request):
+    try:
+        emailAttempt = request.GET.get('email', 'example@example.com')
+        passwordAttempt = request.GET.get('password', 'admin')
+        acctId = Account.objects.get(email=emailAttempt)
 
-    return JsonResponse({'status':False})
+        if acctId.password == passwordAttempt:
+            return JsonResponse({'id':acctId.id})
+        else:
+            return JsonResponse({'status':False})
+    except:
+        return JsonResponse({'status':False})
 
 def register(request):
 
