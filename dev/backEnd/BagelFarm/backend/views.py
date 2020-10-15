@@ -46,7 +46,8 @@ def register(request):
 
             newAccount = Account.objects.get(email=request.GET.get('email'))
 
-            response = JsonResponse({'id': newAccount.id})
+            response = JsonResponse({
+                'id': newAccount.id})
             response['Access-Control-Allow-Origin'] = '*'
             return response
 
@@ -86,7 +87,15 @@ def login(request):
             acctId = Account.objects.get(email = emailAttempt)
 
             if acctId.password == passwordAttempt:
-                response = JsonResponse({'id':acctId.id})
+                response = JsonResponse({
+                    'id':acctId.id,
+                    'firstName': acctId.firstName,
+                    'lastName': acctId.lastName,
+                    'phoneNumber': acctId.phoneNumber,
+                    'email': acctId.email,
+                    'balance': acctId.balance,
+                    'rewards': acctId.rewards
+                })
                 response['Access-Control-Allow-Origin'] = '*'
                 return response
             else:

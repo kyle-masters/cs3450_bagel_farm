@@ -140,6 +140,14 @@ class LoginPage extends Component {
         axios.get('/login?' + this.getLoginQuery())
             .then((response) => {
                 this.props.setID(response.data['id'])
+                this.props.setUserData(
+                    response.data['firstName'],
+                    response.data['lastName'],
+                    response.data['phoneNumber'],
+                    response.data['email'],
+                    response.data['balance'],
+                    response.data['rewards']
+                )
             })
     }
 

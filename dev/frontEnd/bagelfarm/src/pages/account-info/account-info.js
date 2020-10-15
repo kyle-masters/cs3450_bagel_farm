@@ -16,7 +16,7 @@ class AccountInfo extends Component {
                                     right={"2%"}
                                     top={"16%"}
                                     fontSize={"15px"}>Edit</Button>
-                            <h1 className="content-info"> Brent Buffenbarger </h1>
+                            <h1 className="content-info"> {this.props.getUserData['firstName']} {this.props.getUserData['lastName']}</h1>
                         </div>
                         <div className="content-item" id="email-address">
                             <h1 className="content-header"> Email Address </h1>
@@ -25,7 +25,7 @@ class AccountInfo extends Component {
                                     right={"2%"}
                                     top={"16%"}
                                     fontSize={"15px"}>Edit</Button>
-                            <h1 className="content-info"> sample@gmail.com </h1>
+                            <h1 className="content-info"> {this.props.getUserData['email']} </h1>
                         </div>
                         <div className="content-item" id="password">
                             <h1 className="content-header"> Password </h1>
@@ -38,7 +38,7 @@ class AccountInfo extends Component {
                         </div>
                         <div className="content-item" id="funds">
                             <h1 className="content-header"> Funds </h1>
-                            <h1 className="content-info"> $100.00 </h1>
+                            <h1 className="content-info"> ${this.props.getUserData['balance']} </h1>
                             <Button width={"35%"}
                                     height={"45%"}
                                     right={"2%"}
