@@ -47,7 +47,14 @@ def register(request):
             newAccount = Account.objects.get(email=request.GET.get('email'))
 
             response = JsonResponse({
-                'id': newAccount.id})
+                'id':newAccount.id,
+                'firstName': newAccount.firstName,
+                'lastName': newAccount.lastName,
+                'phoneNumber': newAccount.phoneNumber,
+                'email': newAccount.email,
+                'balance': newAccount.balance,
+                'rewards': newAccount.rewards
+            })
             response['Access-Control-Allow-Origin'] = '*'
             return response
 
