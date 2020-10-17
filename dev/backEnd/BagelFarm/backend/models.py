@@ -2,7 +2,6 @@ from django.db import models
 from django import forms
 
 
-# Create your models here.
 class Account(models.Model):
     email = models.EmailField(max_length=200)
     firstName = models.CharField(max_length=200)
