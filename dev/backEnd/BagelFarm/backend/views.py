@@ -111,3 +111,10 @@ def login(request):
                 return response
     except:
         return JsonResponse({'status':'False2'})
+
+def createitem(request):
+    
+
+def increment(request):
+    request.GET.get('amount', 1)
+
