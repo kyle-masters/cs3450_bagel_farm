@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Account
+from .models import Account, Item
 import re
 
 
@@ -112,9 +112,4 @@ def login(request):
     except:
         return JsonResponse({'status':'False2'})
 
-def createitem(request):
-    
-
-def increment(request):
-    request.GET.get('amount', 1)
 

@@ -21,3 +21,28 @@ class Item(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=20)
     category = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.name
+
+class OrderItem(models.Model):
+    name = models.CharField(max_length=200)
+    quantity = models.IntegerField()
+    orderID = models.ForeignKey(
+        'Order',
+        on_delete=models.CASCADE,
+    )
+    price = models.DecimalField(decimal_places=2, max_digits=20)
+
+    def __str__(self):
+        return self.name
+
+class Order(models.Model):
+    status = models.IntegerField() # enumerate later?
+    accountID = models.IntegerField()
+    price = models.DecimalField(decimal_places=2, max_digits=20)
+    orderTime = models.DateTimeField()
+    pickupTime = models.DateTimeField()
+    isFavorite = models.BooleanField()
+
+    def __str__(self):
+        return self.id
