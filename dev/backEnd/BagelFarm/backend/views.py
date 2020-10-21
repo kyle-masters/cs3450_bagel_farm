@@ -20,9 +20,13 @@ def account(request):
             'type': b.type
         }
 
-        return JsonResponse(data)
+        response = JsonResponse(data)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
     except:
-        return JsonResponse({'status':False})
+        response = JsonResponse({'status':False})
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
 
 def register(request):
 
