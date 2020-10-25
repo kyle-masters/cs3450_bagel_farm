@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Account, Item
+from .models import Account, Item, Order, OrderItem
 import re
 
 
@@ -20,9 +20,13 @@ def account(request):
             'type': b.type
         }
 
-        return JsonResponse(data)
+        response = JsonResponse(data)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
     except:
-        return JsonResponse({'status':False})
+        response = JsonResponse({'status': False})
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
 
 def register(request):
 
@@ -70,14 +74,20 @@ def register(request):
 def validateRegistration(requestInfo):
     for info in requestInfo:
         if info is None:
-            return False
+            response = JsonResponse({'status': False})
+            response['Access-Control-Allow-Origin'] = '*'
+            return response
 
     if Account.objects.filter(email=requestInfo[2]).exists():
-        return False
+        response = JsonResponse({'status': False})
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
 
     # Implement data validations
 
-    return True
+    response = JsonResponse({'status': True})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
 
 def login(request):
     try:
@@ -85,7 +95,9 @@ def login(request):
 
         #Validate email using a regex
         if re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", emailAttempt) == None:
-            return JsonResponse({'status':'SuperFalse'})
+            response = JsonResponse({'status': False})
+            response['Access-Control-Allow-Origin'] = '*'
+            return response
         
         else:
             passwordAttempt = request.GET.get('password', 'admin')
@@ -106,10 +118,36 @@ def login(request):
                 response['Access-Control-Allow-Origin'] = '*'
                 return response
             else:
-                response = JsonResponse({'status':'False1'})
+                response = JsonResponse({'status':False})
                 response['Access-Control-Allow-Origin'] = '*'
                 return response
     except:
-        return JsonResponse({'status':'False2'})
+        response = JsonResponse({'status':False})
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
 
+def orderStatus(request):
+    acctID = []
+    for k, v in request.GET.lists():
+        if k.startswith("item"):
+            orderitem = OrderItem.objects.all().create(
 
+            )
+
+    orders = Order.objects.all().filter(accountID=acctID).filter(accountID__gte=1)
+    return JsonResponse({'status':acctID})
+
+def placeOrder(request):
+
+    for k, v in request.GET.lists():
+        if k.startswith("item"):
+            orderitem = OrderItem.objects.all().create(
+                name=v,
+                quantity=request.GET.get("qty_"+v[5:], 1),
+                price=getCurrentPrice(v),
+
+            )
+
+def getCurrentPrice(name):
+    item = Item.objects.get(name=name)
+    return item.price
