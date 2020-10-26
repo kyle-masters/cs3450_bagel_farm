@@ -26,7 +26,7 @@ def account(request):
         response['Access-Control-Allow-Origin'] = '*'
         return response
     except:
-        response = JsonResponse({'status': False})
+        response = JsonResponse({'status':False})
         response['Access-Control-Allow-Origin'] = '*'
         return response
 
