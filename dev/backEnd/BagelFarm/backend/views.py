@@ -1,8 +1,14 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
+<<<<<<< HEAD
 from .models import Account
 from .models import Item
+=======
+from .models import Account, Item, Order, OrderItem
+from django.utils import timezone
+from decimal import *
+>>>>>>> origin/development
 import re
 
 
@@ -75,14 +81,20 @@ def register(request):
 def validateRegistration(requestInfo):
     for info in requestInfo:
         if info is None:
-            return False
+            response = JsonResponse({'status': False})
+            response['Access-Control-Allow-Origin'] = '*'
+            return response
 
     if Account.objects.filter(email=requestInfo[2]).exists():
-        return False
+        response = JsonResponse({'status': False})
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
 
     # Implement data validations
 
-    return True
+    response = JsonResponse({'status': True})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
 
 def login(request):
     try:
@@ -90,7 +102,9 @@ def login(request):
 
         #Validate email using a regex
         if re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", emailAttempt) == None:
-            return JsonResponse({'status':'SuperFalse'})
+            response = JsonResponse({'status': False})
+            response['Access-Control-Allow-Origin'] = '*'
+            return response
         
         else:
             passwordAttempt = request.GET.get('password', 'admin')
@@ -111,10 +125,11 @@ def login(request):
                 response['Access-Control-Allow-Origin'] = '*'
                 return response
             else:
-                response = JsonResponse({'status':'False1'})
+                response = JsonResponse({'status':False})
                 response['Access-Control-Allow-Origin'] = '*'
                 return response
     except:
+<<<<<<< HEAD
         return JsonResponse({'status':'False2'})
 
 def inventory(request):
@@ -153,3 +168,73 @@ def inventory(request):
 
     except:
         return JsonResponse({'status':False})
+=======
+        response = JsonResponse({'status':False})
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
+
+def orderStatus(request):
+    acctID = request.GET.get('id')
+
+    orders = Order.objects.all().filter(accountID=acctID).filter(accountID__gte=1)
+
+    orderInfoList = []
+    for order in orders:
+        items = OrderItem.objects.all().filter(orderID=order.id)
+        itemInfoList = []
+        for item in items:
+            itemInfo = {
+                'name': item.name,
+                'quantity': item.quantity,
+                'price': item.price
+            }
+            itemInfoList.append(itemInfo)
+        orderInfo = {
+            'orderID': order.id,
+            'items': itemInfoList,
+            'status': order.status,
+            'orderTime': order.orderTime,
+            'price': order.price
+        }
+        orderInfoList.append(orderInfo)
+
+    response = JsonResponse({'id': acctID,
+                         'orders': orderInfoList})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+
+
+def placeOrder(request):
+
+    order = Order.objects.all().create(
+        status=1,
+        accountID=request.GET.get("id"),
+        price=0,
+        orderTime=timezone.now(),
+        pickupTime=timezone.now(),
+        isFavorite=False
+    )
+
+    totalPrice = Decimal(0.0)
+    for k, v in request.GET.items():
+        if k.startswith("item"):
+            orderitem = OrderItem.objects.all().create(
+                name=v,
+                quantity=request.GET.get("qty_"+k[5:], 1),
+                price=getCurrentPrice(v),
+                orderID=order
+            )
+            totalPrice = totalPrice + getCurrentPrice(v)
+
+    order.price = totalPrice
+
+    response = JsonResponse({'status': True})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+
+
+def getCurrentPrice(name):
+    nameParts = name.split("_")
+    item = Item.objects.all().get(name=nameParts[0], category=nameParts[1])
+    return item.price
+>>>>>>> origin/development
