@@ -16,15 +16,6 @@ class Account(models.Model):
         return self.firstName
 
 class Item(models.Model):
-<<<<<<< HEAD
-    itemName = models.CharField(max_length=200)
-    itemType = models.CharField(max_length=200)
-    itemQuantity = models.IntegerField(max_digits=100)
-    itemPrice = models.DecimalField(max_digits=8, decimal_places=2)
-
-    def __str__(self):
-        return self.itemName
-=======
     name = models.CharField(max_length=200)
     stock = models.IntegerField()
     price = models.DecimalField(decimal_places=2, max_digits=20)
@@ -55,4 +46,3 @@ class Order(models.Model):
 
     def __str__(self):
         return self.id
->>>>>>> origin/development

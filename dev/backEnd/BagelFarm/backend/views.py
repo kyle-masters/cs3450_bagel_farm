@@ -1,14 +1,9 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
-<<<<<<< HEAD
-from .models import Account
-from .models import Item
-=======
 from .models import Account, Item, Order, OrderItem
 from django.utils import timezone
 from decimal import *
->>>>>>> origin/development
 import re
 
 
@@ -38,8 +33,7 @@ def account(request):
 def register(request):
 
     try:
-        valid = validateRegistration([request.GET.get('firstName'),request.GET.get('lastName'),request.GET.get('email'),
-                                      request.GET.get('phoneNumber'),request.GET.get('password')])
+        valid = validateRegistration([request.GET.get('firstName'),request.GET.get('lastName'),request.GET.get('email'), request.GET.get('phoneNumber'),request.GET.get('password')])
 
         if valid is True:
 
@@ -129,46 +123,7 @@ def login(request):
                 response['Access-Control-Allow-Origin'] = '*'
                 return response
     except:
-<<<<<<< HEAD
-        return JsonResponse({'status':'False2'})
 
-def inventory(request):
-    try:
-        item = Item.objects.all()
-        #This holds the actual inventory numbers
-        currentInventory = {
-            'plainBagelNum':item.plainBagelNum,
-            'onionBagelNum':item.onionBagelNum,
-            'cinnamonRaisinBagel':item.cinnamonRaisinBagel,
-            'sesameBagelNum':item.sesameBagelNum,
-            'cheesyBagelNum':item.cheesyBagelNum,
-            'pumpernickelBagelNum':item.pumpernickelBagelNum,
-            'plainSmearNum':item.plainSmearNum,
-            'honeyNutSmearNum':item.honeyNutSmearNum,
-            'strawberrySmearNum':item.strawberrySmearNum,
-            'frenchOnionSmearNum':item.frenchOnionSmearNum,
-            'coffeeNum':item.coffeeNum,
-            'milkNum':item.milkNum,
-            'orangeJuiceNum':item.orangeJuiceNum,
-            'waterNum':item.waterNum,
-            'baconToppingNum':item.baconToppingNum,
-            'eggToppingNum':item.eggToppingNum,
-            'cheeseToppingNum':item.cheeseToppingNum,
-            'sausageToppingNum':item.sausageToppingNum,
-            'avacadoToppingNum':item.avacadoToppingNum,
-            'turkeyToppingNum':item.turkeyToppingNum,
-            'hamToppingNum':item.hamToppingNum,
-            'spinnachToppingNum':item.spinnachToppingNum,
-            'tomatoToppingNum':item.tomatoToppingNum,
-            'loxToppingNum':item.loxToppingNum
-        }
-        response = JsonResponse(currentInventory)
-        response['Access-Control-Allow-Origin'] = '*'
-        return response
-
-    except:
-        return JsonResponse({'status':False})
-=======
         response = JsonResponse({'status':False})
         response['Access-Control-Allow-Origin'] = '*'
         return response
@@ -237,4 +192,3 @@ def getCurrentPrice(name):
     nameParts = name.split("_")
     item = Item.objects.all().get(name=nameParts[0], category=nameParts[1])
     return item.price
->>>>>>> origin/development
