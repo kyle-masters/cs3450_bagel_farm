@@ -1,24 +1,24 @@
-plain,bagel,115
-onion,bagel,142
-cinnamon rasin ,bagel,201
-sesame,bagel,243
-cheesy,bagel,81
-pumpernickel,bagel,233
-plain,shmear,69
-honey nut,shmear,59
-strawberry ,shmear,90
-french onion,shmear,5
-bacon,sandwhich ,65
-egg,sandwhich ,146
-cheese,sandwhich ,231
-sausage,sandwhich ,4
-avacado ,sandwhich ,51
-turkey,sandwhich ,78
-ham,sandwhich ,250
-spinach,sandwhich ,283
-tomato,sandwhich ,245
-lox,sandwhiches,44
-coffee,beverage,278
-milk,beverage,65
-orange juice,beverage,1
-water,beverage,121
+plain,bagel,115,2.00
+onion,bagel,142,2.00
+cinnamon rasin ,bagel,201,2.00
+sesame,bagel,243,2.00
+cheesy,bagel,81,2.00
+pumpernickel,bagel,233,2.00
+plain,shmear,69,2.00
+honey nut,shmear,59,2.00
+strawberry ,shmear,90,2.00
+french onion,shmear,5,2.00
+bacon,sandwhich ,65,2.00
+egg,sandwhich ,146,2.00
+cheese,sandwhich ,231,2.00
+sausage,sandwhich ,4,2.00
+avacado ,sandwhich ,51,2.00
+turkey,sandwhich ,78,2.00
+ham,sandwhich ,250,2.00
+spinach,sandwhich ,283,2.00
+tomato,sandwhich ,245,2.00
+lox,sandwhiches,44,2.00
+coffee,beverage,278,2.00
+milk,beverage,65,2.00
+orange juice,beverage,1,2.00
+water,beverage,121,2.00
