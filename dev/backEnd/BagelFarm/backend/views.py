@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Account
+from .models import Item
 import re
 
 
@@ -20,9 +21,13 @@ def account(request):
             'type': b.type
         }
 
-        return JsonResponse(data)
+        response = JsonResponse(data)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
     except:
-        return JsonResponse({'status':False})
+        response = JsonResponse({'status':False})
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
 
 def register(request):
 
@@ -42,15 +47,30 @@ def register(request):
                 balance=100,
                 rewards=0,
             )
-            account.save
+            account.save()
 
             newAccount = Account.objects.get(email=request.GET.get('email'))
 
-            return JsonResponse({'status':newAccount.id})
+            response = JsonResponse({
+                'id':newAccount.id,
+                'firstName': newAccount.firstName,
+                'lastName': newAccount.lastName,
+                'phoneNumber': newAccount.phoneNumber,
+                'email': newAccount.email,
+                'balance': newAccount.balance,
+                'rewards': newAccount.rewards
+            })
+            response['Access-Control-Allow-Origin'] = '*'
+            return response
+
         else:
-            return JsonResponse({'status':False})
+            response =  JsonResponse({'status':False})
+            response['Access-Control-Allow-Origin'] = '*'
+            return response
     except ValueError:
-        return JsonResponse({'status':False})
+        response = JsonResponse({'status': False})
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
 
 def validateRegistration(requestInfo):
     for info in requestInfo:
@@ -79,8 +99,57 @@ def login(request):
             acctId = Account.objects.get(email = emailAttempt)
 
             if acctId.password == passwordAttempt:
-                return JsonResponse({'id':acctId.id})
+                response = JsonResponse({
+                    'id':acctId.id,
+                    'firstName': acctId.firstName,
+                    'lastName': acctId.lastName,
+                    'phoneNumber': acctId.phoneNumber,
+                    'email': acctId.email,
+                    'balance': acctId.balance,
+                    'rewards': acctId.rewards
+                })
+                response['Access-Control-Allow-Origin'] = '*'
+                return response
             else:
-                return JsonResponse({'status':'False1'})
+                response = JsonResponse({'status':'False1'})
+                response['Access-Control-Allow-Origin'] = '*'
+                return response
     except:
         return JsonResponse({'status':'False2'})
+
+def inventory(request):
+    try:
+        item = Item.objects.all()
+        #This holds the actual inventory numbers
+        currentInventory = {
+            'plainBagelNum':item.plainBagelNum,
+            'onionBagelNum':item.onionBagelNum,
+            'cinnamonRaisinBagel':item.cinnamonRaisinBagel,
+            'sesameBagelNum':item.sesameBagelNum,
+            'cheesyBagelNum':item.cheesyBagelNum,
+            'pumpernickelBagelNum':item.pumpernickelBagelNum,
+            'plainSmearNum':item.plainSmearNum,
+            'honeyNutSmearNum':item.honeyNutSmearNum,
+            'strawberrySmearNum':item.strawberrySmearNum,
+            'frenchOnionSmearNum':item.frenchOnionSmearNum,
+            'coffeeNum':item.coffeeNum,
+            'milkNum':item.milkNum,
+            'orangeJuiceNum':item.orangeJuiceNum,
+            'waterNum':item.waterNum,
+            'baconToppingNum':item.baconToppingNum,
+            'eggToppingNum':item.eggToppingNum,
+            'cheeseToppingNum':item.cheeseToppingNum,
+            'sausageToppingNum':item.sausageToppingNum,
+            'avacadoToppingNum':item.avacadoToppingNum,
+            'turkeyToppingNum':item.turkeyToppingNum,
+            'hamToppingNum':item.hamToppingNum,
+            'spinnachToppingNum':item.spinnachToppingNum,
+            'tomatoToppingNum':item.tomatoToppingNum,
+            'loxToppingNum':item.loxToppingNum
+        }
+        response = JsonResponse(currentInventory)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
+
+    except:
+        return JsonResponse({'status':False})

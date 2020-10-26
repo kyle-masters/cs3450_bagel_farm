@@ -6,5 +6,6 @@ app_name = 'backend'
 urlpatterns = [
     path('account', views.account, name='account'),
     path('login', views.login, name='login'),
-    path('register', views.register, name='register')
+    path('register', views.register, name='register'),
+    path('inventory', views.inventory, name='inventory')
 ]

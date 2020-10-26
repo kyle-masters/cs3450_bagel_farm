@@ -14,3 +14,12 @@ class Account(models.Model):
 
     def __str__(self):
         return self.firstName
+
+class Item(models.Model):
+    itemName = models.CharField(max_length=200)
+    itemType = models.CharField(max_length=200)
+    itemQuantity = models.IntegerField(max_digits=100)
+    itemPrice = models.DecimalField(max_digits=8, decimal_places=2)
+
+    def __str__(self):
+        return self.itemName
