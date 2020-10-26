@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Account, Item, Order, OrderItem
+from django.utils import timezone
+from decimal import *
 import re
 
 
@@ -127,27 +129,66 @@ def login(request):
         return response
 
 def orderStatus(request):
-    acctID = []
-    for k, v in request.GET.lists():
-        if k.startswith("item"):
-            orderitem = OrderItem.objects.all().create(
-
-            )
+    acctID = request.GET.get('id')
 
     orders = Order.objects.all().filter(accountID=acctID).filter(accountID__gte=1)
-    return JsonResponse({'status':acctID})
+
+    orderInfoList = []
+    for order in orders:
+        items = OrderItem.objects.all().filter(orderID=order.id)
+        itemInfoList = []
+        for item in items:
+            itemInfo = {
+                'name': item.name,
+                'quantity': item.quantity,
+                'price': item.price
+            }
+            itemInfoList.append(itemInfo)
+        orderInfo = {
+            'orderID': order.id,
+            'items': itemInfoList,
+            'status': order.status,
+            'orderTime': order.orderTime,
+            'price': order.price
+        }
+        orderInfoList.append(orderInfo)
+
+    response = JsonResponse({'id': acctID,
+                         'orders': orderInfoList})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+
 
 def placeOrder(request):
 
-    for k, v in request.GET.lists():
+    order = Order.objects.all().create(
+        status=1,
+        accountID=request.GET.get("id"),
+        price=0,
+        orderTime=timezone.now(),
+        pickupTime=timezone.now(),
+        isFavorite=False
+    )
+
+    totalPrice = Decimal(0.0)
+    for k, v in request.GET.items():
         if k.startswith("item"):
             orderitem = OrderItem.objects.all().create(
                 name=v,
-                quantity=request.GET.get("qty_"+v[5:], 1),
+                quantity=request.GET.get("qty_"+k[5:], 1),
                 price=getCurrentPrice(v),
-
+                orderID=order
             )
+            totalPrice = totalPrice + getCurrentPrice(v)
+
+    order.price = totalPrice
+
+    response = JsonResponse({'status': True})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+
 
 def getCurrentPrice(name):
-    item = Item.objects.get(name=name)
+    nameParts = name.split("_")
+    item = Item.objects.all().get(name=nameParts[0], category=nameParts[1])
     return item.price
