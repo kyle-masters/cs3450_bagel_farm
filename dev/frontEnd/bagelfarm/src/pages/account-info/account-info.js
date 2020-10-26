@@ -1,8 +1,37 @@
+import axios from '../../axios-main'
 import React, {Component} from "react"
 import Button from '../../components/UI/Button/Button'
 import './account-info.css';
 
 class AccountInfo extends Component {
+    state = {
+        userData: {
+            'firstName': null,
+            'lastName': null,
+            'phoneNumber': null,
+            'email': null,
+            'balance': null,
+            'rewards': null
+          }
+    }
+
+    componentDidMount() {
+        axios.get('/account?id=' + this.props.getID())
+            .then((response) => {
+                const data = response.data
+                this.setState({
+                    userData: {
+                        'firstName': data['firstName'],
+                        'lastName': data['lastName'],
+                        'phoneNumber': data['phoneNumber'],
+                        'email': data['email'],
+                        'balance': data['balance'],
+                        'rewards': data['rewards']
+                      }
+                })
+            })
+    }
+
     render() {
         return (
             <div className='account-info'>
@@ -16,7 +45,7 @@ class AccountInfo extends Component {
                                     right={"2%"}
                                     top={"16%"}
                                     fontSize={"15px"}>Edit</Button>
-                            <h1 className="content-info"> Brent Buffenbarger </h1>
+                            <h1 className="content-info"> {this.state.userData['firstName']} {this.state.userData['lastName']}</h1>
                         </div>
                         <div className="content-item" id="email-address">
                             <h1 className="content-header"> Email Address </h1>
@@ -25,7 +54,7 @@ class AccountInfo extends Component {
                                     right={"2%"}
                                     top={"16%"}
                                     fontSize={"15px"}>Edit</Button>
-                            <h1 className="content-info"> sample@gmail.com </h1>
+                            <h1 className="content-info"> {this.state.userData['email']} </h1>
                         </div>
                         <div className="content-item" id="password">
                             <h1 className="content-header"> Password </h1>
@@ -38,7 +67,7 @@ class AccountInfo extends Component {
                         </div>
                         <div className="content-item" id="funds">
                             <h1 className="content-header"> Funds </h1>
-                            <h1 className="content-info"> $100.00 </h1>
+                            <h1 className="content-info"> ${this.state.userData['balance']} </h1>
                             <Button width={"35%"}
                                     height={"45%"}
                                     right={"2%"}

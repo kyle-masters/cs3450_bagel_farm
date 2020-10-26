@@ -1,6 +1,8 @@
 import classes from './loginpage.module.css';
 import React, { Component } from 'react';
 
+import axios from '../../axios-main'
+
 import ToggleComponent from './togglecomponent/togglecomponent'
 
 class LoginPage extends Component {
@@ -128,12 +130,43 @@ class LoginPage extends Component {
         this.setState({ isLogin: false})
     }
 
+    getLoginQuery = () => {
+        const email = this.state.formElementsLogin.email.value
+        const password = this.state.formElementsLogin.password.value
+        return 'email=' + email + '&password=' + password
+    }
+
     loginClickedHandler = () => {
-        alert('Logged In!')
+        axios.get('/login?' + this.getLoginQuery())
+            .then((response) => {
+                this.props.setID(response.data['id'])
+            })
+    }
+
+    getRegisterQuery = () => {
+        const firstname = this.state.formElementsRegister.firstName.value
+        const lastname = this.state.formElementsRegister.lastName.value
+        const email = this.state.formElementsRegister.email.value
+        const phone = this.state.formElementsRegister.phoneNumber.value
+        const password = this.state.formElementsRegister.password.value
+        const cPassword = this.state.formElementsRegister.confirmPassword.value
+
+        var queryString = ""
+
+        queryString += 'firstName=' + firstname
+        queryString += '&lastName=' + lastname
+        queryString += '&email=' + email
+        queryString += '&phoneNumber=' + phone
+        queryString += '&password=' + password
+        
+        return queryString
     }
 
     creatAccountClickedHandler = () => {
-        alert('Account Created!')
+        axios.get('/register?' + this.getRegisterQuery())
+            .then((response) => {
+                this.props.setID(response.data['id'])
+            })
     }
 
     componentDidMount() {

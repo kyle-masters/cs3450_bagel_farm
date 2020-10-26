@@ -1,0 +1,3 @@
+## How to run the high-fidelity prototype
+
+For the high-fidelity prototype, we setup the front-end and back-end of the login/registration system, as well as the accoutn information page. To view these, you need to clone this repository. Then, you need to `cd` into the `dev/backend/Bagelfarm` directory and run `python manage.py runserver`. That will only work if you have Django installed. After that, you can open up the `dev/frontend/bagelfarm` directory in an IDE or in the terminal, and run `npm start` to get the webpage to loadup. Then you can create an account in the register tab, head on over to the login tab and login. You can click the Account button in the navigation bar to view your account information.
