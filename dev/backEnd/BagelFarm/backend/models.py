@@ -38,6 +38,11 @@ class OrderItem(models.Model):
 
 class Order(models.Model):
     status = models.IntegerField() # enumerate later?
+    # 1 order placed
+    # 2 order processing
+    # 3 ready for picked up
+    # 4 picked up
+    # 5 donated
     accountID = models.IntegerField()
     price = models.DecimalField(decimal_places=2, max_digits=20)
     orderTime = models.DateTimeField()
