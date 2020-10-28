@@ -145,7 +145,7 @@ def orderStatus(request):
             }
             itemInfoList.append(itemInfo)
         orderInfo = {
-            'orderID': order.id,
+            'orderID': int(order.id),
             'items': itemInfoList,
             'status': order.status,
             'orderTime': order.orderTime,
@@ -153,7 +153,7 @@ def orderStatus(request):
         }
         orderInfoList.append(orderInfo)
 
-    response = JsonResponse({'id': acctID,
+    response = JsonResponse({'id': int(acctID),
                          'orders': orderInfoList})
     response['Access-Control-Allow-Origin'] = '*'
     return response
@@ -174,7 +174,7 @@ def placeOrder(request):
     for k, v in request.GET.items():
         if k.startswith("item"):
             orderitem = OrderItem.objects.all().create(
-                name=v,
+                name=v, # change to id
                 quantity=request.GET.get("qty_"+k[5:], 1),
                 price=getCurrentPrice(v),
                 orderID=order
@@ -192,3 +192,47 @@ def getCurrentPrice(name):
     nameParts = name.split("_")
     item = Item.objects.all().get(name=nameParts[0], category=nameParts[1])
     return item.price
+
+def orderHistory(request):
+    acctID = request.GET.get('id')
+
+    orders = Order.objects.all().filter(accountID=acctID)
+
+    orderInfoList = []
+    for order in orders:
+        items = OrderItem.objects.all().filter(orderID=order.id)
+        itemInfoList = []
+        for item in items:
+            itemInfo = {
+                'name': item.name,
+                'quantity': item.quantity,
+                'price': item.price
+            }
+            itemInfoList.append(itemInfo)
+        orderInfo = {
+            'orderID': int(order.id),
+            'items': itemInfoList,
+            'status': order.status,
+            'orderTime': order.orderTime,
+            'price': order.price
+        }
+        orderInfoList.append(orderInfo)
+
+    response = JsonResponse({'id': int(acctID),
+                             'orders': orderInfoList})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+
+def updateOrder(request):
+    acctID = request.GET.get('id')
+    orderID = request.GET.get('order')
+    newStatus = request.GET.get('status')
+
+    order = Order.objects.all().get(id=orderID)
+
+    order.status = newStatus
+    order.save()
+
+    response = JsonResponse({'status': True})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
