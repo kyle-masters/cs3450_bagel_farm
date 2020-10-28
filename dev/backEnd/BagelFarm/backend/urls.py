@@ -11,3 +11,4 @@ urlpatterns = [
     path('order', views.placeOrder, name='order'),
     path('history', views.orderHistory, name='history'),
     path('update', views.updateOrder, name='update')
+]

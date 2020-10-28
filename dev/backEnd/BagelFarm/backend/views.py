@@ -174,12 +174,12 @@ def placeOrder(request):
     for k, v in request.GET.items():
         if k.startswith("item"):
             orderitem = OrderItem.objects.all().create(
-                name=v, # change to id
+                name=Item.objects.all().get(id=v).name,
                 quantity=request.GET.get("qty_"+k[5:], 1),
-                price=getCurrentPrice(v),
+                price=Item.objects.all().get(id=v).price,
                 orderID=order
             )
-            totalPrice = totalPrice + getCurrentPrice(v)
+            totalPrice = totalPrice + orderitem.price
 
     order.price = totalPrice
 
@@ -187,12 +187,6 @@ def placeOrder(request):
     response['Access-Control-Allow-Origin'] = '*'
     return response
 
-
-def getCurrentPrice(name):
-    nameParts = name.split("_")
-    item = Item.objects.all().get(name=nameParts[0], category=nameParts[1])
-    return item.price
-  
   
 def orderHistory(request):
     acctID = request.GET.get('id')
