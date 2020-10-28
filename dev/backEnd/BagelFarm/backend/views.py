@@ -187,6 +187,35 @@ def placeOrder(request):
     response['Access-Control-Allow-Origin'] = '*'
     return response
 
+
+def getCurrentPrice(name):
+    nameParts = name.split("_")
+    item = Item.objects.all().get(name=nameParts[0], category=nameParts[1])
+    return item.price
+
+#Inventory functions
+def decrementInventory(id, amount):
+    unluckyItem = Item.objects.all().get(id=id)
+    unluckyItem.stock = unluckyItem.stock - 1
+
+def restock(id):
+    luckyItem = Item.objects.all().get(id=id)
+    luckyItem.stock = 100
+
+def getStock(request):
+    allStock = Item.objects.all()
+
+    stock = {}
+
+    for item in allStock:
+        stock[item.id] = {
+            'name': item.name,
+            'qty': item.stock,
+            'price': item.price,
+            'category': item.category
+        }
+
+    return JsonResponse(stock)
   
 def orderHistory(request):
     acctID = request.GET.get('id')
