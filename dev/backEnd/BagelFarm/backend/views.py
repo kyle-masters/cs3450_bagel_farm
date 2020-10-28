@@ -35,7 +35,7 @@ def register(request):
     try:
         valid = validateRegistration([request.GET.get('firstName'),request.GET.get('lastName'),request.GET.get('email'), request.GET.get('phoneNumber'),request.GET.get('password')])
 
-        if valid is True:
+        if valid:
 
             account = Account.objects.all().create(
                 firstName=request.GET.get('firstName'),
@@ -86,9 +86,7 @@ def validateRegistration(requestInfo):
 
     # Implement data validations
 
-    response = JsonResponse({'status': True})
-    response['Access-Control-Allow-Origin'] = '*'
-    return response
+    return True
 
 def login(request):
     try:

@@ -7,7 +7,9 @@ import PlaceOrder from './placeorder/placeorder'
 
 class OrdersPage extends Component {
     state = {
-        
+        currentOrders: null,
+        orderHistory = null,
+        avalibleItems = null
     }
 
     componentDidMount() {
