@@ -56,7 +56,7 @@ def populate_db(apps, schema_editor):
         item = MyModel.objects.all().create(
             name=itemInfo[0],
             stock=itemInfo[2],
-            price=[3],
+            price=itemInfo[3],
             category=itemInfo[1],
         )
         item.save()
