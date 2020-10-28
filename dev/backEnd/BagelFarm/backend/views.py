@@ -33,8 +33,7 @@ def account(request):
 def register(request):
 
     try:
-        valid = validateRegistration([request.GET.get('firstName'),request.GET.get('lastName'),request.GET.get('email'),
-                                      request.GET.get('phoneNumber'),request.GET.get('password')])
+        valid = validateRegistration([request.GET.get('firstName'),request.GET.get('lastName'),request.GET.get('email'), request.GET.get('phoneNumber'),request.GET.get('password')])
 
         if valid is True:
 
@@ -124,6 +123,7 @@ def login(request):
                 response['Access-Control-Allow-Origin'] = '*'
                 return response
     except:
+
         response = JsonResponse({'status':False})
         response['Access-Control-Allow-Origin'] = '*'
         return response
@@ -192,7 +192,8 @@ def getCurrentPrice(name):
     nameParts = name.split("_")
     item = Item.objects.all().get(name=nameParts[0], category=nameParts[1])
     return item.price
-
+  
+  
 def orderHistory(request):
     acctID = request.GET.get('id')
 
@@ -223,6 +224,7 @@ def orderHistory(request):
     response['Access-Control-Allow-Origin'] = '*'
     return response
 
+  
 def updateOrder(request):
     acctID = request.GET.get('id')
     orderID = request.GET.get('order')
