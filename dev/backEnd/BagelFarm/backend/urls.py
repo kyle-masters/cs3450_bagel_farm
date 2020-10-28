@@ -12,3 +12,4 @@ urlpatterns = [
     path('inventory', views.getStock, name='inventory')
     path('history', views.orderHistory, name='history'),
     path('update', views.updateOrder, name='update')
+]
