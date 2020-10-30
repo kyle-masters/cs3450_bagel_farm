@@ -212,8 +212,9 @@ def getStock(request):
             'price': item.price,
             'category': item.category
         }
-
-    return JsonResponse(stock)
+    response = JsonResponse(stock)
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
   
 def orderHistory(request):
     acctID = request.GET.get('id')

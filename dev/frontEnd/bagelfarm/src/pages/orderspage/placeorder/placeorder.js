@@ -1,11 +1,16 @@
 import React from 'react';
 
 const orderPlacement = (props) => {
-    return (
-        <div>
-            
-        </div>
-    )
+    if (props.data) {
+        return (
+            <div>
+                {props.data['1'].name}
+            </div>
+        )
+    } else {
+        return null
+    }
+    
 }
 
 export default orderPlacement;
