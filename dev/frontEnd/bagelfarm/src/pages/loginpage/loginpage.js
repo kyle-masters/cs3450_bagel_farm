@@ -149,7 +149,7 @@ class LoginPage extends Component {
         const email = this.state.formElementsRegister.email.value
         const phone = this.state.formElementsRegister.phoneNumber.value
         const password = this.state.formElementsRegister.password.value
-        const cPassword = this.state.formElementsRegister.confirmPassword.value
+        //const cPassword = this.state.formElementsRegister.confirmPassword.value
 
         var queryString = ""
 

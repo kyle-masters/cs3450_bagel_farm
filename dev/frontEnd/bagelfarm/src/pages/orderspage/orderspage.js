@@ -3,13 +3,15 @@ import axios from '../../axios-main'
 import History from './history/history';
 import Current from './current/current';
 import PlaceOrder from './placeorder/placeorder'
+import classes from './orderspage.module.css'
 
 
 class OrdersPage extends Component {
     state = {
         currentOrders: null,
         orderHistory: null,
-        inventory: null
+        inventory: null,
+        detailsOpen: null
     }
 
     componentDidMount() {
@@ -27,12 +29,29 @@ class OrdersPage extends Component {
             })
     }
 
+    showDetails = (id) => {
+        this.setState({detailsOpen: id})
+    }
+
+    hideDetails = () => {
+        this.setState({detailsOpen: null})
+    }
+
     render() {
         return (
-            <div>
-                <Current data={this.state.currentOrders}/>
+            <div className={classes.OrdersPage}>
+                <Current 
+                    data={this.state.currentOrders} 
+                    showDetails={this.showDetails}
+                    hideDetails={this.hideDetails}
+                    detailsOpen={this.state.detailsOpen}/>
                 <PlaceOrder data={this.state.inventory}/>
-                <History data={this.state.orderHistory}/>
+                <History 
+                    currentData={this.state.currentOrders}
+                    data={this.state.orderHistory} 
+                    showDetails={this.showDetails}
+                    hideDetails={this.hideDetails}
+                    detailsOpen={this.state.detailsOpen}/>
             </div>
         )
     }

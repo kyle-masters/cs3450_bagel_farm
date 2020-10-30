@@ -129,7 +129,7 @@ def login(request):
 def orderStatus(request):
     acctID = request.GET.get('id')
 
-    orders = Order.objects.all().filter(accountID=acctID).filter(accountID__gte=1)
+    orders = Order.objects.all().filter(accountID=acctID).filter(accountID__gte=1).filter(status__lt=4)
 
     orderInfoList = []
     for order in orders:
@@ -147,6 +147,7 @@ def orderStatus(request):
             'items': itemInfoList,
             'status': order.status,
             'orderTime': order.orderTime,
+            'pickupTime': order.pickupTime,
             'price': order.price
         }
         orderInfoList.append(orderInfo)
@@ -237,6 +238,7 @@ def orderHistory(request):
             'items': itemInfoList,
             'status': order.status,
             'orderTime': order.orderTime,
+            'pickupTime': order.pickupTime,
             'price': order.price
         }
         orderInfoList.append(orderInfo)

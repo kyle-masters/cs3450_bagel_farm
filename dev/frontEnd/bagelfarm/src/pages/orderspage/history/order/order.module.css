@@ -1,0 +1,18 @@
+.Order {
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+    width: 90%;
+    margin: 10px 0;
+    padding: 0 20px 20px 20px;
+    background-color: white;
+    opacity: .8;
+    border-radius: 10px;
+    text-transform: capitalize;
+}
+
+.Title {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+}
