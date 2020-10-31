@@ -18,7 +18,14 @@ const orderPlacement = (props) => {
                     toggleDown={props.toggleDown}/>
                 <OrderSummary 
                     totalAmount={props.totalOrderAmount}
-                    selectedItems={props.selectedItems}/>
+                    selectedItems={props.selectedItems}
+                    pickupTimeForm={props.pickupTimeForm}
+                    pickupTimeChanged={props.pickupTimeChanged}
+                    orderButtonClicked={props.orderButtonClicked}
+                    errorDisplayText={props.errorDisplayText}
+                    displayConfirmOrder={props.displayConfirmOrder}
+                    submitButtonClicked={props.submitButtonClicked}
+                    cancelButtonClicked={props.cancelButtonClicked}/>
             </div>
         </div>
     )

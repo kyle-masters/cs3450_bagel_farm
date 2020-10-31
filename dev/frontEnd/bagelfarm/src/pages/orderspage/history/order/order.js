@@ -4,7 +4,7 @@ import {date} from '../../../../helpers'
 import OrderDetails from '../../orderdetails/orderdetails'
 import Button from '../../../../components/UI/ButtonRelative/ButtonRelative'
 
-const orderTracker = (props) => {
+const order = (props) => {
     return (
         <div className={classes.Order}>
             <div className={classes.Title}>
@@ -18,9 +18,10 @@ const orderTracker = (props) => {
 }
 
 const getItemList = (items) => {
+    console.log(items)
     var string = "";
     items.forEach(element => string += element.name + ", ")
     return string.slice(0, -2);
 }
 
-export default orderTracker;
+export default order;

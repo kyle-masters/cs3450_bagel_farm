@@ -12,14 +12,14 @@ const selectedOrders = (props) => {
                     <h2>Selected Items</h2>
                     <h2>Quantity</h2>
                 </div>
-                {props.items.map((el) => {
+                {props.items.length >= 1 ? props.items.map((el) => {
                     return (
                         <div className={classes.OrderSelections}>
                             <h3>{el.name + " " + el.category}</h3>
                             <h3>{el.qty}</h3>
                         </div>
                     )
-                })}
+                }): <h3>No Items Selected</h3>}
             </div>
             <div className={classes.Total}>
                 <h2>Total: {money.format(props.totalAmount)}</h2>
