@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import Layout from './hoc/Layout/Layout';
 import AccountInfo from './pages/account-info/account-info'
+import HomePage from './pages/home-page/home-page';
 import LoginPage from './pages/loginpage/loginpage';
 
 class App extends Component {
@@ -30,12 +31,28 @@ class App extends Component {
                 getID={this.getUserID}
                 />
             </Route>
+            <Route path='/home'>
+              <HomePage/>
+            </Route>
           </Switch>
         </Layout> 
         :
-        <LoginPage
-          setID={this.setUserID}
-          getID={this.getUserID}/>}
+        <Layout>
+          <Switch>
+            <Route path='/account'>
+              <AccountInfo 
+                getID={this.getUserID}
+                />
+            </Route>
+            <Route path='/home'>
+              <HomePage/>
+            </Route>
+          </Switch>
+        </Layout> 
+        //<LoginPage
+          //setID={this.setUserID}
+          //getID={this.getUserID}/>
+          }
       </div>
     );
   }

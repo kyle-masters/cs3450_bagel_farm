@@ -25,9 +25,6 @@ render () {
           drawerOpen={this.state.sideDrawerOpen}
           toggleClicked={this.toggleClickedHandler}
           closeDrawer={this.closeDrawer}/>
-          <div className="bg-image">
-              <img src={require('../../images/bg-windmill.png')}/>
-          </div>
         {this.props.children}
       </div>
     );

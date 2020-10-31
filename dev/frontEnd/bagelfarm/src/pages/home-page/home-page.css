@@ -1,0 +1,232 @@
+:root {
+    background: rgb(245, 242, 235);
+}
+
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
+  
+#content-wrap {
+    padding-bottom: 2.5rem;    /* Footer height */
+}
+
+.footer {
+    position: absolute;
+    bottom: -10%;
+    width: 100%;
+    height: 9%;            /* Footer height */
+}
+
+.home-page {
+    position:relative;
+}
+
+.banner-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+}
+
+#banner-header {
+    font-size: 5vw;
+    text-shadow: 0px 0px 10px #000000;
+    margin: -1%;
+}
+
+#banner-content {
+    font-size: 2vw;
+    padding-left: 20%;
+    padding-right: 20%;
+    text-shadow: 0px 0px 10px #000000;
+}
+
+#banner {
+    top: 59%;
+    left:0;
+    right:0;
+    margin:auto;
+    width: 100%;
+    height: 400%;
+    max-height: 375px;
+    max-width: 1920px;
+    filter:brightness(60%);
+    box-shadow: 0px 0px 20px  rgba(0, 0, 0, 0.);
+    -moz-box-shadow: 0px 0px 20px  rgba(0,0,0,0.8);
+    -webkit-box-shadow: 0px 0px 20px  rgba(0,0,0,0.8);
+    -o-box-shadow: 0px 0px 20px  rgba(0,0,0,0.8);
+}
+
+#hto-header {
+    font-size: 3vw;
+    text-decoration: underline;
+    margin-bottom: 2%;
+}
+
+.order-steps {
+    position: relative;
+    width: 90%;
+    height: 14vw;
+    left: 50%;
+    margin-left: -45%;
+    color: #3d1c17;
+    box-shadow: 0px 0px 20px  rgba(0, 0, 0, 0.);
+    -moz-box-shadow: 0px 0px 20px  rgba(0,0,0,0.8);
+    -webkit-box-shadow: 0px 0px 20px  rgba(0,0,0,0.8);
+    -o-box-shadow: 0px 0px 20px  rgba(0,0,0,0.8);
+}
+  
+#first-step {
+    float: left;
+    width: 25%;
+    height: 14vw;
+    background: #f5f2eb;
+    filter: brightness(93%);
+    border: 1px solid #3d1c17;
+}
+
+#first-step > h3 {
+    text-align: left;
+    font-size: 2.5vw;
+    margin-bottom: -5%;
+    margin-left: 10%;
+}
+
+#first-step > p {
+    text-align: left;
+    font-size: 1.75vw;
+    padding-right: 10%;
+    margin-left: 10%;
+}
+  
+#second-step {
+    float: left;
+    width: 25%;
+    height: 14vw;
+    background: #f5f2eb;
+    filter: brightness(93%);
+    border: 1px solid #3d1c17;
+    margin-left: -1px;
+}
+
+#second-step > h3 {
+    text-align: left;
+    font-size: 2.5vw;
+    margin-bottom: -5%;
+    margin-left: 10%;
+}
+
+#second-step > p {
+    text-align: left;
+    font-size: 1.75vw;
+    padding-right: 10%;
+    margin-left: 10%;
+}
+
+#third-step {
+    float: left;
+    width: 25%;
+    height: 14vw;
+    background: #f5f2eb;
+    filter: brightness(93%);
+    border: 1px solid #3d1c17;
+    margin-left: -1px;
+}
+
+#third-step > h3 {
+    text-align: left;
+    font-size: 2.5vw;
+    margin-bottom: -5%;
+    margin-left: 10%;
+}
+
+#third-step > p {
+    text-align: left;
+    font-size: 1.75vw;
+    padding-right: 10%;
+    margin-left: 10%;
+}
+
+#fourth-step {
+    float: left;
+    width: 24.4%;
+    height: 14vw;
+    background: #f5f2eb;
+    filter: brightness(93%);
+    border: 1px solid #3d1c17;
+    margin-left: -1px;
+}
+
+#fourth-step > h3 {
+    text-align: left;
+    font-size: 2.5vw;
+    margin-bottom: -5%;
+    margin-left: 10%;
+}
+
+#fourth-step > p {
+    text-align: left;
+    font-size: 1.75vw;
+    padding-right: 10%;
+    margin-left: 10%;
+}
+
+hr {
+    border: 0;
+    clear:both;
+    display:block;
+    width: 96%;               
+    background-color:#3d1c17;
+    height: 1px;
+}
+
+#line {
+    position: absolute;
+    float: left;
+    width: 96%;
+    height: 10px;
+    margin-top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#about-header {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3vw;
+    text-decoration: underline;
+    margin-top: 9%;
+}
+
+.about-container {
+    position: absolute;
+    width: 90%;
+    height: 22vw;
+    left: 50%;
+    margin-left: -45%;
+    margin-top: 12%;
+    color: #3d1c17;
+    background: #f5f2eb;
+    border: 1px solid #3d1c17;
+    filter: brightness(93%);
+    box-shadow: 0px 0px 20px  rgba(0, 0, 0, 0.);
+    -moz-box-shadow: 0px 0px 20px  rgba(0,0,0,0.8);
+    -webkit-box-shadow: 0px 0px 20px  rgba(0,0,0,0.8);
+    -o-box-shadow: 0px 0px 20px  rgba(0,0,0,0.8);
+}
+
+.about-container > p {
+    font-size: 2vw;
+    padding: 1%;
+}
