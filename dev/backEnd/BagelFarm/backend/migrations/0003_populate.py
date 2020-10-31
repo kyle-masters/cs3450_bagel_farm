@@ -2,13 +2,13 @@
 
 from django.db import migrations
 
-from ..models import Account
+from ..models import Account, Item
 
 
 def populate_db(apps, schema_editor):
     MyModel = apps.get_model('backend', 'Account')
 
-    file = open('backend/data/customer_list.txt', 'r')
+    file = open('backend/data/customer_list.csv', 'r')
     fileLines = file.readlines()
     for line in fileLines:
         accountInfo = line.split(',')
@@ -24,7 +24,7 @@ def populate_db(apps, schema_editor):
         )
         account.save()
 
-    file = open('backend/data/employee_list.txt', 'r')
+    file = open('backend/data/employee_list.csv', 'r')
     fileLines = file.readlines()
     for line in fileLines:
         accountInfo = line.split(',')
@@ -47,6 +47,19 @@ def populate_db(apps, schema_editor):
         )
         account.save()
 
+    MyModel = apps.get_model('backend', 'Item')
+
+    file = open('backend/data/inventory_list.csv', 'r')
+    fileLines = file.readlines()
+    for line in fileLines:
+        itemInfo = line.split(',')
+        item = MyModel.objects.all().create(
+            name=itemInfo[0],
+            stock=itemInfo[2],
+            price=itemInfo[3],
+            category=itemInfo[1],
+        )
+        item.save()
 
     pass
 
@@ -55,7 +68,7 @@ def populate_db(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('backend', '0001_initial'),
+        ('backend', '0002_item_order_orderitem'),
     ]
 
     operations = [

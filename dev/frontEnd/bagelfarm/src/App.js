@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import { Switch, Route } from 'react-router-dom';
-import logo from './logo.svg';
 import './App.css';
 import Layout from './hoc/Layout/Layout';
 import AccountInfo from './pages/account-info/account-info'
 import HomePage from './pages/home-page/home-page';
 import LoginPage from './pages/loginpage/loginpage';
+import Orders from './pages/orderspage/orderspage'
 
 class App extends Component {
   state = {
@@ -26,6 +26,9 @@ class App extends Component {
         {this.state.id ? 
         <Layout>
           <Switch>
+            <Route path='/order'>
+              <Orders getID={this.getUserID}/>
+            </Route>
             <Route path='/account'>
               <AccountInfo 
                 getID={this.getUserID}

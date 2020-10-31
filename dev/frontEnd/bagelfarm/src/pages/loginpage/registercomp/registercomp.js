@@ -29,7 +29,6 @@ const registerForm = (props) => {
             </form>
             <Button
                 height={'50px'}
-                width={'200px'}
                 width={'30%'}
                 left={'35%'}
                 clicked={props.submit}
