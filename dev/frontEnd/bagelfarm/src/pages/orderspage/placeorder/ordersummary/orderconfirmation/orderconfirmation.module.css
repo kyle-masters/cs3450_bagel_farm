@@ -1,0 +1,36 @@
+.Confirmation {
+    margin: 0 20px;
+    display: flex;
+    justify-content: space-evenly;
+    border-top-style: solid;
+    border-color: #3d1c17;
+    padding: 20px;
+}
+
+.Pickup {
+    width: 400px;
+}
+
+.Button {
+    width: 500px;
+    padding: 10px;
+    text-align: center;
+}
+
+.Button h3 {
+    color: darkred;
+}
+
+.FinalConfirmation {
+    margin: 0 20px;
+    border-top-style: solid;
+    border-color: #3d1c17;
+    text-align: center;
+}
+
+.ConfirmationButtons {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px 10% 0 10%;
+    height: 100px;
+}

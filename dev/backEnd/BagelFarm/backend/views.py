@@ -35,7 +35,7 @@ def register(request):
     try:
         valid = validateRegistration([request.GET.get('firstName'),request.GET.get('lastName'),request.GET.get('email'), request.GET.get('phoneNumber'),request.GET.get('password')])
 
-        if valid is True:
+        if valid:
 
             account = Account.objects.all().create(
                 firstName=request.GET.get('firstName'),
@@ -86,9 +86,7 @@ def validateRegistration(requestInfo):
 
     # Implement data validations
 
-    response = JsonResponse({'status': True})
-    response['Access-Control-Allow-Origin'] = '*'
-    return response
+    return True
 
 def login(request):
     try:
@@ -131,7 +129,7 @@ def login(request):
 def orderStatus(request):
     acctID = request.GET.get('id')
 
-    orders = Order.objects.all().filter(accountID=acctID).filter(accountID__gte=1)
+    orders = Order.objects.all().filter(accountID=acctID).filter(accountID__gte=1).filter(status__lt=4)
 
     orderInfoList = []
     for order in orders:
@@ -149,6 +147,7 @@ def orderStatus(request):
             'items': itemInfoList,
             'status': order.status,
             'orderTime': order.orderTime,
+            'pickupTime': order.pickupTime,
             'price': order.price
         }
         orderInfoList.append(orderInfo)
@@ -205,17 +204,19 @@ def restock(id):
 def getStock(request):
     allStock = Item.objects.all()
 
-    stock = {}
+    stock = []
 
     for item in allStock:
-        stock[item.id] = {
+        stock.append({
             'name': item.name,
             'qty': item.stock,
             'price': item.price,
-            'category': item.category
-        }
-
-    return JsonResponse(stock)
+            'category': item.category,
+            'id': item.id
+        })
+    response = JsonResponse({'inventory': stock})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
   
 def orderHistory(request):
     acctID = request.GET.get('id')
@@ -238,6 +239,7 @@ def orderHistory(request):
             'items': itemInfoList,
             'status': order.status,
             'orderTime': order.orderTime,
+            'pickupTime': order.pickupTime,
             'price': order.price
         }
         orderInfoList.append(orderInfo)

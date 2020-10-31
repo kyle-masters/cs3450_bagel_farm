@@ -1,0 +1,29 @@
+.Button {
+    background-color: rgb(198, 167, 132);
+    transition: all 0.2s ease-out;
+    color: #3d1c17;
+    border: 1px solid #3d1c17;
+    border-radius: 3px;
+    font-family: Baskerville Old Face;
+    font-size: 20px;
+    height: 50%;
+    width: 20%;
+}
+
+.Button:first-of-type {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.Button:hover {
+    background-color: rgba(215, 167, 105, 0.151);
+    transition: all 0.2s ease-out;
+}
+
+.Button:active {
+    background-color: rgba(215, 167, 105, 0.151);
+}
+
+.OrderButton {
+    width: 200px;
+}
