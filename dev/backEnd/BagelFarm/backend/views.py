@@ -204,16 +204,17 @@ def restock(id):
 def getStock(request):
     allStock = Item.objects.all()
 
-    stock = {}
+    stock = []
 
     for item in allStock:
-        stock[item.id] = {
+        stock.append({
             'name': item.name,
             'qty': item.stock,
             'price': item.price,
-            'category': item.category
-        }
-    response = JsonResponse(stock)
+            'category': item.category,
+            'id': item.id
+        })
+    response = JsonResponse({'inventory': stock})
     response['Access-Control-Allow-Origin'] = '*'
     return response
   

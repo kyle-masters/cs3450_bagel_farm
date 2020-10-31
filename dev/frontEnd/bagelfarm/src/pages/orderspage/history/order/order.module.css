@@ -11,6 +11,10 @@
     text-transform: capitalize;
 }
 
+.Order h4 {
+    padding-left: 30px;
+}
+
 .Title {
     display: flex;
     justify-content: space-between;
