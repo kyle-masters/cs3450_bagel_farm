@@ -14,7 +14,8 @@ const inventoryList = (props) => {
                 <ItemList 
                     data={props.itemSelections}
                     toggleUp={props.toggleUp}
-                    toggleDown={props.toggleDown}/>
+                    toggleDown={props.toggleDown}
+                    restock={props.restockButtonClicked}/>
             </div>
         </div>
     )

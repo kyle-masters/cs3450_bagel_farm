@@ -30,22 +30,6 @@ class App extends Component {
             <Route path='/order'>
               <Orders getID={this.getUserID}/>
             </Route>
-            <Route path='/account'>
-              <AccountInfo 
-                getID={this.getUserID}
-                />
-            </Route>
-            <Route exact path='/'>
-              <HomePage/>
-            </Route>
-          </Switch>
-        </Layout> 
-        :
-        <Layout>
-          <Switch>
-            <Route path='/order'>
-              <Orders getID={this.getUserID}/>
-            </Route>
             <Route path='/inventory'>
               <Inventory getID={this.getUserID}/>
             </Route>
@@ -59,9 +43,10 @@ class App extends Component {
             </Route>
           </Switch>
         </Layout> 
-        //<LoginPage
-         // setID={this.setUserID}
-          //getID={this.getUserID}/>
+        :
+        <LoginPage
+          setID={this.setUserID}
+          getID={this.getUserID}/>
           }
       </div>
     );

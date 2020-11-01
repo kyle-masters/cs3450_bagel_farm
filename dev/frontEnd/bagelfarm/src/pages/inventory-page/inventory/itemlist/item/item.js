@@ -2,6 +2,7 @@ import React from 'react';
 import {money} from '../../../../../helpers'
 import classes from './item.module.css';
 import Quantity from './quantity/quantity'
+import Button from '../../../../../components/UI/Button/Button'
 
 const item = (props) => {
     var itemBox = null;
@@ -13,7 +14,7 @@ const item = (props) => {
                 <h4>{money.format(props.data.price)}</h4>
                 <Quantity 
                     qty={props.data.qty}/>
-                <button className={classes.Button}>Restock</button>
+                <button className={classes.Button} onClick={props.restock}>Restock</button>
             </div>
     }
 

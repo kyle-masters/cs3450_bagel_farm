@@ -18,8 +18,7 @@ const itemList = (props) => {
                             <Item
                                 data={el}
                                 key={idx}
-                                toggleUp={() => props.toggleUp(el.id)}
-                                toggleDown={() => props.toggleDown(el.id)}/>
+                                restock={() => props.restock(el.id)}/>
                     )
                     })}
                 </div>

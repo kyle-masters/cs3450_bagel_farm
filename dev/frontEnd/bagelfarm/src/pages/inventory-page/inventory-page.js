@@ -87,6 +87,15 @@ class InventoryPage extends Component {
         });
     }
 
+    restockButtonClickedHandler = (id) => {
+        this.setState({spinner: true})
+        axios.get("/inventory?id=" + id)
+            .then((response) => {
+                this.setState({updateItems: true})
+            })
+        this.resetState()
+    }
+
     resetState = () => {
         this.setState({
             inventory: null,
@@ -115,8 +124,7 @@ class InventoryPage extends Component {
                     itemSelections={this.state.itemSelectionsShown}
                     searchBarForm={this.state.searchBarForm}
                     searchBarChanged={this.searchBarChangedHandler}
-                    toggleUp={this.toggleUpHandler}
-                    toggleDown={this.toggleDownHandler}
+                    restockButtonClicked={this.restockButtonClickedHandler}
                     errorDisplayText={this.state.errorDisplayText}/>
             </div>
         
