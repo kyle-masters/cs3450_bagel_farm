@@ -200,8 +200,12 @@ def decrementInventory(id, amount):
 def restock(id):
     luckyItem = Item.objects.all().get(id=id)
     luckyItem.stock = 100
+    luckyItem.save()
 
 def getStock(request):
+    restockId = request.GET.get("id")
+    if(restockId != None):
+        restock(restockId)
     allStock = Item.objects.all()
 
     stock = []

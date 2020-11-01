@@ -10,6 +10,10 @@
     align-items: center;
 }
 
+.NavigationItem:not(:last-child) {
+    border-right: 1px solid black;
+}
+
 .NavigationItem a {
     color: black;
     text-decoration: none;
