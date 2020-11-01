@@ -90,7 +90,6 @@ class AccountInfo extends Component {
                                     right={"5%"}
                                     bottom={"3%"}>Manage Accounts</Button>
                     </div>
-                    <div className="footer"></div>
                 </div>
             </div>
         );

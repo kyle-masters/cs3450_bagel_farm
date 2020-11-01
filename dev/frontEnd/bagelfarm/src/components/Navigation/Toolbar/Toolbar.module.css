@@ -1,13 +1,24 @@
-.Toolbar {
+.ToolbarBG {
     height: 50px;
     width: 100%;
+    position:relative;
+    background-color:rgb(245, 242, 235);
+    z-index: 199;
+}
+
+.Toolbar {
+    height: 50px;
+    width: 90%;
     position: relative;
+    margin: auto;
     top: 0;
     left: 0;
     background-color: rgb(245, 242, 235);
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
     align-items: center;
     z-index: 200;
-    
 }
 
 @media (max-width: 600px) {

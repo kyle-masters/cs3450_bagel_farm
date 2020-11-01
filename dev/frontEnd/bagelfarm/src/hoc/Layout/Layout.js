@@ -26,7 +26,7 @@ render () {
           toggleClicked={this.toggleClickedHandler}
           closeDrawer={this.closeDrawer}/>
           <div className="bg-image">
-              <img alt={"Windmill"} src={require('../../images/bg-windmill.png')}/>
+            <img src={require('../../images/bg-windmill.png')}/>
           </div>
         {this.props.children}
       </div>

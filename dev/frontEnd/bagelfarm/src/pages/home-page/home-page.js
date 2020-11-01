@@ -44,7 +44,6 @@ class HomePage extends Component {
                             </p>
                         </div>
                     </div>
-                    <div className="footer"></div>
                 </div>
             </>
         );
