@@ -199,7 +199,10 @@ def decrementInventory(id, amount):
 
 def restock(id):
     luckyItem = Item.objects.all().get(id=id)
-    luckyItem.stock = 100
+    if luckyItem.stock >= 100:
+        pass
+    else:
+        luckyItem.stock = 100
     luckyItem.save()
 
 def getStock(request):

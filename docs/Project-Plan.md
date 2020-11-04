@@ -31,7 +31,7 @@ able to manage inventory, process orders, and see high-level transaction informa
 
 # Description of the Process
 
-The process will be broken up into 6 phases. Each phase will be like a Sprint in an Agile method like an iteration in a Spiral process. We are going to split up each phase into small tasks and self-assign tasks. Each phase will be like a Sprint. We are going to organize work into small tasks and place these tasks into a backlog and prioritize them. The team will also use a Scrum Board to keep track of tasks in the backlog. 
+The process will be broken up into 6 phases. Each phase will be like a Sprint in an Agile method or like an iteration in a Spiral process. We are going to split up each phase into small tasks and self-assign tasks. Each phase will be like a Sprint. We are going to organize work into small tasks and place these tasks into a backlog and prioritize them. The team will also use a Scrum Board to keep track of tasks in the backlog. 
 
 Once a group member finishes their tasks, or is unable to because their task depends on another group member to finish something, then that group member will find who needs the most help and provide assistance as needed. Tasks are being tracked using GitHub's Issue and Project features. Tasks are categorized into several categories in the Project tab on GitHub, and once the task is complete the related Issue can be resolved. 
 
