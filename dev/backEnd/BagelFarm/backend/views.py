@@ -5,6 +5,7 @@ from .models import Account, Item, Order, OrderItem
 from django.utils import timezone
 from decimal import *
 import re
+import random
 
 
 def account(request):
@@ -157,7 +158,6 @@ def orderStatus(request):
     response['Access-Control-Allow-Origin'] = '*'
     return response
 
-
 def placeOrder(request):
 
     order = Order.objects.all().create(
@@ -166,7 +166,8 @@ def placeOrder(request):
         price=0,
         orderTime=timezone.now(),
         pickupTime=timezone.now(),
-        isFavorite=False
+        isFavorite=False,
+        rewardPoints = 0
     )
 
     totalPrice = Decimal(0.0)
@@ -181,6 +182,14 @@ def placeOrder(request):
             totalPrice = totalPrice + orderitem.price
 
     order.price = totalPrice
+
+    # Rewards for the order
+    order.rewardPoints = totalPrice * 100 * random.randint(1, 5)
+
+    # Rewards for the account
+    account = Account.objects.all().get(id=accountID)
+    account.rewardPoints = account.rewardPoints + order.rewardPoints
+    account.save()
 
     response = JsonResponse({'status': True})
     response['Access-Control-Allow-Origin'] = '*'
