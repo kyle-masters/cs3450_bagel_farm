@@ -176,12 +176,13 @@ def placeOrder(request):
             orderitem = OrderItem.objects.all().create(
                 name=Item.objects.all().get(id=v).name,
                 quantity=request.GET.get("qty_"+k[5:], 1),
-                price=Item.objects.all().get(id=v).price,
+                price=Item.objects.all().get(id=v).price * Decimal(request.GET.get("qty_"+k[5:], 1)),
                 orderID=order
             )
             totalPrice = totalPrice + orderitem.price
 
     order.price = totalPrice
+    order.save()
 
     # Rewards for the order
     order.rewardPoints = totalPrice * 100 * random.randint(1, 5)
@@ -276,6 +277,36 @@ def updateOrder(request):
     order.status = newStatus
     order.save()
 
+    # Validate if account has permission
+
     response = JsonResponse({'status': True})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+
+
+def viewOrder(request):
+    orderID = request.GET.get('id')
+
+    order = Order.objects.all().get(id=orderID)
+
+    items = OrderItem.objects.all().filter(orderID=order.id)
+    itemInfoList = []
+    for item in items:
+        itemInfo = {
+            'name': item.name,
+            'quantity': item.quantity,
+            'price': item.price
+        }
+        itemInfoList.append(itemInfo)
+    orderInfo = {
+        'orderID': int(order.id),
+        'items': itemInfoList,
+        'status': order.status,
+        'orderTime': order.orderTime,
+        'pickupTime': order.pickupTime,
+        'price': order.price
+    }
+
+    response = JsonResponse(orderInfo)
     response['Access-Control-Allow-Origin'] = '*'
     return response

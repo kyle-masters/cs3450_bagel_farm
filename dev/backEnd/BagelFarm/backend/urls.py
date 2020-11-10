@@ -11,5 +11,6 @@ urlpatterns = [
     path('order', views.placeOrder, name='order'),
     path('inventory', views.getStock, name='inventory'),
     path('history', views.orderHistory, name='history'),
-    path('update', views.updateOrder, name='update')
+    path('update', views.updateOrder, name='update'),
+    path('view', views.viewOrder, name='view')
 ]
