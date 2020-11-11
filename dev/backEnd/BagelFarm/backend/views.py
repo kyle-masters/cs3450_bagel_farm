@@ -17,7 +17,7 @@ def account(request):
             'lastName': b.lastName,
             'email': b.email,
             'phoneNumber': b.phoneNumber,
-            'rewards': b.rewardPoints,
+            'rewards': b.rewards,
             'balance': b.balance,
             'password': b.password,
             'type': b.type
