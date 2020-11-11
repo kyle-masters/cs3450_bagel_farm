@@ -7,7 +7,6 @@ from decimal import *
 import re
 import random
 
-
 def account(request):
     try:
         b = Account.objects.get(id=request.GET.get('id', 0))
@@ -196,6 +195,19 @@ def placeOrder(request):
     response['Access-Control-Allow-Origin'] = '*'
     return response
 
+def setFavOrder(request):
+    orderID = request.GET.get("id")
+    orderID.isFavorite = request.GET.get("isFavorite")
+    orderID.save()
+    return JsonResponse({'status':'success'})
+
+def getFavOrder(request):
+    orderID = request.GET.get("id")
+    if(orderID != None):
+        return JsonResponse({'status':'fail'})
+    else:
+        return JsonResponse(orderID.isFavorite)
+    
 
 def getCurrentPrice(name):
     nameParts = name.split("_")
@@ -234,7 +246,7 @@ def getStock(request):
     response = JsonResponse({'inventory': stock})
     response['Access-Control-Allow-Origin'] = '*'
     return response
-  
+
 def orderHistory(request):
     acctID = request.GET.get('id')
 
