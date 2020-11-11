@@ -17,7 +17,7 @@ def account(request):
             'lastName': b.lastName,
             'email': b.email,
             'phoneNumber': b.phoneNumber,
-            'rewards': b.rewards,
+            'rewards': b.rewardPoints,
             'balance': b.balance,
             'password': b.password,
             'type': b.type
@@ -46,7 +46,7 @@ def register(request):
                 type=0,
                 password=request.GET.get('password'),
                 balance=100,
-                rewardPoints=0,
+                rewards=0
             )
             account.save()
 
@@ -113,7 +113,7 @@ def login(request):
                     'phoneNumber': acctId.phoneNumber,
                     'email': acctId.email,
                     'balance': acctId.balance,
-                    'rewards': acctId.rewardPoints
+                    'rewards': acctId.rewards
                 })
                 response['Access-Control-Allow-Origin'] = '*'
                 return response
@@ -149,7 +149,8 @@ def orderStatus(request):
             'status': order.status,
             'orderTime': order.orderTime,
             'pickupTime': order.pickupTime,
-            'price': order.price
+            'price': order.price,
+            'rewards': order.rewards
         }
         orderInfoList.append(orderInfo)
 
@@ -167,7 +168,7 @@ def placeOrder(request):
         orderTime=timezone.now(),
         pickupTime=timezone.now(),
         isFavorite=False,
-        rewardPoints = 0
+        rewards=0
     )
 
     totalPrice = Decimal(0.0)
@@ -257,7 +258,8 @@ def orderHistory(request):
             'status': order.status,
             'orderTime': order.orderTime,
             'pickupTime': order.pickupTime,
-            'price': order.price
+            'price': order.price,
+            'rewards': order.rewards
         }
         orderInfoList.append(orderInfo)
 
