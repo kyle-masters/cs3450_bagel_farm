@@ -31,6 +31,7 @@ class Migration(migrations.Migration):
                 ('orderTime', models.DateTimeField()),
                 ('pickupTime', models.DateTimeField()),
                 ('isFavorite', models.BooleanField()),
+                ('rewards', models.IntegerField())
             ],
         ),
         migrations.CreateModel(

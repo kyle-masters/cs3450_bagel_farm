@@ -45,7 +45,7 @@ def register(request):
                 type=0,
                 password=request.GET.get('password'),
                 balance=100,
-                rewards=0,
+                rewards=0
             )
             account.save()
 
@@ -77,12 +77,12 @@ def validateRegistration(requestInfo):
         if info is None:
             response = JsonResponse({'status': False})
             response['Access-Control-Allow-Origin'] = '*'
-            return response
+            return False
 
     if Account.objects.filter(email=requestInfo[2]).exists():
         response = JsonResponse({'status': False})
         response['Access-Control-Allow-Origin'] = '*'
-        return response
+        return False
 
     # Implement data validations
 
@@ -148,7 +148,8 @@ def orderStatus(request):
             'status': order.status,
             'orderTime': order.orderTime,
             'pickupTime': order.pickupTime,
-            'price': order.price
+            'price': order.price,
+            'rewards': order.rewards
         }
         orderInfoList.append(orderInfo)
 
@@ -166,7 +167,7 @@ def placeOrder(request):
         orderTime=timezone.now(),
         pickupTime=timezone.now(),
         isFavorite=False,
-        rewardPoints = 0
+        rewards=0
     )
 
     totalPrice = Decimal(0.0)
@@ -269,7 +270,8 @@ def orderHistory(request):
             'status': order.status,
             'orderTime': order.orderTime,
             'pickupTime': order.pickupTime,
-            'price': order.price
+            'price': order.price,
+            'rewards': order.rewards
         }
         orderInfoList.append(orderInfo)
 
