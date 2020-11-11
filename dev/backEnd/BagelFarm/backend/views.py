@@ -46,7 +46,7 @@ def register(request):
                 type=0,
                 password=request.GET.get('password'),
                 balance=100,
-                rewards=0,
+                rewardPoints=0,
             )
             account.save()
 
@@ -78,12 +78,12 @@ def validateRegistration(requestInfo):
         if info is None:
             response = JsonResponse({'status': False})
             response['Access-Control-Allow-Origin'] = '*'
-            return response
+            return False
 
     if Account.objects.filter(email=requestInfo[2]).exists():
         response = JsonResponse({'status': False})
         response['Access-Control-Allow-Origin'] = '*'
-        return response
+        return False
 
     # Implement data validations
 
@@ -113,7 +113,7 @@ def login(request):
                     'phoneNumber': acctId.phoneNumber,
                     'email': acctId.email,
                     'balance': acctId.balance,
-                    'rewards': acctId.rewards
+                    'rewards': acctId.rewardPoints
                 })
                 response['Access-Control-Allow-Origin'] = '*'
                 return response
