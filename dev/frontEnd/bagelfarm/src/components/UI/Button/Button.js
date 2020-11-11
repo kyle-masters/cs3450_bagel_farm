@@ -15,7 +15,8 @@ const button = props => (
             right: props.right,
             marginTop: props.marginTop,
             marginBottom: props.marginBottom,
-            position: props.position}}
+            position: props.position,
+            zIndex: props.zIndex}}
     className={[classes.Button, classes[props.btnType]].join(' ')}
     disabled={props.disabled}>{props.children}</button>
 );
