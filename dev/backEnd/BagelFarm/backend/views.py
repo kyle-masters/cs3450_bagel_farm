@@ -324,3 +324,17 @@ def viewOrder(request):
     response = JsonResponse(orderInfo)
     response['Access-Control-Allow-Origin'] = '*'
     return response
+
+def updateInfo(request):
+    acctID = request.GET.get('id')
+    field = request.GET.get('field')
+    value = request.GET.get('value')
+
+    account = Account.objects.all().get(id=acctID)
+
+    setattr(account, field, value)
+    account.save()
+
+    response = JsonResponse({'status': True})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
