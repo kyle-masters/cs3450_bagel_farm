@@ -10,7 +10,7 @@ import Inventory from './pages/inventory-page/inventory-page'
 
 class App extends Component {
   state = {
-    id: null,
+    id: 29,
   }
 
   getUserID = () => {
@@ -29,9 +29,6 @@ class App extends Component {
           <Switch>
             <Route path='/order'>
               <Orders getID={this.getUserID}/>
-            </Route>
-            <Route path='/inventory'>
-              <Inventory getID={this.getUserID}/>
             </Route>
             <Route path='/account'>
               <AccountInfo 

@@ -158,6 +158,37 @@ def orderStatus(request):
     response['Access-Control-Allow-Origin'] = '*'
     return response
 
+
+def getOrderByStatus(request):
+    orders = Order.objects.all().filter(status=request.GET.get('status'))
+
+    orderInfoList = []
+    for order in orders:
+        items = OrderItem.objects.all().filter(orderID=order.id)
+        itemInfoList = []
+        for item in items:
+            itemInfo = {
+                'name': item.name,
+                'quantity': item.quantity,
+                'price': item.price
+            }
+            itemInfoList.append(itemInfo)
+        orderInfo = {
+            'orderID': int(order.id),
+            'items': itemInfoList,
+            'status': order.status,
+            'orderTime': order.orderTime,
+            'pickupTime': order.pickupTime,
+            'price': order.price,
+            'rewards': order.rewards
+        }
+        orderInfoList.append(orderInfo)
+
+    response = JsonResponse({'orders': orderInfoList})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+
+
 def placeOrder(request):
 
     order = Order.objects.all().create(
@@ -188,8 +219,8 @@ def placeOrder(request):
     order.rewardPoints = totalPrice * 100 * random.randint(1, 5)
 
     # Rewards for the account
-    account = Account.objects.all().get(id=accountID)
-    account.rewardPoints = account.rewardPoints + order.rewardPoints
+    account = Account.objects.all().get(id=request.GET.get("id"))
+    account.rewards = account.rewards + order.rewards
     account.save()
 
     response = JsonResponse({'status': True})
@@ -282,7 +313,6 @@ def orderHistory(request):
 
   
 def updateOrder(request):
-    acctID = request.GET.get('id')
     orderID = request.GET.get('order')
     newStatus = request.GET.get('status')
 

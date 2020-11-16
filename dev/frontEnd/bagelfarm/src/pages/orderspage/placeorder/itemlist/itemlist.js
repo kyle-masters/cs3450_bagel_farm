@@ -7,12 +7,10 @@ const itemList = (props) => {
     var items = null;
 
     if (props.data) {
-        console.log(props)
         items = 
             <div>
                 <ItemHeader />
                 <div className={classes.Items}>
-                    
                     {props.data.map((el, idx) => {
                     return (
                             <Item

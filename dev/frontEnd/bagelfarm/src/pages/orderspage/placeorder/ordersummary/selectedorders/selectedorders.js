@@ -12,9 +12,9 @@ const selectedOrders = (props) => {
                     <h2>Selected Items</h2>
                     <h2>Quantity</h2>
                 </div>
-                {props.items.length >= 1 ? props.items.map((el) => {
+                {props.items.length >= 1 ? props.items.map((el, idx) => {
                     return (
-                        <div className={classes.OrderSelections}>
+                        <div key={idx} className={classes.OrderSelections}>
                             <h3>{el.name + " " + el.category}</h3>
                             <h3>{el.qty}</h3>
                         </div>
