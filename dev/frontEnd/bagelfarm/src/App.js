@@ -30,9 +30,6 @@ class App extends Component {
             <Route path='/order'>
               <Orders getID={this.getUserID}/>
             </Route>
-            <Route path='/inventory'>
-              <Inventory getID={this.getUserID}/>
-            </Route>
             <Route path='/account'>
               <AccountInfo 
                 getID={this.getUserID}

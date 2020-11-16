@@ -1,0 +1,64 @@
+.Order {
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+    width: 90%;
+    margin: 10px 0;
+    padding: 0 20px 20px 20px;
+    background-color: white;
+    opacity: .8;
+    border-radius: 10px;
+}
+
+.Order h2, h3 {
+    text-transform: capitalize;
+    color: black;
+}
+
+.Order h4 {
+    margin-left: 30px;
+}
+
+.OrderTracker {
+    display: flex;
+    justify-content: space-between;
+}
+
+.LabelTracker {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.LabelTracker p {
+    color: #3d1c17;
+}
+
+.Dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: white;
+    border: 2px solid #3d1c17;
+    margin: 0 2%;
+    z-index: 2;
+}
+
+.DotFilled {
+    background-color:#3d1c17;
+    z-index: 2;
+}
+
+.Line {
+    width: 100%;
+    position: relative;
+    transform: translate(0, 12px);
+    height: 2px;
+    background-color: #3d1c17;
+    z-index: 1;
+}
+
+.Buttons {
+    display: flex;
+    justify-content: space-between;
+}
