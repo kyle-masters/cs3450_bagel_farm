@@ -37,7 +37,7 @@ class AccountInfo extends Component {
                         'email': data['email'],
                         'balance': data['balance'],
                         'rewards': data['rewards'],
-                        'type': 4
+                        'type': data['type']
                     }
                 })
             })

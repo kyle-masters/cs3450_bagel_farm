@@ -10,7 +10,7 @@ import Inventory from './pages/inventory-page/inventory-page'
 
 class App extends Component {
   state = {
-    id: 29,
+    id: null,
   }
 
   getUserID = () => {
