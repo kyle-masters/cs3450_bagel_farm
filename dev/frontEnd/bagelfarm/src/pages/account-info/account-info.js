@@ -3,6 +3,11 @@ import React, {Component} from "react"
 import Button from '../../components/UI/Button/Button'
 import './account-info.css';
 import Spinner from '../../components/UI/Spinner/Spinner'
+import ChefTasks from './chef-tasks/chef-tasks'
+import CashierTasks from './cashier-tasks/cashier-tasks'
+import ManagerTasks from './manager-tasks/manager-tasks'
+import ManageAccounts from './manage-accounts/manage-accounts'
+import InventoryPage from '../inventory-page/inventory-page'
 
 class AccountInfo extends Component {
     state = {
@@ -13,6 +18,7 @@ class AccountInfo extends Component {
             'email': null,
             'balance': null,
             'rewards': null,
+            'type': null
           },
           fieldUpdating: false,
           firstNameInput: null,
@@ -20,7 +26,10 @@ class AccountInfo extends Component {
           phoneNumerInput: null,
           emailInput: null,
           balanceInput: null,
-          spinner: false
+          spinner: false,
+          showTaskPage: false,
+          showManagePage: false,
+          showInventoryPage: false
     }
 
     componentDidUpdate() {
@@ -80,6 +89,18 @@ class AccountInfo extends Component {
                 if(field === 'firstName') {
                     this.updateField('lastName', tempLastName);
                 }
+                const data = response.data
+                this.setState({
+                    userData: {
+                        'firstName': data['firstName'],
+                        'lastName': data['lastName'],
+                        'phoneNumber': data['phoneNumber'],
+                        'email': data['email'],
+                        'balance': data['balance'],
+                        'rewards': data['rewards'],
+                        'type': data['type']
+                    }
+                })
             })
     }
 
@@ -165,6 +186,25 @@ class AccountInfo extends Component {
         })
     }
 
+    viewTasksButtonHandler = () => {
+        this.setState({showTaskPage: true})
+    }
+
+    manageAccountsButtonHandler = () => {
+        this.setState({showManagePage: true})
+    }
+
+    inventoryButtonHandler = () => {
+        this.setState({showInventoryPage: true})
+    }
+
+    backToAccountPageHandler = () => {
+        this.setState({
+            showTaskPage: false,
+            showManagePage: false,
+            showInventoryPage: false})
+    }
+
     editName = false;
     nameEditOrCancel = "Edit"
     editEmail = false;
@@ -178,7 +218,7 @@ class AccountInfo extends Component {
             return <Spinner />
         }
 
-        return (
+        var accountPage = 
             <div className='account-info'>
                 <div>
                     <h2 className='account-info-header'> Account Information </h2>
@@ -280,19 +320,45 @@ class AccountInfo extends Component {
                         <Button width={"43%"}
                                     height={"8.5%"}
                                     right={"5%"}
-                                    bottom={"14%"}>View Tasks</Button>
+                                    bottom={"14%"}
+                                    disabled={this.state.userData.type === 1}
+                                    clicked={this.viewTasksButtonHandler}>View Tasks</Button>
                         <Button width={"43%"}
                                     height={"8.5%"}
                                     left={"5%"}
-                                    bottom={"3%"}>Inventory</Button>
+                                    bottom={"3%"}
+                                    disabled={this.state.userData.type === 1 || this.state.userData.type === 3}
+                                    clicked={this.inventoryButtonHandler}>Inventory</Button>
                         <Button width={"43%"}
                                     height={"8.5%"}
                                     right={"5%"}
-                                    bottom={"3%"}>Manage Accounts</Button>
+                                    bottom={"3%"}
+                                    disabled={this.state.userData.type != 4}
+                                    clicked={this.manageAccountsButtonHandler}>Manage Accounts</Button>
                     </div>
                 </div>
             </div>
-        );
+
+        if (this.state.showTaskPage) {
+            if (this.state.userData.type === 2) {
+                accountPage = <ChefTasks
+                                    backToAccountPage={this.backToAccountPageHandler}/>
+            } else if (this.state.userData.type === 3) {
+                accountPage = <CashierTasks 
+                                    backToAccountPage={this.backToAccountPageHandler}/>
+            } else if (this.state.userData.type === 4) {
+                accountPage = <ManagerTasks
+                                    backToAccountPage={this.backToAccountPageHandler}/>
+            }
+        } else if (this.state.showManagePage) {
+            accountPage = <ManageAccounts 
+                                backToAccountPage={this.backToAccountPageHandler}/>
+        } else if (this.state.showInventoryPage) {
+            accountPage = <InventoryPage 
+                                backToAccountPage={this.backToAccountPageHandler}/>
+        }
+
+        return accountPage;
     }
 }
 

@@ -28,3 +28,8 @@
 .LoginToggler {
     border-radius: 0px;
 }
+
+.Button:disabled {
+    background-color: #a3a3a3;
+    color: #525252;
+}
