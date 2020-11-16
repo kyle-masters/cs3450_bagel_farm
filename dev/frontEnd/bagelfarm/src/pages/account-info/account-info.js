@@ -7,6 +7,7 @@ import CashierTasks from './cashier-tasks/cashier-tasks'
 import ManagerTasks from './manager-tasks/manager-tasks'
 import ManageAccounts from './manage-accounts/manage-accounts'
 import InventoryPage from '../inventory-page/inventory-page'
+import { withRouter } from "react-router";
 import Modal from '../../components/UI/Modal/Modal'
 
 class AccountInfo extends Component {
@@ -100,6 +101,10 @@ class AccountInfo extends Component {
         this.setState({showInventoryPage: true})
     }
 
+    nextPath(path) {
+        this.props.history.push('/order')
+    }
+
     backToAccountPageHandler = () => {
         this.setState({
             showTaskPage: false,
@@ -116,6 +121,7 @@ class AccountInfo extends Component {
     editFunds = false;
     fundsBtnText = "Add Funds"
     render() {
+        console.log(this.props)
         var accountPage = 
             <div className='account-info'>
                 <div>
@@ -211,7 +217,8 @@ class AccountInfo extends Component {
                         <Button width={"43%"}
                                     height={"8.5%"}
                                     left={"5%"}
-                                    bottom={"14%"}>View Orders</Button>
+                                    bottom={"14%"}
+                                    clicked={() => this.nextPath('/order')}>View Orders</Button>
                         <Button width={"43%"}
                                     height={"8.5%"}
                                     right={"5%"}
@@ -257,4 +264,4 @@ class AccountInfo extends Component {
     }
 }
 
-export default AccountInfo;
+export default withRouter(AccountInfo);
