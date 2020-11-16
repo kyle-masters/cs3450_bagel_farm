@@ -1,0 +1,143 @@
+.AccountID {
+    position: relative;
+    text-transform: capitalize;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+    width: 7vw;
+    margin: 0;
+}
+
+.AccountID > h3 {
+    margin: 0;
+    -ms-transform: translateY(31%);
+    transform: translateY(31%);
+}
+
+.AccountName {
+    position: relative;
+    text-transform: capitalize;
+    border-radius: 10px;
+    width: 18vw;
+}
+
+.AccountEmail {
+    position: relative;
+    text-transform: capitalize;
+    border-radius: 10px;
+    max-width: 15vw;
+    min-width: 15vw;
+}
+
+.AccountEmail > h3 {
+    margin: 0;
+    -ms-transform: translateY(80%);
+    transform: translateY(80%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.AccountRewards {
+    position: relative;
+    text-transform: capitalize;
+    border-radius: 10px;
+    width: 12.5vw;
+}
+
+.AccountRewards > h3 {
+    -ms-transform: translateY(20%);
+    transform: translateY(20%);
+}
+
+.AccountBalance {
+    position: relative;
+    text-transform: capitalize;
+    width: 14vw;
+    border-radius: 10px;   
+}
+
+.AccountBalance > h3 {
+    -ms-transform: translateY(50%);
+    transform: translateY(50%);
+}
+
+.AccountRole {
+    position: relative;
+    text-transform: capitalize;
+    width: 9vw;
+    border-radius: 10px;   
+}
+
+.AccountRole > h3 {
+    -ms-transform: translateY(50%);
+    transform: translateY(50%);
+}
+
+.AccountAction {
+    position: relative;
+    text-transform: capitalize;
+    border-radius: 10px;
+}
+
+.AccountAction > button {
+    -ms-transform: translateY(50%);
+    transform: translateY(50%);
+}
+
+.Account {
+    background-color: rgb(198, 167, 132);
+    margin: 10px;
+    padding: 0 20px;
+    text-transform: capitalize;
+    display: flex;
+    border-radius: 10px;
+}
+
+.Header {
+    position: relative;
+    background-color: #3d1c17;
+    color: rgb(255, 227, 196);
+    top: 0px;
+    margin-bottom: 0;
+    border-radius: 0;
+    padding-right: 50px;
+}
+
+.AccountBalanceHdr {
+    position: relative;
+    text-transform: capitalize;
+    width: 13vw;
+    border-radius: 10px;   
+}
+
+.AccountRoleHdr {
+    position: relative;
+    text-transform: capitalize;
+    width: 11vw;
+    border-radius: 10px;   
+}
+
+.AccountActionHdr {
+    position: relative;
+    text-transform: capitalize;
+    border-radius: 10px;
+}
+
+.Button {
+    height: 40px;
+    width: 8vw;
+    background-color: rgb(255, 92, 92);
+    transition: all 0.2s ease-out;
+    color: #3d1c17;
+    border: 1px solid #3d1c17;
+    border-radius: 3px;
+    font-family: Baskerville Old Face;
+    font-size: 20px;
+}
+
+.Button:hover {
+    background-color: #3d1c17;
+    color: rgb(198, 167, 132);
+    transition: all 0.2s ease-out;
+}

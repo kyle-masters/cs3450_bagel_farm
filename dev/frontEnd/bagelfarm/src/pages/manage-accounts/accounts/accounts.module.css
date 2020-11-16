@@ -1,0 +1,9 @@
+.Accounts {
+    width: 90%;
+    display: inline-block;
+    text-align: left;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    opacity: .8;
+}
