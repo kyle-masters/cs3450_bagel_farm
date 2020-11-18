@@ -2,12 +2,12 @@ import axios from '../../axios-main'
 import React, {Component} from "react"
 import Button from '../../components/UI/Button/Button'
 import './account-info.css';
+import Spinner from '../../components/UI/Spinner/Spinner'
 import ChefTasks from './chef-tasks/chef-tasks'
 import CashierTasks from './cashier-tasks/cashier-tasks'
 import ManagerTasks from './manager-tasks/manager-tasks'
-import ManageAccounts from './manage-accounts/manage-accounts'
+import ManageAccounts from '../../pages/manage-accounts/manage-accounts-page'
 import InventoryPage from '../inventory-page/inventory-page'
-import Modal from '../../components/UI/Modal/Modal'
 
 class AccountInfo extends Component {
     state = {
@@ -19,15 +19,76 @@ class AccountInfo extends Component {
             'balance': null,
             'rewards': null,
             'type': null
-        },
-        showTaskPage: false,
-        showManagePage: false,
-        showInventoryPage: false
+          },
+          fieldUpdating: false,
+          firstNameInput: null,
+          lastNameInput: null,
+          phoneNumerInput: null,
+          emailInput: null,
+          balanceInput: null,
+          spinner: false,
+          showTaskPage: false,
+          showManagePage: false,
+          showInventoryPage: false
+    }
+
+    componentDidUpdate() {
+        if (this.state.fieldUpdating) {
+            this.resetState()
+        }
     }
 
     componentDidMount() {
-        axios.get('/account?id=' + this.props.getID())
+        this.resetState();
+    }
+    
+    handleChange(e, field) {
+        let value = e.target.value;
+        if(field === 'firstName') {
+            this.setState({ firstNameInput: value });
+        } else if(field === 'lastName') {
+            this.setState({ lastNameInput: value });
+        } else if(field === 'password') {
+            this.setState({ passwordInput: value });
+        } else if(field === 'password2') {
+            this.setState({ reenterPasswordInput: value });
+        } else if(field === 'email') {
+            this.setState({ emailInput: value });
+        } else if(field === 'balance') {
+            this.setState({ balanceInput: value });
+        }
+    }
+
+    handleClick(e, field) {
+        this.setState({spinner: true})
+        if(field === 'name') {
+            if(this.state.firstNameInput != null && this.state.lastNameInput != null) {
+                this.updateField('firstName', this.state.firstNameInput);
+            }
+        } else if(field === 'password') {
+            if(this.state.passwordInput != null && this.state.passwordInput === this.state.reenterPasswordInput) {
+                this.updateField('password', this.state.passwordInput);
+            }
+        } else if(field === 'email') {
+            if(this.state.emailInput != null) {
+                this.updateField('email', this.state.emailInput);
+            }
+        } else if(field === 'balance') {
+            if(this.state.balanceInput != null) {
+                this.updateField('balance', this.state.balanceInput);
+            }
+        }
+    }
+
+    updateField = (field, value) => {
+        this.setState({spinner: true})
+        axios.get(`/updateInfo?id=${this.props.getID()}&field=${field}&value=${value}`)
             .then((response) => {
+                var tempLastName = this.state.lastNameInput;
+                this.setState({fieldUpdating: true});
+                if(field === 'firstName') {
+                    this.updateField('lastName', tempLastName);
+                }
                 const data = response.data
                 this.setState({
                     userData: {
@@ -42,11 +103,6 @@ class AccountInfo extends Component {
                 })
             })
     }
-
-    showAlert = e => {
-        e.preventDefault();
-        alert('hello')
-      };
 
     flipEditName = () => {
         this.editName = !this.editName;
@@ -78,8 +134,13 @@ class AccountInfo extends Component {
         this.forceUpdate();
     };
 
-    flipFunds = () => {
+    flipFunds = (e) => {
         this.editFunds = !this.editFunds;
+
+        if(!this.editFunds) {
+            this.handleClick(e, 'balance');
+        }
+
         if(this.fundsBtnText === "Add Funds") {
             this.fundsBtnText = "Confirm Addition";
         } else {
@@ -87,6 +148,43 @@ class AccountInfo extends Component {
         }
         this.forceUpdate();
     };
+
+    resetState() {
+        axios.get('/account?id=' + this.props.getID())
+        .then((response) => {
+            const data = response.data
+            this.setState({
+                userData: {
+                    'firstName': data['firstName'],
+                    'lastName': data['lastName'],
+                    'phoneNumber': data['phoneNumber'],
+                    'email': data['email'],
+                    'balance': data['balance'],
+                    'rewards': data['rewards']
+                  },
+                  fieldUpdating: false,
+                  firstNameInput: null,
+                  lastNameInput: null,
+                  passwordInput: null,
+                  reenterPasswordInput: null,
+                  emailInput: null,
+                  balanceInput: null,
+                  spinner: false
+            })
+
+            // the code below could be done in a MUCH better way
+            // it makes sure that when a field is changed the page will update in a nice way
+            this.editName = false;
+            this.editPassword = false;
+            this.editEmail = false;
+            this.editFunds = false;
+            this.nameEditOrCancel = 'Edit';
+            this.passwordEditOrCancel = 'Edit';
+            this.emailEditOrCancel = 'Edit';
+            this.fundsBtnText = 'Add Funds';
+            this.forceUpdate();
+        })
+    }
 
     viewTasksButtonHandler = () => {
         this.setState({showTaskPage: true})
@@ -116,6 +214,10 @@ class AccountInfo extends Component {
     editFunds = false;
     fundsBtnText = "Add Funds"
     render() {
+        if (this.state.spinner) {
+            return <Spinner />
+        }
+
         var accountPage = 
             <div className='account-info'>
                 <div>
@@ -131,14 +233,15 @@ class AccountInfo extends Component {
                                     zIndex={"99"}
                                     clicked={e => this.flipEditName()}>{this.nameEditOrCancel}</Button>
                             {this.editName ? 
-                                            <div class="edit-name">
-                                                <input type="text" id="first-input-box" placeholder="First Name"/>
-                                                <input type="text" id="second-input-box" placeholder="Last Name"/>
+                                            <div className="edit-name">
+                                                <input type="text" id="first-input-box" placeholder="First Name" onChange={ e => this.handleChange(e, 'firstName') }/>
+                                                <input type="text" id="second-input-box" placeholder="Last Name" onChange={ e => this.handleChange(e, 'lastName') }/>
                                                 <Button width={"24%"}
                                                         height={"37%"}
                                                         right={"2%"}
                                                         bottom={"10%"}
-                                                        fontSize={"15px"}>Confirm Change</Button>
+                                                        fontSize={"15px"}
+                                                        clicked={e => this.handleClick(e, 'name')}>Confirm Change</Button>
                                             </div>
                                             : 
                                             <h1 className="content-info"> {this.state.userData['firstName']} {this.state.userData['lastName']}</h1>}
@@ -153,13 +256,14 @@ class AccountInfo extends Component {
                                     zIndex={"99"}
                                     clicked={e => this.flipEmailAddress()}>{this.emailEditOrCancel}</Button>
                             {this.editEmail ? 
-                                            <div class="edit-name">
-                                                <input type="text" id="input-box" placeholder="Email Address"/>
+                                            <div className="edit-name">
+                                                <input type="text" id="input-box" placeholder="Email Address" onChange={ e => this.handleChange(e, 'email') }/>
                                                 <Button width={"24%"}
                                                         height={"37%"}
                                                         right={"2%"}
                                                         bottom={"10%"}
-                                                        fontSize={"15px"}>Confirm Change</Button>
+                                                        fontSize={"15px"}
+                                                        clicked={e => this.handleClick(e, 'email')}>Confirm Change</Button>
                                             </div>
                                             : 
                                             <h1 className="content-info"> {this.state.userData['email']}</h1>}
@@ -174,17 +278,18 @@ class AccountInfo extends Component {
                                     zIndex={"99"}
                                     clicked={e => this.flipPassword()}>{this.passwordEditOrCancel}</Button>
                             {this.editPassword ? 
-                                            <div class="edit-name">
-                                                <input type="password" id="first-input-box" placeholder="New Password"/>
-                                                <input type="password" id="second-input-box" placeholder="Re-enter Password"/>
+                                            <div className="edit-name">
+                                                <input type="password" id="first-input-box" placeholder="New Password" onChange={ e => this.handleChange(e, 'password') }/>
+                                                <input type="password" id="second-input-box" placeholder="Re-enter Password" onChange={ e => this.handleChange(e, 'password2') }/>
                                                 <Button width={"24%"}
                                                         height={"37%"}
                                                         right={"2%"}
                                                         bottom={"10%"}
-                                                        fontSize={"15px"}>Confirm Change</Button>
+                                                        fontSize={"15px"}
+                                                        clicked={e => this.handleClick(e, 'password')}>Confirm Change</Button>
                                             </div>
                                             : 
-                                            <a href="#"><h1 className="content-info" onClick={e => this.flipPassword()}> Change Password</h1></a>}
+                                            <h1 className="content-info" onClick={e => this.flipPassword()}> Change Password</h1>}
                         </div>
                         <div className="content-item" id="funds">
                             <h1 className="content-header"> Funds </h1>
@@ -193,16 +298,16 @@ class AccountInfo extends Component {
                                     right={"2%"}
                                     bottom={"8%"}
                                     zIndex={"99"}
-                                    clicked={e => this.flipFunds()}>{this.fundsBtnText}</Button>
+                                    clicked={e => this.flipFunds(e)}>{this.fundsBtnText}</Button>
                             {this.editFunds ? 
-                                            <div class="edit-name">
-                                                <input type="number" min="1" step="any" id="input-box" placeholder="Enter Amount To Add"/>
+                                            <div className="edit-name">
+                                                <input type="number" min="1" step="any" id="input-box" placeholder="Enter Amount To Add" onChange={ e => this.handleChange(e, 'balance') }/>
                                                 <Button width={"35%"}
                                                         height={"45%"}
                                                         right={"2%"}
                                                         bottom={"8%"}
                                                         zIndex={"99"}
-                                                        clicked={e => this.flipFunds()}>{this.fundsBtnText}</Button>
+                                                        clicked={e => this.flipFunds(e)}>{this.fundsBtnText}</Button>
                                             </div>
                                             : 
                                             <h1 className="content-info"> ${this.state.userData['balance']} </h1>}
@@ -216,19 +321,19 @@ class AccountInfo extends Component {
                                     height={"8.5%"}
                                     right={"5%"}
                                     bottom={"14%"}
-                                    disabled={this.state.userData.type === 1}
+                                    disabled={this.state.userData.type === 0}
                                     clicked={this.viewTasksButtonHandler}>View Tasks</Button>
                         <Button width={"43%"}
                                     height={"8.5%"}
                                     left={"5%"}
                                     bottom={"3%"}
-                                    disabled={this.state.userData.type === 1 || this.state.userData.type === 3}
+                                    disabled={this.state.userData.type === 0 || this.state.userData.type === 1}
                                     clicked={this.inventoryButtonHandler}>Inventory</Button>
                         <Button width={"43%"}
                                     height={"8.5%"}
                                     right={"5%"}
                                     bottom={"3%"}
-                                    disabled={this.state.userData.type != 4}
+                                    disabled={this.state.userData.type !== 3}
                                     clicked={this.manageAccountsButtonHandler}>Manage Accounts</Button>
                     </div>
                 </div>

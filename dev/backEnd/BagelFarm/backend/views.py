@@ -355,6 +355,14 @@ def viewOrder(request):
     response['Access-Control-Allow-Origin'] = '*'
     return response
 
+def deleteAccount(request):
+    acctID = request.GET.get('id')
+    Account.objects.filter(id=acctID).delete()
+    
+    response = JsonResponse({'status': True})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+
 def updateInfo(request):
     acctID = request.GET.get('id')
     field = request.GET.get('field')
@@ -368,3 +376,29 @@ def updateInfo(request):
     response = JsonResponse({'status': True})
     response['Access-Control-Allow-Origin'] = '*'
     return response
+
+def manageAccounts(request):
+    try:
+        allAccounts = Account.objects.all()
+
+        accounts = []
+        for account in allAccounts:
+            accounts.append({
+                'firstName': account.firstName,
+                'lastName': account.lastName,
+                'email': account.email,
+                'phoneNumber': account.phoneNumber,
+                'rewards': account.rewards,
+                'balance': account.balance,
+                'password': account.password,
+                'type': account.type,
+                'userID': account.id
+        })
+
+        response = JsonResponse({'accounts': accounts})
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
+    except:
+        response = JsonResponse({'status':False})
+        response['Access-Control-Allow-Origin'] = '*'
+        return response

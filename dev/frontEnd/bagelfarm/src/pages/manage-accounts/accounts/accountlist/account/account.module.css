@@ -1,0 +1,111 @@
+.AccountID {
+    position: relative;
+    text-transform: capitalize;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+    width: 7vw;
+    margin: 0;
+    margin-left: 1vw;
+}
+
+.AccountFirstName {
+    position: relative;
+    text-transform: capitalize;
+    border-radius: 10px;
+    width: 18vw;
+}
+
+.AccountFirstName > h3{
+    margin-left: 0.5vw;
+}
+
+.AccountLastName {
+    position: relative;
+    text-transform: capitalize;
+    border-radius: 10px;
+    width: 15vw;
+}
+
+.AccountLastName > h3{
+    margin-left: 0.5vw;
+}
+
+.AccountRole {
+    position: relative;
+    text-transform: capitalize;
+    width: 9vw;
+    border-radius: 10px;  
+    margin: auto; 
+    margin-right: 1vw;
+}
+
+.AccountAction {
+    position: relative;
+    text-transform: capitalize;
+    border-radius: 10px;
+}
+
+.AccountAction > button {
+    -ms-transform: translateY(50%);
+    transform: translateY(50%);
+}
+
+.Account {
+    background-color: rgb(198, 167, 132);
+    margin: 10px;
+    padding: 0 20px;
+    text-transform: capitalize;
+    display: flex;
+    border-radius: 10px;
+}
+
+.Header {
+    position: relative;
+    background-color: #3d1c17;
+    color: rgb(255, 227, 196);
+    top: 0px;
+    margin-bottom: 0;
+    border-radius: 0;
+    padding-right: 50px;
+}
+
+.Button {
+    height: 30px;
+    width: 5vw;
+    min-width: 90px;
+    background-color: rgb(255, 92, 92);
+    transition: all 0.2s ease-out;
+    color: #3d1c17;
+    border: 1px solid #3d1c17;
+    border-radius: 3px;
+    font-family: Baskerville Old Face;
+    font-size: max(1vw, 18px);
+    margin-right: 0.1vw;
+    z-index: 1000;
+}
+
+.Button:hover {
+    background-color: #3d1c17;
+    color: rgb(198, 167, 132);
+    transition: all 0.2s ease-out;
+}
+
+.DetailsBtn {
+    background-color: #3d1c17;
+    color: rgb(198, 167, 132);
+    border: none;
+    margin: auto;
+    margin-left: -0.5vw;
+    border-radius: 2px;
+    width: 2vw;
+    height: 1.1vw;
+    padding: 0;
+    transition: all 0.2s ease-out;
+}
+
+.DetailsBtn:hover {
+    background-color: rgb(198, 167, 132);
+    color: #3d1c17;
+    transition: all 0.2s ease-out;
+}
