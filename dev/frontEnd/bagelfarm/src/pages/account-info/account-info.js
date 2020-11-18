@@ -8,6 +8,7 @@ import CashierTasks from './cashier-tasks/cashier-tasks'
 import ManagerTasks from './manager-tasks/manager-tasks'
 import ManageAccounts from '../../pages/manage-accounts/manage-accounts-page'
 import InventoryPage from '../inventory-page/inventory-page'
+import { withRouter } from "react-router";
 
 class AccountInfo extends Component {
     state = {
@@ -198,6 +199,10 @@ class AccountInfo extends Component {
         this.setState({showInventoryPage: true})
     }
 
+    nextPath(path) {
+        this.props.history.push('/order')
+    }
+
     backToAccountPageHandler = () => {
         this.setState({
             showTaskPage: false,
@@ -316,7 +321,8 @@ class AccountInfo extends Component {
                         <Button width={"43%"}
                                     height={"8.5%"}
                                     left={"5%"}
-                                    bottom={"14%"}>View Orders</Button>
+                                    bottom={"14%"}
+                                    clicked={() => this.nextPath('/order')}>View Orders</Button>
                         <Button width={"43%"}
                                     height={"8.5%"}
                                     right={"5%"}
@@ -343,10 +349,10 @@ class AccountInfo extends Component {
             if (this.state.userData.type === 2) {
                 accountPage = <ChefTasks
                                     backToAccountPage={this.backToAccountPageHandler}/>
-            } else if (this.state.userData.type === 3) {
+            } else if (this.state.userData.type === 1) {
                 accountPage = <CashierTasks 
                                     backToAccountPage={this.backToAccountPageHandler}/>
-            } else if (this.state.userData.type === 4) {
+            } else if (this.state.userData.type === 3) {
                 accountPage = <ManagerTasks
                                     backToAccountPage={this.backToAccountPageHandler}/>
             }
@@ -362,4 +368,4 @@ class AccountInfo extends Component {
     }
 }
 
-export default AccountInfo;
+export default withRouter(AccountInfo);
