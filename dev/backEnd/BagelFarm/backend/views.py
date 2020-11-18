@@ -16,7 +16,7 @@ def account(request):
             'lastName': b.lastName,
             'email': b.email,
             'phoneNumber': b.phoneNumber,
-            'rewards': b.rewards,
+            'rewards': b.rewardPoints,
             'balance': b.balance,
             'password': b.password,
             'type': b.type
@@ -45,7 +45,7 @@ def register(request):
                 type=0,
                 password=request.GET.get('password'),
                 balance=100,
-                rewards=0,
+                rewardPoints=0
             )
             account.save()
 
@@ -58,7 +58,7 @@ def register(request):
                 'phoneNumber': newAccount.phoneNumber,
                 'email': newAccount.email,
                 'balance': newAccount.balance,
-                'rewards': newAccount.rewards
+                'rewards': newAccount.rewardPoints
             })
             response['Access-Control-Allow-Origin'] = '*'
             return response
@@ -68,7 +68,7 @@ def register(request):
             response['Access-Control-Allow-Origin'] = '*'
             return response
     except ValueError:
-        response = JsonResponse({'status': False})
+        response = False
         response['Access-Control-Allow-Origin'] = '*'
         return response
 
@@ -80,7 +80,7 @@ def validateRegistration(requestInfo):
             return response
 
     if Account.objects.filter(email=requestInfo[2]).exists():
-        response = JsonResponse({'status': False})
+        response = False
         response['Access-Control-Allow-Origin'] = '*'
         return response
 
@@ -112,7 +112,7 @@ def login(request):
                     'phoneNumber': acctId.phoneNumber,
                     'email': acctId.email,
                     'balance': acctId.balance,
-                    'rewards': acctId.rewards
+                    'rewards': acctId.rewardPoints
                 })
                 response['Access-Control-Allow-Origin'] = '*'
                 return response
@@ -197,8 +197,14 @@ def placeOrder(request):
 
 def setFavOrder(request):
     orderID = request.GET.get("id")
-    orderID.isFavorite = request.GET.get("isFavorite")
-    orderID.save()
+    order = Order.objects.all().get(id=orderID)
+    if Order.objects.all().get(accountID=order.accountID, isFavorite=True) is not None:
+        badFavorite = Order.objects.all().get(accountID=order.accountID, isFavorite=True)
+        badFavorite.isFavorite = False
+        badFavorite.save()
+
+    order.isFavorite = True
+    order.save()
     return JsonResponse({'status':'success'})
 
 def getFavOrder(request):
