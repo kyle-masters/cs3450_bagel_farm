@@ -2,7 +2,6 @@ import React from 'react';
 import {money} from '../../../../../helpers'
 import classes from './item.module.css';
 import Quantity from './quantity/quantity'
-import Button from '../../../../../components/UI/Button/Button'
 
 const item = (props) => {
     var itemBox = null;
