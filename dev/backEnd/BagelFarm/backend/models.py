@@ -10,7 +10,7 @@ class Account(models.Model):
     phoneNumber = models.CharField(max_length=200)
     type = models.IntegerField()
     balance = models.DecimalField(decimal_places=2, max_digits=20)
-    rewardPoints = models.IntegerField()
+    rewards = models.IntegerField()
 
     def __str__(self):
         return self.firstName
@@ -48,7 +48,7 @@ class Order(models.Model):
     orderTime = models.DateTimeField()
     pickupTime = models.DateTimeField()
     isFavorite = models.BooleanField()
-    rewardPoints = models.IntegerField()
+    rewards = models.IntegerField()
 
     def __str__(self):
         return self.id

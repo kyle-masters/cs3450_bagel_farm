@@ -3,6 +3,7 @@ import axios from '../../axios-main'
 import Inventory from './inventory/inventory';
 import classes from './inventory-page.module.css'
 import Spinner from '../../components/UI/Spinner/Spinner'
+import Button from '../../components/UI/ButtonRelative/ButtonRelative'
 
 
 class InventoryPage extends Component {
@@ -119,6 +120,7 @@ class InventoryPage extends Component {
     render() {
         var inventoryPage =
             <div className={classes.InventoryPage}>
+                <Button clicked={this.props.backToAccountPage}>Back To Account Page</Button>
                 <Inventory 
                     data={this.state.inventory}
                     itemSelections={this.state.itemSelectionsShown}

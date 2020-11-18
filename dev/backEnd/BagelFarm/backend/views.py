@@ -45,7 +45,7 @@ def register(request):
                 type=0,
                 password=request.GET.get('password'),
                 balance=100,
-                rewardPoints=0
+                rewards=0
             )
             account.save()
 
@@ -77,12 +77,12 @@ def validateRegistration(requestInfo):
         if info is None:
             response = JsonResponse({'status': False})
             response['Access-Control-Allow-Origin'] = '*'
-            return response
+            return False
 
     if Account.objects.filter(email=requestInfo[2]).exists():
         response = False
         response['Access-Control-Allow-Origin'] = '*'
-        return response
+        return False
 
     # Implement data validations
 
@@ -148,7 +148,8 @@ def orderStatus(request):
             'status': order.status,
             'orderTime': order.orderTime,
             'pickupTime': order.pickupTime,
-            'price': order.price
+            'price': order.price,
+            'rewards': order.rewards
         }
         orderInfoList.append(orderInfo)
 
@@ -156,6 +157,37 @@ def orderStatus(request):
                          'orders': orderInfoList})
     response['Access-Control-Allow-Origin'] = '*'
     return response
+
+
+def getOrderByStatus(request):
+    orders = Order.objects.all().filter(status=request.GET.get('status'))
+
+    orderInfoList = []
+    for order in orders:
+        items = OrderItem.objects.all().filter(orderID=order.id)
+        itemInfoList = []
+        for item in items:
+            itemInfo = {
+                'name': item.name,
+                'quantity': item.quantity,
+                'price': item.price
+            }
+            itemInfoList.append(itemInfo)
+        orderInfo = {
+            'orderID': int(order.id),
+            'items': itemInfoList,
+            'status': order.status,
+            'orderTime': order.orderTime,
+            'pickupTime': order.pickupTime,
+            'price': order.price,
+            'rewards': order.rewards
+        }
+        orderInfoList.append(orderInfo)
+
+    response = JsonResponse({'orders': orderInfoList})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+
 
 def placeOrder(request):
 
@@ -166,7 +198,7 @@ def placeOrder(request):
         orderTime=timezone.now(),
         pickupTime=timezone.now(),
         isFavorite=False,
-        rewardPoints = 0
+        rewards=0
     )
 
     totalPrice = Decimal(0.0)
@@ -187,8 +219,8 @@ def placeOrder(request):
     order.rewardPoints = totalPrice * 100 * random.randint(1, 5)
 
     # Rewards for the account
-    account = Account.objects.all().get(id=accountID)
-    account.rewardPoints = account.rewardPoints + order.rewardPoints
+    account = Account.objects.all().get(id=request.GET.get("id"))
+    account.rewards = account.rewards + order.rewards
     account.save()
 
     response = JsonResponse({'status': True})
@@ -275,7 +307,8 @@ def orderHistory(request):
             'status': order.status,
             'orderTime': order.orderTime,
             'pickupTime': order.pickupTime,
-            'price': order.price
+            'price': order.price,
+            'rewards': order.rewards
         }
         orderInfoList.append(orderInfo)
 
@@ -286,7 +319,6 @@ def orderHistory(request):
 
   
 def updateOrder(request):
-    acctID = request.GET.get('id')
     orderID = request.GET.get('order')
     newStatus = request.GET.get('status')
 
@@ -328,3 +360,51 @@ def viewOrder(request):
     response = JsonResponse(orderInfo)
     response['Access-Control-Allow-Origin'] = '*'
     return response
+
+def deleteAccount(request):
+    acctID = request.GET.get('id')
+    Account.objects.filter(id=acctID).delete()
+    
+    response = JsonResponse({'status': True})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+
+def updateInfo(request):
+    acctID = request.GET.get('id')
+    field = request.GET.get('field')
+    value = request.GET.get('value')
+
+    account = Account.objects.all().get(id=acctID)
+
+    setattr(account, field, value)
+    account.save()
+
+    response = JsonResponse({'status': True})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+
+def manageAccounts(request):
+    try:
+        allAccounts = Account.objects.all()
+
+        accounts = []
+        for account in allAccounts:
+            accounts.append({
+                'firstName': account.firstName,
+                'lastName': account.lastName,
+                'email': account.email,
+                'phoneNumber': account.phoneNumber,
+                'rewards': account.rewards,
+                'balance': account.balance,
+                'password': account.password,
+                'type': account.type,
+                'userID': account.id
+        })
+
+        response = JsonResponse({'accounts': accounts})
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
+    except:
+        response = JsonResponse({'status':False})
+        response['Access-Control-Allow-Origin'] = '*'
+        return response

@@ -1,0 +1,11 @@
+.Accounts {
+    width: 70%;
+    max-width: 700px;
+    min-width: 500px;
+    display: inline-block;
+    text-align: left;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    opacity: .8;
+}

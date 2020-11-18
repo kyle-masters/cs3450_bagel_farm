@@ -24,6 +24,11 @@
     background-color: rgba(215, 167, 105, 0.151);
 }
 
+.Button:disabled {
+    background-color: #a3a3a3;
+    color: #525252;
+}
+
 .OrderButton {
     width: 200px;
 }
