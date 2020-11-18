@@ -315,11 +315,33 @@ def orderHistory(request):
 def updateOrder(request):
     orderID = request.GET.get('order')
     newStatus = request.GET.get('status')
+    acctID = request.GET.get('id')
 
+    account = Account.objects.all().get(id=acctID)
     order = Order.objects.all().get(id=orderID)
+
+    validUpdate = True
+    if order.status == 0:
+        validUpdate = False
+    if order.status == 1:
+        if newStatus == 0:
+            if account.type != 0 and account.type != 3:
+                validUpdate = False
+        elif newStatus == 2:
+            if account.type != 2 and account.type != 3:
+                validUpdate = False
+        else:
+            validUpdate = False
+    if order.status == 2:
+        if newStatus == 3:
+            if account.type != 2 and account.type != 3:
+                validUpdate = False
+        else:
+            validUpdate = False
 
     order.status = newStatus
     order.save()
+
 
     # Validate if account has permission
 
