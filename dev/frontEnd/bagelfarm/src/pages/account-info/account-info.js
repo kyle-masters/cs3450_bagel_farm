@@ -161,7 +161,8 @@ class AccountInfo extends Component {
                     'phoneNumber': data['phoneNumber'],
                     'email': data['email'],
                     'balance': data['balance'],
-                    'rewards': data['rewards']
+                    'rewards': data['rewards'],
+                    'type': data['type']
                   },
                   fieldUpdating: false,
                   firstNameInput: null,
