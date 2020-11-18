@@ -14,5 +14,6 @@ urlpatterns = [
     path('history', views.orderHistory, name='history'),
     path('update', views.updateOrder, name='update'),
     path('view', views.viewOrder, name='view'),
-    path('updateInfo', views.updateInfo, name='updateInfo')
+    path('updateInfo', views.updateInfo, name='updateInfo'),
+    path('mostpurchased', views.mostpurchased, name='mostpurchased')
 ]
