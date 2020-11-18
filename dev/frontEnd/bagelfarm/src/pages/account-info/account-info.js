@@ -6,7 +6,7 @@ import Spinner from '../../components/UI/Spinner/Spinner'
 import ChefTasks from './chef-tasks/chef-tasks'
 import CashierTasks from './cashier-tasks/cashier-tasks'
 import ManagerTasks from './manager-tasks/manager-tasks'
-import ManageAccounts from './manage-accounts/manage-accounts'
+import ManageAccounts from '../../pages/manage-accounts/manage-accounts-page'
 import InventoryPage from '../inventory-page/inventory-page'
 
 class AccountInfo extends Component {
@@ -321,19 +321,19 @@ class AccountInfo extends Component {
                                     height={"8.5%"}
                                     right={"5%"}
                                     bottom={"14%"}
-                                    disabled={this.state.userData.type === 1}
+                                    disabled={this.state.userData.type === 0}
                                     clicked={this.viewTasksButtonHandler}>View Tasks</Button>
                         <Button width={"43%"}
                                     height={"8.5%"}
                                     left={"5%"}
                                     bottom={"3%"}
-                                    disabled={this.state.userData.type === 1 || this.state.userData.type === 3}
+                                    disabled={this.state.userData.type === 0 || this.state.userData.type === 1}
                                     clicked={this.inventoryButtonHandler}>Inventory</Button>
                         <Button width={"43%"}
                                     height={"8.5%"}
                                     right={"5%"}
                                     bottom={"3%"}
-                                    disabled={this.state.userData.type !== 4}
+                                    disabled={this.state.userData.type !== 3}
                                     clicked={this.manageAccountsButtonHandler}>Manage Accounts</Button>
                     </div>
                 </div>
