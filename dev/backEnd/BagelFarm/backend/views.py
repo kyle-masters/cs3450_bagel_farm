@@ -355,6 +355,14 @@ def viewOrder(request):
     response['Access-Control-Allow-Origin'] = '*'
     return response
 
+def deleteAccount(request):
+    acctID = request.GET.get('id')
+    Account.objects.filter(id=acctID).delete()
+    
+    response = JsonResponse({'status': True})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+
 def updateInfo(request):
     acctID = request.GET.get('id')
     field = request.GET.get('field')

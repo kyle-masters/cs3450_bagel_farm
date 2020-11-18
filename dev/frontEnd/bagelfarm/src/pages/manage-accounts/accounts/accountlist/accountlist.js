@@ -17,7 +17,12 @@ const accountList = (props) => {
                     return (
                             <Account
                                 data={el}
-                                key={idx}/>
+                                key={idx}
+                                showDetailsID={props.detailsOpen === el.userID}
+                                showDetails={() => props.showDetails(el.userID)}
+                                hideDetails={props.hideDetails}
+                                deleteAccount={() => props.deleteAccount(el.userID)}
+                                setRole={props.setRole}/>
                     )
                     })}
                 </div>

@@ -6,72 +6,38 @@
     border-radius: 10px;
     width: 7vw;
     margin: 0;
+    margin-left: 1vw;
 }
 
-.AccountID > h3 {
-    margin: 0;
-    -ms-transform: translateY(31%);
-    transform: translateY(31%);
-}
-
-.AccountName {
+.AccountFirstName {
     position: relative;
     text-transform: capitalize;
     border-radius: 10px;
     width: 18vw;
 }
 
-.AccountEmail {
+.AccountFirstName > h3{
+    margin-left: 0.5vw;
+}
+
+.AccountLastName {
     position: relative;
     text-transform: capitalize;
     border-radius: 10px;
-    max-width: 15vw;
-    min-width: 15vw;
+    width: 15vw;
 }
 
-.AccountEmail > h3 {
-    margin: 0;
-    -ms-transform: translateY(80%);
-    transform: translateY(80%);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.AccountRewards {
-    position: relative;
-    text-transform: capitalize;
-    border-radius: 10px;
-    width: 12.5vw;
-}
-
-.AccountRewards > h3 {
-    -ms-transform: translateY(20%);
-    transform: translateY(20%);
-}
-
-.AccountBalance {
-    position: relative;
-    text-transform: capitalize;
-    width: 14vw;
-    border-radius: 10px;   
-}
-
-.AccountBalance > h3 {
-    -ms-transform: translateY(50%);
-    transform: translateY(50%);
+.AccountLastName > h3{
+    margin-left: 0.5vw;
 }
 
 .AccountRole {
     position: relative;
     text-transform: capitalize;
     width: 9vw;
-    border-radius: 10px;   
-}
-
-.AccountRole > h3 {
-    -ms-transform: translateY(50%);
-    transform: translateY(50%);
+    border-radius: 10px;  
+    margin: auto; 
+    margin-right: 1vw;
 }
 
 .AccountAction {
@@ -104,40 +70,42 @@
     padding-right: 50px;
 }
 
-.AccountBalanceHdr {
-    position: relative;
-    text-transform: capitalize;
-    width: 13vw;
-    border-radius: 10px;   
-}
-
-.AccountRoleHdr {
-    position: relative;
-    text-transform: capitalize;
-    width: 11vw;
-    border-radius: 10px;   
-}
-
-.AccountActionHdr {
-    position: relative;
-    text-transform: capitalize;
-    border-radius: 10px;
-}
-
 .Button {
-    height: 40px;
-    width: 8vw;
+    height: 30px;
+    width: 5vw;
+    min-width: 90px;
     background-color: rgb(255, 92, 92);
     transition: all 0.2s ease-out;
     color: #3d1c17;
     border: 1px solid #3d1c17;
     border-radius: 3px;
     font-family: Baskerville Old Face;
-    font-size: 20px;
+    font-size: max(1vw, 18px);
+    margin-right: 0.1vw;
+    z-index: 1000;
 }
 
 .Button:hover {
     background-color: #3d1c17;
     color: rgb(198, 167, 132);
+    transition: all 0.2s ease-out;
+}
+
+.DetailsBtn {
+    background-color: #3d1c17;
+    color: rgb(198, 167, 132);
+    border: none;
+    margin: auto;
+    margin-left: -0.5vw;
+    border-radius: 2px;
+    width: 2vw;
+    height: 1.1vw;
+    padding: 0;
+    transition: all 0.2s ease-out;
+}
+
+.DetailsBtn:hover {
+    background-color: rgb(198, 167, 132);
+    color: #3d1c17;
     transition: all 0.2s ease-out;
 }

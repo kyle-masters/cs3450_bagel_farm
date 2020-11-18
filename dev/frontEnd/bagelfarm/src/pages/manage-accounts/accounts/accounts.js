@@ -8,7 +8,12 @@ const accountList = (props) => {
             <h1>Accounts</h1>
             <div className={classes.Accounts}>
                 <AccountList 
-                    data={props.accountSelections}/>
+                    data={props.accountSelections}
+                    showDetails={props.showDetails}
+                    hideDetails={props.hideDetails}
+                    detailsOpen={props.detailsOpen}
+                    deleteAccount={props.deleteAccount}
+                    setRole={props.setRole}/>
             </div>
         </div>
     )

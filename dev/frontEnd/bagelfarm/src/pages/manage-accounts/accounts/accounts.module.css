@@ -1,5 +1,7 @@
 .Accounts {
-    width: 90%;
+    width: 70%;
+    max-width: 700px;
+    min-width: 500px;
     display: inline-block;
     text-align: left;
     background-color: white;

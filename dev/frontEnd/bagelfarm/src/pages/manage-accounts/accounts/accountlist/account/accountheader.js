@@ -8,20 +8,20 @@ const accountHeader = (props) => {
                 <h2>ID</h2>
             </div>
 
-            <div className={classes.AccountName}>
-                <h2>Name</h2>
+            <div className={classes.AccountFirstName}>
+                <h2>First Name</h2>
             </div>
 
-            <div className={classes.AccountEmail}>
-                <h2>Email</h2>
+            <div className={classes.AccountLastName}>
+                <h2>Last Name</h2>
             </div>
 
-            <div className={classes.AccountRewards}>
-                <h2>Rewards</h2>
+            <div className={classes.AccountRole}>
+                <h2>Role</h2>
             </div>
 
-            <div className={classes.AccountBalance}>
-                <h2>Balance</h2>
+            <div className={classes.AccountAction}>
+                <h2>Action</h2>
             </div>
         </div>
     ) 

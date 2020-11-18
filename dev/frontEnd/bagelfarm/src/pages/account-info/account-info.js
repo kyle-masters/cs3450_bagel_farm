@@ -333,7 +333,7 @@ class AccountInfo extends Component {
                                     height={"8.5%"}
                                     right={"5%"}
                                     bottom={"3%"}
-                                    disabled={this.state.userData.type != 4}
+                                    disabled={this.state.userData.type !== 4}
                                     clicked={this.manageAccountsButtonHandler}>Manage Accounts</Button>
                     </div>
                 </div>

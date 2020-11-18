@@ -15,5 +15,6 @@ urlpatterns = [
     path('update', views.updateOrder, name='update'),
     path('view', views.viewOrder, name='view'),
     path('updateInfo', views.updateInfo, name='updateInfo'),
-    path('manageAccounts', views.manageAccounts, name='manageAccounts')
+    path('manageAccounts', views.manageAccounts, name='manageAccounts'),
+    path('deleteAccount', views.deleteAccount, name='deleteAccount')
 ]
