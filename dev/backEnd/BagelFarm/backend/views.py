@@ -210,7 +210,8 @@ def placeOrder(request):
                 name=Item.objects.all().get(id=v).name,
                 quantity=request.GET.get("qty_"+k[5:], 1),
                 price=Item.objects.all().get(id=v).price * Decimal(request.GET.get("qty_"+k[5:], 1)),
-                orderID=order
+                orderID=order,
+                itemID=v
             )
             totalPrice = totalPrice + orderitem.price
 
@@ -434,15 +435,36 @@ def mostpurchased(request):
 
     orderList = list(orders)
 
-    itemList = {}
+    allStock = Item.objects.all()
+    stock = []
+    for item in allStock:
+        stock.append({
+            'name': item.name,
+            'qty': item.stock,
+            'price': item.price,
+            'category': item.category,
+            'id': item.id,
+            'quantity': 0
+        })
+
+    for i, dict in enumerate(stock):
+        if dict['id'] == 3:
+            response = JsonResponse({'order': i})
+
     for order in orderList:
         items = OrderItem.objects.all().filter(orderID=order)
         for item in items:
-            if item.name in itemList:
-                itemList[item.name] = itemList[item.name] + item.quantity
-            else:
-                itemList[item.name] = item.quantity
+            iid = item.itemID
+            x = findDict(stock, 'id', item.itemID)
+            stock[x]['quantity'] = stock[x]['quantity'] + item.quantity
 
-    response = JsonResponse({'orders': itemList})
+    stock.sort(reverse=True, key=lambda inventory: inventory['quantity'])
+
+    response = JsonResponse({'inventory': stock})
     response['Access-Control-Allow-Origin'] = '*'
     return response
+
+def findDict(list, key, value):
+    for i, dict in enumerate(list):
+        if dict[key] == value:
+            return i

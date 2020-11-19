@@ -32,6 +32,7 @@ class OrderItem(models.Model):
         on_delete=models.CASCADE,
     )
     price = models.DecimalField(decimal_places=2, max_digits=20)
+    itemID = models.IntegerField()
 
     def __str__(self):
         return self.name
