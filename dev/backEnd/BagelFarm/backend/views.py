@@ -436,9 +436,7 @@ def mostpurchased(request):
     else:
         endDate = strptime(endDate, "%Y-%m-%d")
 
-
-
-    orders = Order.objects.all().filter(orderTime__gt=startDate)
+    orders = Order.objects.all().filter(orderTime__gt=startDate, orderTime__lte=endDate)
     if acctID is not None:
         orders.filter(accountID=acctID)
 
@@ -456,14 +454,9 @@ def mostpurchased(request):
             'quantity': 0
         })
 
-    for i, dict in enumerate(stock):
-        if dict['id'] == 3:
-            response = JsonResponse({'order': i})
-
     for order in orderList:
         items = OrderItem.objects.all().filter(orderID=order)
         for item in items:
-            iid = item.itemID
             x = findDict(stock, 'id', item.itemID)
             stock[x]['quantity'] = stock[x]['quantity'] + item.quantity
 
