@@ -58,7 +58,8 @@ def register(request):
                 'phoneNumber': newAccount.phoneNumber,
                 'email': newAccount.email,
                 'balance': newAccount.balance,
-                'rewards': newAccount.rewards
+                'rewards': newAccount.rewards,
+                'type': newAccount.type
             })
             response['Access-Control-Allow-Origin'] = '*'
             return response
@@ -112,7 +113,8 @@ def login(request):
                     'phoneNumber': acctId.phoneNumber,
                     'email': acctId.email,
                     'balance': acctId.balance,
-                    'rewards': acctId.rewards
+                    'rewards': acctId.rewards,
+                    'type': acctId.type
                 })
                 response['Access-Control-Allow-Origin'] = '*'
                 return response
@@ -191,6 +193,10 @@ def getOrderByStatus(request):
 
 def placeOrder(request):
 
+    redeemedPoints = request.GET.get("points", 0)
+
+    # validate if enough points/balance
+
     order = Order.objects.all().create(
         status=1,
         accountID=request.GET.get("id"),
@@ -208,19 +214,21 @@ def placeOrder(request):
                 name=Item.objects.all().get(id=v).name,
                 quantity=request.GET.get("qty_"+k[5:], 1),
                 price=Item.objects.all().get(id=v).price * Decimal(request.GET.get("qty_"+k[5:], 1)),
-                orderID=order
+                orderID=order,
+                itemID=v
             )
             totalPrice = totalPrice + orderitem.price
 
-    order.price = totalPrice
-    order.save()
+    order.price = totalPrice - redeemedPoints/1000
 
     # Rewards for the order
-    order.rewardPoints = totalPrice * 100 * random.randint(1, 5)
+    order.rewardPoints = totalPrice * random.randint(100, 500)
+    order.save()
 
     # Rewards for the account
     account = Account.objects.all().get(id=request.GET.get("id"))
     account.rewards = account.rewards + order.rewards
+    account.balance = account.balance - order.price
     account.save()
 
     response = JsonResponse({'status': True})
@@ -231,25 +239,32 @@ def setFavOrder(request):
     orderID = request.GET.get("id")
     orderID.isFavorite = request.GET.get("isFavorite")
     orderID.save()
-    return JsonResponse({'status':'success'})
+    response = JsonResponse({'status': 'success'})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
 
 def getFavOrder(request):
     orderID = request.GET.get("id")
     if(orderID != None):
-        return JsonResponse({'status':'fail'})
+        response = JsonResponse({'status': 'fail'})
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
     else:
-        return JsonResponse(orderID.isFavorite)
-    
+        response = JsonResponse(orderID.isFavorite)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
+
 
 def getCurrentPrice(name):
     nameParts = name.split("_")
     item = Item.objects.all().get(name=nameParts[0], category=nameParts[1])
     return item.price
 
-#Inventory functions
+
 def decrementInventory(id, amount):
     unluckyItem = Item.objects.all().get(id=id)
     unluckyItem.stock = unluckyItem.stock - 1
+
 
 def restock(id):
     luckyItem = Item.objects.all().get(id=id)
@@ -258,6 +273,7 @@ def restock(id):
     else:
         luckyItem.stock = 100
     luckyItem.save()
+
 
 def getStock(request):
     restockId = request.GET.get("id")
@@ -278,6 +294,7 @@ def getStock(request):
     response = JsonResponse({'inventory': stock})
     response['Access-Control-Allow-Origin'] = '*'
     return response
+
 
 def orderHistory(request):
     acctID = request.GET.get('id')
@@ -315,15 +332,43 @@ def orderHistory(request):
 def updateOrder(request):
     orderID = request.GET.get('order')
     newStatus = request.GET.get('status')
+    acctID = request.GET.get('id')
 
+    account = Account.objects.all().get(id=acctID)
     order = Order.objects.all().get(id=orderID)
 
-    order.status = newStatus
-    order.save()
+    validUpdate = True
+    if order.status == 0:
+        validUpdate = False
+    if order.status == 1:
+        if newStatus == 0:
+            if account.type != 0 and account.type != 3:
+                validUpdate = False
+        elif newStatus == 2:
+            if account.type != 2 and account.type != 3:
+                validUpdate = False
+        else:
+            validUpdate = False
+    if order.status == 2:
+        if newStatus == 3:
+            if account.type != 2 and account.type != 3:
+                validUpdate = False
+        else:
+            validUpdate = False
+    if order.status == 3:
+        if newStatus == 4 or newStatus == 5:
+            if account.type != 1 and account.type != 2 and account.type != 3:
+                validUpdate = False
+            else:
+                order.pickupTime = timezone.now()
+        else:
+            validUpdate = False
 
-    # Validate if account has permission
+    if validUpdate == True:
+        order.status = newStatus
+        order.save()
 
-    response = JsonResponse({'status': True})
+    response = JsonResponse({'status': ValidUpdate})
     response['Access-Control-Allow-Origin'] = '*'
     return response
 
@@ -355,6 +400,7 @@ def viewOrder(request):
     response['Access-Control-Allow-Origin'] = '*'
     return response
 
+
 def deleteAccount(request):
     acctID = request.GET.get('id')
     Account.objects.filter(id=acctID).delete()
@@ -362,6 +408,7 @@ def deleteAccount(request):
     response = JsonResponse({'status': True})
     response['Access-Control-Allow-Origin'] = '*'
     return response
+
 
 def updateInfo(request):
     acctID = request.GET.get('id')
@@ -377,6 +424,59 @@ def updateInfo(request):
     response['Access-Control-Allow-Origin'] = '*'
     return response
 
+
+def mostpurchased(request):
+    startDate = request.GET.get('start', 1) # format is YYYY-mm-dd ("%Y-%m-%d")
+    endDate = request.GET.get('end', 1)
+    acctID = request.GET.get(id, None)
+
+    if startDate == 1:
+        startDate = timezone.now()
+        startDate = startDate.replace(year=startDate.year-1)
+    else:
+        startDate = strptime(startDate, "%Y-%m-%d")
+
+    if endDate == 1:
+        endDate = timezone.now()
+    else:
+        endDate = strptime(endDate, "%Y-%m-%d")
+
+    orders = Order.objects.all().filter(orderTime__gt=startDate, orderTime__lte=endDate)
+    if acctID is not None:
+        orders.filter(accountID=acctID)
+
+    orderList = list(orders)
+
+    allStock = Item.objects.all()
+    stock = []
+    for item in allStock:
+        stock.append({
+            'name': item.name,
+            'qty': item.stock,
+            'price': item.price,
+            'category': item.category,
+            'id': item.id,
+            'quantity': 0
+        })
+
+    for order in orderList:
+        items = OrderItem.objects.all().filter(orderID=order)
+        for item in items:
+            x = findDict(stock, 'id', item.itemID)
+            stock[x]['quantity'] = stock[x]['quantity'] + item.quantity
+
+    stock.sort(reverse=True, key=lambda inventory: inventory['quantity'])
+
+    response = JsonResponse({'inventory': stock})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+
+def findDict(list, key, value):
+    for i, dict in enumerate(list):
+        if dict[key] == value:
+            return i
+          
+          
 def manageAccounts(request):
     try:
         allAccounts = Account.objects.all()
