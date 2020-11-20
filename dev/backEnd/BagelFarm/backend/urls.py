@@ -17,5 +17,5 @@ urlpatterns = [
     path('updateInfo', views.updateInfo, name='updateInfo'),
     path('mostpurchased', views.mostpurchased, name='mostpurchased'),
     path('manageAccounts', views.manageAccounts, name='manageAccounts'),
-    path('deleteAccount', views.deleteAccount, name='deleteAccount')
+    path('deleteAccount', views.deleteAccount, name='deleteAccount'),
 ]

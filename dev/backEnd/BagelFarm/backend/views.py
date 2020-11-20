@@ -193,6 +193,10 @@ def getOrderByStatus(request):
 
 def placeOrder(request):
 
+    redeemedPoints = request.GET.get("points", 0)
+
+    # validate if enough points/balance
+
     order = Order.objects.all().create(
         status=1,
         accountID=request.GET.get("id"),
@@ -215,15 +219,16 @@ def placeOrder(request):
             )
             totalPrice = totalPrice + orderitem.price
 
-    order.price = totalPrice
-    order.save()
+    order.price = totalPrice - redeemedPoints/1000
 
     # Rewards for the order
     order.rewardPoints = totalPrice * random.randint(100, 500)
+    order.save()
 
     # Rewards for the account
     account = Account.objects.all().get(id=request.GET.get("id"))
     account.rewards = account.rewards + order.rewards
+    account.balance = account.balance - order.price
     account.save()
 
     response = JsonResponse({'status': True})
