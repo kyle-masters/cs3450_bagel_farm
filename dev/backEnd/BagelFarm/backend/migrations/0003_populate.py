@@ -29,11 +29,11 @@ def populate_db(apps, schema_editor):
     for line in fileLines:
         accountInfo = line.split(',')
         theType = 0
-        if accountInfo[2] == 'Cashier':
+        if accountInfo[2].lower().strip() == 'cashier':
             theType = 1
-        if accountInfo[2] == 'chef':
+        if accountInfo[2].lower().strip() == 'chef':
             theType = 2
-        if accountInfo[2] == 'Manager':
+        if accountInfo[2].lower().strip() == 'manager':
             theType = 3
         account = MyModel.objects.all().create(
             firstName=accountInfo[0],
