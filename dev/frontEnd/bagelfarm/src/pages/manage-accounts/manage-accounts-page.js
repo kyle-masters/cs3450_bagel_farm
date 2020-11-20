@@ -3,7 +3,7 @@ import axios from '../../axios-main'
 import Accounts from './accounts/accounts';
 import classes from './manage-accounts-page.module.css'
 import Spinner from '../../components/UI/Spinner/Spinner'
-
+import Button from '../../components/UI/ButtonRelative/ButtonRelative'
 
 class ManageAccountsPage extends Component {
     state = {
@@ -83,6 +83,7 @@ class ManageAccountsPage extends Component {
     render() {
         var manageAccountsPage =
             <div className={classes.ManageAccountsPage}>
+                <Button clicked={this.props.backToAccountPage}>Back To Account Page</Button>
                 <Accounts 
                     data={this.state.accounts}
                     accountSelections={this.state.accountSelectionsShown}
