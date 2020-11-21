@@ -9,7 +9,7 @@ const item = (props) => {
     if (props.data) {
         itemBox = 
             <div className={classes.Item}>
-                <h3 className={classes.Name}>{props.data.name} {props.data.category}</h3>
+                <h3 className={classes.Name}>{props.data.name} {props.data.category === "bagel" ? props.data.category : null}</h3>
                 <h4>{money.format(props.data.price)}</h4>
                 <QuantityToggle 
                     qty={props.data.qty}

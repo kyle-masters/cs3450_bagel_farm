@@ -1,6 +1,7 @@
 import React from 'react';
 import {money} from '../../../../../helpers'
 import classes from './selectedorders.module.css';
+import OrderAdditions from './order-additions/order-additions'
 
 const selectedOrders = (props) => {
     var selected = null
@@ -10,14 +11,15 @@ const selectedOrders = (props) => {
             <div className={classes.Orders}>
                 <div className={classes.OrderSelections}>
                     <h2>Selected Items</h2>
-                    <h2>Quantity</h2>
                 </div>
                 {props.items.length >= 1 ? props.items.map((el, idx) => {
                     return (
-                        <div key={idx} className={classes.OrderSelections}>
-                            <h3>{el.name + " " + el.category}</h3>
-                            <h3>{el.qty}</h3>
-                        </div>
+                        <OrderAdditions
+                            addExtrasButtonClicked={() => props.addExtrasButtonClicked(idx)}
+                            extrasSelected={props.extrasSelected === idx}
+                            data={el}
+                            key={idx}
+                            />
                     )
                 }): <h3>No Items Selected</h3>}
             </div>

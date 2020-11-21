@@ -8,12 +8,6 @@
     width: 50%;
 }
 
-.OrderSelections {
-    display: flex;
-    justify-content: space-between;
-    width: 400px;
-}
-
 .Total {
     margin: 0 20px;
     width: 50%;

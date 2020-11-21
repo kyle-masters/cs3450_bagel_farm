@@ -4,6 +4,7 @@ import ItemHeader from './item/itemheader'
 import classes from './itemlist.module.css';
 
 const itemList = (props) => {
+    console.log(props)
     var items = null;
 
     if (props.data) {
@@ -12,13 +13,16 @@ const itemList = (props) => {
                 <ItemHeader />
                 <div className={classes.Items}>
                     {props.data.map((el, idx) => {
-                    return (
+                    if (el.category === "bagel" || el.category === "beverage") {
+                        return (
                             <Item
                                 data={el}
                                 key={idx}
                                 toggleUp={() => props.toggleUp(el.id)}
                                 toggleDown={() => props.toggleDown(el.id)}/>
-                    )
+                        )
+                    } else 
+                    return null
                     })}
                 </div>
             </div>

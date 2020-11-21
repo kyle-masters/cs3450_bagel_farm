@@ -38,7 +38,8 @@ class OrdersPage extends Component {
         errorDisplayText: "",
         displayConfirmOrder: false,
         updateItems: false,
-        spinner: false
+        spinner: false,
+        selectedItemExtrasActive: null
     }
 
     componentDidUpdate() {
@@ -141,7 +142,8 @@ class OrdersPage extends Component {
                 this.state.searchBarForm.value, itemSelections
             ),
             orderTotal: this.getOrderTotal(itemSelections),
-            selectedItems: this.updateItemSelectedList(itemSelections)
+            selectedItems: this.updateItemSelectedList(itemSelections),
+            selectedItemExtrasActive: null
         })
     }
 
@@ -163,8 +165,13 @@ class OrdersPage extends Component {
                 this.state.searchBarForm.value, itemSelections
             ),
             orderTotal: this.getOrderTotal(itemSelections),
-            selectedItems: this.updateItemSelectedList(itemSelections)
+            selectedItems: this.updateItemSelectedList(itemSelections),
+            selectedItemExtrasActive: null
         })
+    }
+
+    addExtrasButtonClickedHandler = (id) => {
+        this.setState({selectedItemExtrasActive: id})
     }
 
     orderButtonClickedHandler = () => {
@@ -224,7 +231,9 @@ class OrdersPage extends Component {
         var selectedItems = []
         itemSelections.forEach((el) => {
             if (el.qty > 0) {
-                selectedItems.push(el)
+                for (var i = 0; i < el.qty; i++) {
+                    selectedItems.push(el)
+                }
             }
         })
         return selectedItems;
@@ -280,6 +289,8 @@ class OrdersPage extends Component {
                     searchBarChanged={this.searchBarChangedHandler}
                     toggleUp={this.toggleUpHandler}
                     toggleDown={this.toggleDownHandler}
+                    addExtrasButtonClicked={this.addExtrasButtonClickedHandler}
+                    extrasSelected={this.state.selectedItemExtrasActive}
                     totalOrderAmount={this.state.orderTotal}
                     selectedItems={this.state.selectedItems}
                     pickupTimeForm={this.state.pickupTimeForm}
