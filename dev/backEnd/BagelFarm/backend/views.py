@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Account, Item, Order, OrderItem
+from .models import Account, Item, Order, OrderItem, FullItem
 from django.utils import timezone
 from decimal import *
 import re
@@ -16,7 +16,7 @@ def account(request):
             'lastName': b.lastName,
             'email': b.email,
             'phoneNumber': b.phoneNumber,
-            'rewards': b.rewards,
+            'rewards': b.rewardPoints,
             'balance': b.balance,
             'password': b.password,
             'type': b.type
@@ -69,7 +69,7 @@ def register(request):
             response['Access-Control-Allow-Origin'] = '*'
             return response
     except ValueError:
-        response = JsonResponse({'status': False})
+        response = False
         response['Access-Control-Allow-Origin'] = '*'
         return response
 
@@ -81,7 +81,7 @@ def validateRegistration(requestInfo):
             return False
 
     if Account.objects.filter(email=requestInfo[2]).exists():
-        response = JsonResponse({'status': False})
+        response = False
         response['Access-Control-Allow-Origin'] = '*'
         return False
 
@@ -95,14 +95,32 @@ def login(request):
 
         #Validate email using a regex
         if re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", emailAttempt) == None:
-            response = JsonResponse({'status': False})
+            response = JsonResponse({'status': 'Invalid Email!'})
             response['Access-Control-Allow-Origin'] = '*'
             return response
         
         else:
-            passwordAttempt = request.GET.get('password', 'admin')
-
+            passwordAttempt = request.GET.get('password', 'admin')            
             #Validate password using a regex
+            specialCharExists = False
+
+            for i in passwordAttempt:
+                if(ord(i) == 33 #Check the character is a '!'
+                or ord(i) > 34 or ord(i) < 38 #Check if the character is a '#','$', '%', '&'
+                or ord(i) == 63 #Checks if the character is a '?'
+                or ord(i) == 64): #Checks if the character is a '@'
+                    specialCharExists = True
+                else:
+                    specialCharExists = False
+                
+            if not len(passwordAttempt) >= 8 \
+            or not all(ord(c) < 128 for c in passwordAttempt) or not specialCharExists:
+                response = JsonResponse({'status':'Invalid Password!'})
+                response['Access-Control-Allow-Origin'] = '*'
+                return response
+
+
+
             acctId = Account.objects.get(email = emailAttempt)
 
             if acctId.password == passwordAttempt:
@@ -135,14 +153,18 @@ def orderStatus(request):
 
     orderInfoList = []
     for order in orders:
-        items = OrderItem.objects.all().filter(orderID=order.id)
+        itemlist = order.fullitem_set.all()
         itemInfoList = []
-        for item in items:
+        for item in itemlist:
+            ingredientlist = item.orderitem_set.all()
             itemInfo = {
-                'name': item.name,
+                'itemNum': item.itemInOrder,
                 'quantity': item.quantity,
-                'price': item.price
+                'price': item.price,
+                'ingredients': []
             }
+            for ingredient in ingredientlist:
+                itemInfo['ingredients'].append(ingredient.name)
             itemInfoList.append(itemInfo)
         orderInfo = {
             'orderID': int(order.id),
@@ -166,14 +188,18 @@ def getOrderByStatus(request):
 
     orderInfoList = []
     for order in orders:
-        items = OrderItem.objects.all().filter(orderID=order.id)
+        itemlist = order.fullitem_set.all()
         itemInfoList = []
-        for item in items:
+        for item in itemlist:
+            ingredientlist = item.orderitem_set.all()
             itemInfo = {
-                'name': item.name,
+                'itemNum': item.itemInOrder,
                 'quantity': item.quantity,
-                'price': item.price
+                'price': item.price,
+                'ingredients': []
             }
+            for ingredient in ingredientlist:
+                itemInfo['ingredients'].append(ingredient.name)
             itemInfoList.append(itemInfo)
         orderInfo = {
             'orderID': int(order.id),
@@ -202,7 +228,7 @@ def placeOrder(request):
         accountID=request.GET.get("id"),
         price=0,
         orderTime=timezone.now(),
-        pickupTime=timezone.now(),
+        pickupTime=request.GET.get("pickup", timezone.now()),
         isFavorite=False,
         rewards=0
     )
@@ -210,16 +236,27 @@ def placeOrder(request):
     totalPrice = Decimal(0.0)
     for k, v in request.GET.items():
         if k.startswith("item"):
+            fullItemVar = k.split("_")[1]
+            if not order.fullitem_set.all().filter(itemInOrder=fullItemVar):
+                order.fullitem_set.create(
+                    price=0.0,
+                    quantity=request.GET.get("qty_"+fullItemVar),
+                    itemInOrder=fullItemVar
+                )
             orderitem = OrderItem.objects.all().create(
                 name=Item.objects.all().get(id=v).name,
-                quantity=request.GET.get("qty_"+k[5:], 1),
-                price=Item.objects.all().get(id=v).price * Decimal(request.GET.get("qty_"+k[5:], 1)),
+                quantity=request.GET.get("qty_"+fullItemVar, 1),
+                price=Item.objects.all().get(id=v).price * Decimal(request.GET.get("qty_"+fullItemVar, 1)),
                 orderID=order,
-                itemID=v
+                itemID=v,
+                fullItem=order.fullitem_set.all().get(itemInOrder=fullItemVar)
             )
+            fullItem = order.fullitem_set.all().get(itemInOrder=fullItemVar)
+            fullItem.price = fullItem.price + orderitem.price
+            fullItem.save()
             totalPrice = totalPrice + orderitem.price
 
-    order.price = float(totalPrice) - float(redeemedPoints)/1000
+    order.price = float(totalPrice) - redeemedPoints/1000
 
     # Rewards for the order
     order.rewardPoints = totalPrice * random.randint(100, 500)
@@ -227,7 +264,7 @@ def placeOrder(request):
 
     # Rewards for the account
     account = Account.objects.all().get(id=request.GET.get("id"))
-    account.rewards = account.rewards + order.rewards
+    account.rewards = float(account.rewards) + float(order.rewards)
     account.balance = float(account.balance) - float(order.price)
     account.save()
 
@@ -303,14 +340,18 @@ def orderHistory(request):
 
     orderInfoList = []
     for order in orders:
-        items = OrderItem.objects.all().filter(orderID=order.id)
+        itemlist = order.fullitem_set.all()
         itemInfoList = []
-        for item in items:
+        for item in itemlist:
+            ingredientlist = item.orderitem_set.all()
             itemInfo = {
-                'name': item.name,
+                'itemNum': item.itemInOrder,
                 'quantity': item.quantity,
-                'price': item.price
+                'price': item.price,
+                'ingredients': []
             }
+            for ingredient in ingredientlist:
+                itemInfo['ingredients'].append(ingredient.name)
             itemInfoList.append(itemInfo)
         orderInfo = {
             'orderID': int(order.id),
