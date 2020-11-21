@@ -16,7 +16,7 @@ def account(request):
             'lastName': b.lastName,
             'email': b.email,
             'phoneNumber': b.phoneNumber,
-            'rewards': b.rewards,
+            'rewards': b.rewardPoints,
             'balance': b.balance,
             'password': b.password,
             'type': b.type
@@ -69,7 +69,7 @@ def register(request):
             response['Access-Control-Allow-Origin'] = '*'
             return response
     except ValueError:
-        response = JsonResponse({'status': False})
+        response = False
         response['Access-Control-Allow-Origin'] = '*'
         return response
 
@@ -81,7 +81,7 @@ def validateRegistration(requestInfo):
             return False
 
     if Account.objects.filter(email=requestInfo[2]).exists():
-        response = JsonResponse({'status': False})
+        response = False
         response['Access-Control-Allow-Origin'] = '*'
         return False
 
@@ -95,14 +95,33 @@ def login(request):
 
         #Validate email using a regex
         if re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", emailAttempt) == None:
-            response = JsonResponse({'status': False})
+            response = JsonResponse({'status': 'Invalid Email!'})
             response['Access-Control-Allow-Origin'] = '*'
             return response
         
         else:
-            passwordAttempt = request.GET.get('password', 'admin')
-
+            passwordAttempt = request.GET.get('password', 'admin')            
             #Validate password using a regex
+            specialCharExists = False
+
+            for i in passwordAttempt:
+                if(ord(i) == 33 #Check the character is a '!'
+                or ord(i) > 34 or ord(i) < 38 #Check if the character is a '#','$', '%', '&'
+                or ord(i) == 63 #Checks if the character is a '?'
+                or ord(i) == 64): #Checks if the character is a '@'
+                    specialCharExists = True
+                else:
+                    specialCharExists = False
+                
+            if not len(passwordAttempt) >= 8 #Checks if the password is greater than 8 characters
+            or not all(ord(c) < 128 for c in passwordAttempt) #Checks if the password is all ASCII values
+            or not specialCharExists): #Checks if the special character exists
+                response = JsonResponse({'status':'Invalid Password!'})
+                response['Access-Control-Allow-Origin'] = '*'
+                return response
+
+
+
             acctId = Account.objects.get(email = emailAttempt)
 
             if acctId.password == passwordAttempt:
