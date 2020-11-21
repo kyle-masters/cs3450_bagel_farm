@@ -76,9 +76,13 @@ def register(request):
 def validateRegistration(requestInfo):
     for info in requestInfo:
         if info is None:
+            response = JsonResponse({'status': False})
+            response['Access-Control-Allow-Origin'] = '*'
             return False
 
     if Account.objects.filter(email=requestInfo[2]).exists():
+        response = JsonResponse({'status': False})
+        response['Access-Control-Allow-Origin'] = '*'
         return False
 
     # Implement data validations
@@ -96,27 +100,9 @@ def login(request):
             return response
         
         else:
-            passwordAttempt = request.GET.get('password', 'admin')            
+            passwordAttempt = request.GET.get('password', 'admin')
+
             #Validate password using a regex
-            specialCharExists = False
-
-            for i in passwordAttempt:
-                if(ord(i) == 33 #Check the character is a '!'
-                or ord(i) > 34 or ord(i) < 38 #Check if the character is a '#','$', '%', '&'
-                or ord(i) == 63 #Checks if the character is a '?'
-                or ord(i) == 64): #Checks if the character is a '@'
-                    specialCharExists = True
-                else:
-                    specialCharExists = False or specialCharExists
-                
-            if not len(passwordAttempt) >= 8 \
-            or not all(ord(c) < 128 for c in passwordAttempt) or not specialCharExists:
-                response = JsonResponse({'status':'Invalid Password!'})
-                response['Access-Control-Allow-Origin'] = '*'
-                return response
-
-
-
             acctId = Account.objects.get(email = emailAttempt)
 
             if acctId.password == passwordAttempt:
@@ -252,7 +238,9 @@ def placeOrder(request):
             fullItem.save()
             totalPrice = totalPrice + orderitem.price
 
-    order.price = float(totalPrice) - redeemedPoints/1000
+            order.price = float(totalPrice) - redeemedPoints/1000
+
+    order.price = totalPrice - redeemedPoints/1000
 
     # Rewards for the order
     order.rewardPoints = totalPrice * random.randint(100, 500)
@@ -338,7 +326,7 @@ def orderHistory(request):
     for order in orders:
         itemlist = order.fullitem_set.all()
         itemInfoList = []
-        for item in itemlist:
+        for item in items:
             ingredientlist = item.orderitem_set.all()
             itemInfo = {
                 'itemNum': item.itemInOrder,
