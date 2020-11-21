@@ -219,9 +219,8 @@ def placeOrder(request):
     for k, v in request.GET.items():
         if k.startswith("item"):
             fullItemVar = k.split("_")[1]
-            list = order.fullitem_set.all().filter(itemInOrder=fullItemVar)
             if not order.fullitem_set.all().filter(itemInOrder=fullItemVar):
-                fullItem = order.fullitem_set.create(
+                order.fullitem_set.create(
                     price=0.0,
                     quantity=request.GET.get("qty_"+fullItemVar),
                     itemInOrder=fullItemVar
@@ -234,6 +233,9 @@ def placeOrder(request):
                 itemID=v,
                 fullItem=order.fullitem_set.all().get(itemInOrder=fullItemVar)
             )
+            fullItem = order.fullitem_set.all().get(itemInOrder=fullItemVar)
+            fullItem.price = fullItem.price + orderitem.price
+            fullItem.save()
             totalPrice = totalPrice + orderitem.price
 
     order.price = float(totalPrice) - redeemedPoints/1000
