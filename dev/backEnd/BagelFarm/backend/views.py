@@ -219,7 +219,7 @@ def placeOrder(request):
             )
             totalPrice = totalPrice + orderitem.price
 
-    order.price = totalPrice - redeemedPoints/1000
+    order.price = float(totalPrice) - float(redeemedPoints)/1000
 
     # Rewards for the order
     order.rewardPoints = totalPrice * random.randint(100, 500)
@@ -228,7 +228,7 @@ def placeOrder(request):
     # Rewards for the account
     account = Account.objects.all().get(id=request.GET.get("id"))
     account.rewards = account.rewards + order.rewards
-    account.balance = account.balance - order.price
+    account.balance = float(account.balance) - float(order.price)
     account.save()
 
     response = JsonResponse({'status': True})
