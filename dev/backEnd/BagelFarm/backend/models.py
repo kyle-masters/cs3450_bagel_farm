@@ -26,13 +26,17 @@ class Item(models.Model):
 
 class OrderItem(models.Model):
     name = models.CharField(max_length=200)
-    quantity = models.IntegerField()
     orderID = models.ForeignKey(
         'Order',
         on_delete=models.CASCADE,
     )
+    quantity = models.IntegerField()
     price = models.DecimalField(decimal_places=2, max_digits=20)
     itemID = models.IntegerField()
+    fullItem = models.ForeignKey(
+        'FullItem',
+        on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.name
@@ -53,3 +57,13 @@ class Order(models.Model):
 
     def __str__(self):
         return self.id
+
+
+class FullItem(models.Model):
+    order = models.ForeignKey(
+        'Order',
+        on_delete=models.CASCADE
+    )
+    price = models.DecimalField(decimal_places=2, max_digits=20)
+    quantity = models.IntegerField()
+    itemInOrder = models.IntegerField()
