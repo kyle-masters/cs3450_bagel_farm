@@ -50,6 +50,7 @@ class ManageAccountsPage extends Component {
     }
 
     setRole = (id, type) => {
+        
         this.setState({spinner: true})
         axios.get(`/updateInfo?id=${id}&field=type&value=${type}`)
         .then((response) => {

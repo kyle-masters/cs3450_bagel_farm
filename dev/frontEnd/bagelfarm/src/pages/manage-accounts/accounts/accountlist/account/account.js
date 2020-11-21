@@ -26,34 +26,34 @@ const account = (props) => {
 
                     <div className={classes.AccountRole}>
                         {props.data.type === 0 ?
-                        <select>
-                            <option value="0" onClick={() => props.setRole(props.data.userID, 0)}>{role[0]}</option>
-                            <option value="1" onClick={() => props.setRole(props.data.userID,1)}>{role[1]}</option>
-                            <option value="2" onClick={() => props.setRole(props.data.userID,2)}>{role[2]}</option>
-                            <option value="3" onClick={() => props.setRole(props.data.userID,3)}>{role[3]}</option>
+                        <select onChange={(e) => props.setRole(props.data.userID, e.target.value)}>
+                            <option value="0">{role[0]}</option>
+                            <option value="1">{role[1]}</option>
+                            <option value="2">{role[2]}</option>
+                            <option value="3">{role[3]}</option>
                         </select>
                         :
                         props.data.type === 1 ?
-                            <select>
-                                <option value="1" onClick={() => props.setRole(props.data.userID,1)}>{role[1]}</option>
-                                <option value="0" onClick={() => props.setRole(props.data.userID,0)}>{role[0]}</option>
-                                <option value="2" onClick={() => props.setRole(props.data.userID,2)}>{role[2]}</option>
-                                <option value="3" onClick={() => props.setRole(props.data.userID,3)}>{role[3]}</option>
+                            <select onChange={(e) => props.setRole(props.data.userID, e.target.value)}>
+                                <option value="1">{role[1]}</option>
+                                <option value="0">{role[0]}</option>
+                                <option value="2">{role[2]}</option>
+                                <option value="3">{role[3]}</option>
                             </select>
                             :
                             props.data.type === 2 ?
-                                <select>
-                                    <option value="2" onClick={() => props.setRole(props.data.userID,2)}>{role[2]}</option>
-                                    <option value="0" onClick={() => props.setRole(props.data.userID,0)}>{role[0]}</option>
-                                    <option value="1" onClick={() => props.setRole(props.data.userID,1)}>{role[1]}</option>
-                                    <option value="3" onClick={() => props.setRole(props.data.userID,3)}>{role[3]}</option>
+                                <select onChange={(e) => props.setRole(props.data.userID, e.target.value)}>
+                                    <option value="2">{role[2]}</option>
+                                    <option value="0">{role[0]}</option>
+                                    <option value="1">{role[1]}</option>
+                                    <option value="3">{role[3]}</option>
                                 </select>
                                 :
-                                <select>
-                                    <option value="3" onClick={() => props.setRole(props.data.userID,3)}>{role[3]}</option>
-                                    <option value="0" onClick={() => props.setRole(props.data.userID,0)}>{role[0]}</option>
-                                    <option value="1" onClick={() => props.setRole(props.data.userID,1)}>{role[1]}</option>
-                                    <option value="2" onClick={() => props.setRole(props.data.userID,2)}>{role[2]}</option>
+                                <select onChange={(e) => props.setRole(props.data.userID, e.target.value)}>
+                                    <option value="3">{role[3]}</option>
+                                    <option value="0">{role[0]}</option>
+                                    <option value="1">{role[1]}</option>
+                                    <option value="2">{role[2]}</option>
                                 </select>
                         }
                     </div>

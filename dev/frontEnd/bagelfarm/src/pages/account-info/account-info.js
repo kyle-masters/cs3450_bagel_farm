@@ -76,7 +76,7 @@ class AccountInfo extends Component {
             }
         } else if(field === 'balance') {
             if(this.state.balanceInput != null) {
-                this.updateField('balance', this.state.balanceInput);
+                this.updateField('balance', +this.state.balanceInput + +this.state.userData['balance']);
             }
         }
     }
