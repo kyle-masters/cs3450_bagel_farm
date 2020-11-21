@@ -22,14 +22,17 @@ const orderTracker = (props) => {
                 </div>
             </div>
             {props.showDetailsID ? <Button clicked={props.hideDetails}>Hide Details</Button> : <Button clicked={props.showDetails}>Show Details</Button>}
-            {props.showDetailsID ? <OrderDetails {...props.data}/> : null}    
+            <div className={classes.AddOns}>
+                {props.showDetailsID ? <OrderDetails {...props.data}/> : null}   
+            </div>
+             
         </div>
     )
 }
 
 const getItemList = (items) => {
     var string = "";
-    items.forEach(element => string += element.ingredients + ", ")
+    items.forEach(element => string += element.ingredients[0] + ", ")
     return string.slice(0, -2);
 }
 

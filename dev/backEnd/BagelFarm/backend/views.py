@@ -160,7 +160,7 @@ def orderStatus(request):
                 'ingredients': []
             }
             for ingredient in ingredientlist:
-                itemInfo['ingredients'].append(ingredient.name)
+                itemInfo['ingredients'].append(ingredient.name + " " + Item.objects.all().filter(id=ingredient.itemID)[0].category)
             itemInfoList.append(itemInfo)
         orderInfo = {
             'orderID': int(order.id),
@@ -195,7 +195,7 @@ def getOrderByStatus(request):
                 'ingredients': []
             }
             for ingredient in ingredientlist:
-                itemInfo['ingredients'].append(ingredient.name)
+                itemInfo['ingredients'].append(ingredient.name + " " + Item.objects.all().filter(id=ingredient.itemID)[0].category)
             itemInfoList.append(itemInfo)
         orderInfo = {
             'orderID': int(order.id),
@@ -347,7 +347,7 @@ def orderHistory(request):
                 'ingredients': []
             }
             for ingredient in ingredientlist:
-                itemInfo['ingredients'].append(ingredient.name)
+                itemInfo['ingredients'].append(ingredient.name + " " + Item.objects.all().filter(id=ingredient.itemID)[0].category)
             itemInfoList.append(itemInfo)
         orderInfo = {
             'orderID': int(order.id),

@@ -275,11 +275,16 @@ class OrdersPage extends Component {
 
     getItemOrderString = () => {
         var orderString = ""
-        var count = 0
+        var bigCount = 0
         this.state.selectedItems.forEach(el => {
-            count += 1
-            orderString += ("item_" + count + "=" + el.id + "&")
-            orderString += ("qty_" + count + "=" + el.qty + "&")
+            bigCount += 1
+            var smallCount = 1
+            orderString += ("item_" + bigCount + "_" + smallCount + "=" + el.id + "&")
+            el.qty[el.refID].forEach(element => {
+                smallCount += 1
+                orderString += ("item_" + bigCount + "_" + smallCount + "=" + element.id + "&")
+            })
+            orderString += ("qty_" + bigCount + "=1&")
         })
         return orderString.slice(0, -1);
     }
@@ -299,14 +304,15 @@ class OrdersPage extends Component {
         })
         var selectedItems = []
         itemSelections.forEach((el) => {
-            if (el.category === "bagel" || el.category === "beverage")
-            if (el.qty.length > 0) {
-                for (var i = 0; i < el.qty.length; i++) {
-                    el = {...el}
-                    el.refID = i
-                    selectedItems.push(el)
+            if (el.category === "bagel" || el.category === "beverage") {
+                if (el.qty.length > 0) {
+                    for (var i = 0; i < el.qty.length; i++) {
+                        el = {...el}
+                        el.refID = i
+                        selectedItems.push(el)
+                    }
                 }
-            }
+            } 
         })
         return selectedItems;
     }

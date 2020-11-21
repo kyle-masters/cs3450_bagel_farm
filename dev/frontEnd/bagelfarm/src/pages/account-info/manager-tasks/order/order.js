@@ -35,7 +35,7 @@ const order = (props) => {
 
 const getItemList = (items) => {
     var string = "";
-    items.forEach(element => string += element.ingredients + ", ")
+    items.forEach(element => string += element.ingredients[0] + ", ")
     return string.slice(0, -2);
 }
 
