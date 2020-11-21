@@ -36,3 +36,8 @@
 .AddExtrasButton {
     width: 150px;
 }
+
+.Extras:hover {
+    background-color: #3d1c17;
+    color: white;
+}

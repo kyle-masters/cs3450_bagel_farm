@@ -4,7 +4,6 @@ import ItemHeader from './item/itemheader'
 import classes from './itemlist.module.css';
 
 const itemList = (props) => {
-    console.log(props)
     var items = null;
 
     if (props.data) {

@@ -15,8 +15,10 @@ const selectedOrders = (props) => {
                 {props.items.length >= 1 ? props.items.map((el, idx) => {
                     return (
                         <OrderAdditions
-                            addExtrasButtonClicked={() => props.addExtrasButtonClicked(idx)}
-                            extrasSelected={props.extrasSelected === idx}
+                            addExtrasButtonClicked={() => props.addExtrasButtonClicked(el.name + "_" + el.refID)}
+                            extrasSelected={props.extrasSelected === (el.name + "_" + el.refID)}
+                            addRemoveExtrasButtonClicked={props.addRemoveExtrasButtonClicked}
+                            itemSelections={props.itemSelections}
                             data={el}
                             key={idx}
                             />

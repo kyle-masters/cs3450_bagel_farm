@@ -74,7 +74,7 @@ class OrdersPage extends Component {
             updatedInventory[idx] = {...inventory[idx]}
         })  
         updatedInventory.forEach((el) => {
-            el.qty = 0
+            el.qty = []
         })
         this.setState({
             itemSelections: updatedInventory,
@@ -133,7 +133,7 @@ class OrdersPage extends Component {
         })
         itemSelections.forEach((el) => {
             if (el.id === id) {
-                el.qty += 1
+                el.qty.push([])
             }
         })
         this.setState({
@@ -152,13 +152,27 @@ class OrdersPage extends Component {
         itemSelections.forEach((el, idx) => {
             itemSelections[idx] = {...this.state.itemSelections[idx]}
         })
+
+        var item = null
+
         itemSelections.forEach((el) => {
             if (el.id === id) {
-                if (el.qty > 0) {
-                    el.qty -= 1
+                if (el.qty.length > 0) {
+                    item = el.qty.pop()
                 }
             }
         })
+
+        if (item) {
+            item.forEach((element) => {
+                itemSelections.forEach((value) => {
+                    if (element.name === value.name && element.category === value.category) {
+                        value.qty.pop()
+                    }
+                })
+            })
+        }
+
         this.setState({
             itemSelections: itemSelections,
             itemSelectionsShown: this.updateItemSelectionsShown(
@@ -170,8 +184,63 @@ class OrdersPage extends Component {
         })
     }
 
-    addExtrasButtonClickedHandler = (id) => {
-        this.setState({selectedItemExtrasActive: id})
+    addExtrasButtonClickedHandler = (name) => {
+        if (this.state.selectedItemExtrasActive === (name)) {
+            this.setState({selectedItemExtrasActive: null})
+        } else {
+            this.setState({selectedItemExtrasActive: (name)})
+        }
+    }
+
+    addRemoveExtrasButtonClickedHandler = (el, name, buttonState) => {
+        const nameSplit = name.split('_')
+        const item = nameSplit[0]
+        const idx = parseInt(nameSplit[1])
+        var itemSelections = [...this.state.itemSelections]
+        itemSelections.forEach((value, idx) => {
+            itemSelections[idx] = {...this.state.itemSelections[idx]}
+        })
+
+        if (buttonState) {
+            itemSelections.forEach((element) => {
+                if (element.id === el.id) {
+                    element.qty.push([])
+                }
+    
+                if (element.name === item && element.category === "bagel" ) {
+                    const copiedEl = {...el}
+                    element.qty[idx].push(copiedEl)
+                }
+            })
+        } else {
+            itemSelections.forEach((element) => {
+                if (element.id === el.id) {
+                    if (el.qty.length > 0) {
+                        el.qty.pop()
+                    }
+                }
+    
+                if (element.name === item && element.category === "bagel" ) {
+                    var index = null
+                    element.qty[idx].forEach((value, idx) => {
+                        if (value.name === el.name && value.category === el.category) {
+                             index = idx
+                        }
+                    })
+                    element.qty[idx].splice(index, 1)
+                }
+            })
+        }
+        
+
+        this.setState({
+            itemSelections: itemSelections,
+            itemSelectionsShown: this.updateItemSelectionsShown(
+                this.state.searchBarForm.value, itemSelections
+            ),
+            orderTotal: this.getOrderTotal(itemSelections),
+            selectedItems: this.updateItemSelectedList(itemSelections),
+        })
     }
 
     orderButtonClickedHandler = () => {
@@ -218,7 +287,7 @@ class OrdersPage extends Component {
     getOrderTotal = (itemSelections) => {
         var totalAmount = 0.0;
         itemSelections.forEach(el => {
-            totalAmount += el.qty * parseFloat(el.price)
+            totalAmount += el.qty.length * parseFloat(el.price)
         })
         return totalAmount;
     }
@@ -230,8 +299,11 @@ class OrdersPage extends Component {
         })
         var selectedItems = []
         itemSelections.forEach((el) => {
-            if (el.qty > 0) {
-                for (var i = 0; i < el.qty; i++) {
+            if (el.category === "bagel" || el.category === "beverage")
+            if (el.qty.length > 0) {
+                for (var i = 0; i < el.qty.length; i++) {
+                    el = {...el}
+                    el.refID = i
                     selectedItems.push(el)
                 }
             }
@@ -291,6 +363,7 @@ class OrdersPage extends Component {
                     toggleDown={this.toggleDownHandler}
                     addExtrasButtonClicked={this.addExtrasButtonClickedHandler}
                     extrasSelected={this.state.selectedItemExtrasActive}
+                    addRemoveExtrasButtonClicked={this.addRemoveExtrasButtonClickedHandler}
                     totalOrderAmount={this.state.orderTotal}
                     selectedItems={this.state.selectedItems}
                     pickupTimeForm={this.state.pickupTimeForm}

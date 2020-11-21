@@ -17,6 +17,8 @@ const orderPlacement = (props) => {
                     toggleUp={props.toggleUp}
                     toggleDown={props.toggleDown}/>
                 <OrderSummary 
+                    addRemoveExtrasButtonClicked={props.addRemoveExtrasButtonClicked}
+                    itemSelections={props.itemSelections}
                     extrasSelected={props.extrasSelected}
                     addExtrasButtonClicked={props.addExtrasButtonClicked}
                     totalAmount={props.totalOrderAmount}

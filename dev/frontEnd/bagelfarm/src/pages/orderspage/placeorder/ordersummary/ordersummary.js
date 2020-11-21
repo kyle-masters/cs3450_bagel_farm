@@ -10,6 +10,8 @@ const orderSummary = (props) => {
     summary =
         <div className={classes.Summary}>
             <SelectedOrders 
+                addRemoveExtrasButtonClicked={props.addRemoveExtrasButtonClicked}
+                itemSelections={props.itemSelections}
                 extrasSelected={props.extrasSelected}
                 addExtrasButtonClicked={props.addExtrasButtonClicked}
                 items={props.selectedItems}
