@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Account, Item, Order, OrderItem
+from .models import Account, Item, Order, OrderItem, FullItem
 from django.utils import timezone
 from decimal import *
 import re
@@ -154,14 +154,18 @@ def orderStatus(request):
 
     orderInfoList = []
     for order in orders:
-        items = OrderItem.objects.all().filter(orderID=order.id)
+        itemlist = order.fullitem_set.all()
         itemInfoList = []
-        for item in items:
+        for item in itemlist:
+            ingredientlist = item.orderitem_set.all()
             itemInfo = {
-                'name': item.name,
+                'itemNum': item.itemInOrder,
                 'quantity': item.quantity,
-                'price': item.price
+                'price': item.price,
+                'ingredients': []
             }
+            for ingredient in ingredientlist:
+                itemInfo['ingredients'].append(ingredient.name)
             itemInfoList.append(itemInfo)
         orderInfo = {
             'orderID': int(order.id),
@@ -185,14 +189,18 @@ def getOrderByStatus(request):
 
     orderInfoList = []
     for order in orders:
-        items = OrderItem.objects.all().filter(orderID=order.id)
+        itemlist = order.fullitem_set.all()
         itemInfoList = []
-        for item in items:
+        for item in itemlist:
+            ingredientlist = item.orderitem_set.all()
             itemInfo = {
-                'name': item.name,
+                'itemNum': item.itemInOrder,
                 'quantity': item.quantity,
-                'price': item.price
+                'price': item.price,
+                'ingredients': []
             }
+            for ingredient in ingredientlist:
+                itemInfo['ingredients'].append(ingredient.name)
             itemInfoList.append(itemInfo)
         orderInfo = {
             'orderID': int(order.id),
@@ -221,7 +229,7 @@ def placeOrder(request):
         accountID=request.GET.get("id"),
         price=0,
         orderTime=timezone.now(),
-        pickupTime=timezone.now(),
+        pickupTime=request.GET.get("pickup", timezone.now()),
         isFavorite=False,
         rewards=0
     )
@@ -229,16 +237,27 @@ def placeOrder(request):
     totalPrice = Decimal(0.0)
     for k, v in request.GET.items():
         if k.startswith("item"):
+            fullItemVar = k.split("_")[1]
+            if not order.fullitem_set.all().filter(itemInOrder=fullItemVar):
+                order.fullitem_set.create(
+                    price=0.0,
+                    quantity=request.GET.get("qty_"+fullItemVar),
+                    itemInOrder=fullItemVar
+                )
             orderitem = OrderItem.objects.all().create(
                 name=Item.objects.all().get(id=v).name,
-                quantity=request.GET.get("qty_"+k[5:], 1),
-                price=Item.objects.all().get(id=v).price * Decimal(request.GET.get("qty_"+k[5:], 1)),
+                quantity=request.GET.get("qty_"+fullItemVar, 1),
+                price=Item.objects.all().get(id=v).price * Decimal(request.GET.get("qty_"+fullItemVar, 1)),
                 orderID=order,
-                itemID=v
+                itemID=v,
+                fullItem=order.fullitem_set.all().get(itemInOrder=fullItemVar)
             )
+            fullItem = order.fullitem_set.all().get(itemInOrder=fullItemVar)
+            fullItem.price = fullItem.price + orderitem.price
+            fullItem.save()
             totalPrice = totalPrice + orderitem.price
 
-    order.price = totalPrice - redeemedPoints/1000
+    order.price = float(totalPrice) - redeemedPoints/1000
 
     # Rewards for the order
     order.rewardPoints = totalPrice * random.randint(100, 500)
@@ -246,8 +265,8 @@ def placeOrder(request):
 
     # Rewards for the account
     account = Account.objects.all().get(id=request.GET.get("id"))
-    account.rewards = account.rewards + order.rewards
-    account.balance = account.balance - order.price
+    account.rewards = float(account.rewards) + float(order.rewards)
+    account.balance = float(account.balance) - float(order.price)
     account.save()
 
     response = JsonResponse({'status': True})
@@ -322,14 +341,18 @@ def orderHistory(request):
 
     orderInfoList = []
     for order in orders:
-        items = OrderItem.objects.all().filter(orderID=order.id)
+        itemlist = order.fullitem_set.all()
         itemInfoList = []
-        for item in items:
+        for item in itemlist:
+            ingredientlist = item.orderitem_set.all()
             itemInfo = {
-                'name': item.name,
+                'itemNum': item.itemInOrder,
                 'quantity': item.quantity,
-                'price': item.price
+                'price': item.price,
+                'ingredients': []
             }
+            for ingredient in ingredientlist:
+                itemInfo['ingredients'].append(ingredient.name)
             itemInfoList.append(itemInfo)
         orderInfo = {
             'orderID': int(order.id),
