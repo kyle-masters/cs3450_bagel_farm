@@ -34,7 +34,7 @@ class ChefTasks extends Component {
 
     moveToInProgressHandler = (id) => {
         this.setState({detailsOpen: null, spinner: true})
-        axios.get("/update?order=" + id + "&status=2")
+        axios.get("/update?order=" + id + "&status=2&id=" + this.props.getID())
             .then((response) => {
                 this.resetState()
                 this.setState({spinner: false})
@@ -43,7 +43,7 @@ class ChefTasks extends Component {
 
     moveToReadyHandler = (id) => {
         this.setState({detailsOpen: null, spinner: true})
-        axios.get("/update?order=" + id + "&status=3")
+        axios.get("/update?order=" + id + "&status=3&id=" + this.props.getID())
             .then((response) => {
                 this.resetState()
                 this.setState({spinner: false})

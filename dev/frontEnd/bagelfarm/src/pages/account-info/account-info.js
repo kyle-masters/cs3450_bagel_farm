@@ -19,7 +19,7 @@ class AccountInfo extends Component {
             'email': null,
             'balance': null,
             'rewards': null,
-            'type': null
+            'type': null,
           },
           fieldUpdating: false,
           firstNameInput: null,
@@ -349,12 +349,15 @@ class AccountInfo extends Component {
         if (this.state.showTaskPage) {
             if (this.state.userData.type === 2) {
                 accountPage = <ChefTasks
+                                    getID={this.props.getID}
                                     backToAccountPage={this.backToAccountPageHandler}/>
             } else if (this.state.userData.type === 1) {
                 accountPage = <CashierTasks 
+                                    getID={this.props.getID}
                                     backToAccountPage={this.backToAccountPageHandler}/>
             } else if (this.state.userData.type === 3) {
                 accountPage = <ManagerTasks
+                                    getID={this.props.getID}
                                     backToAccountPage={this.backToAccountPageHandler}/>
             }
         } else if (this.state.showManagePage) {

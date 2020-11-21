@@ -28,7 +28,7 @@ class CashierTasks extends Component {
 
     moveToCompleteHandler = (id) => {
         this.setState({detailsOpen: null, spinner: true})
-        axios.get("/update?order=" + id + "&status=4")
+        axios.get("/update?order=" + id + "&status=4&id=" + this.props.getID())
             .then((response) => {
                 this.resetState()
                 this.setState({spinner: false})
@@ -37,7 +37,7 @@ class CashierTasks extends Component {
 
     moveToDonatedHandler = (id) => {
         this.setState({detailsOpen: null, spinner: true})
-        axios.get("/update?order=" + id + "&status=5")
+        axios.get("/update?order=" + id + "&status=5&id=" + this.props.getID())
             .then((response) => {
                 this.resetState()
                 this.setState({spinner: false})

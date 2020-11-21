@@ -20,7 +20,7 @@ const order = (props) => {
 const getItemList = (items) => {
     console.log(items)
     var string = "";
-    items.forEach(element => string += element.name + ", ")
+    items.forEach(element => string += element.ingredients + ", ")
     return string.slice(0, -2);
 }
 

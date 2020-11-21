@@ -16,7 +16,7 @@ def account(request):
             'lastName': b.lastName,
             'email': b.email,
             'phoneNumber': b.phoneNumber,
-            'rewards': b.rewardPoints,
+            'rewards': b.rewards,
             'balance': b.balance,
             'password': b.password,
             'type': b.type
@@ -76,13 +76,9 @@ def register(request):
 def validateRegistration(requestInfo):
     for info in requestInfo:
         if info is None:
-            response = JsonResponse({'status': False})
-            response['Access-Control-Allow-Origin'] = '*'
             return False
 
     if Account.objects.filter(email=requestInfo[2]).exists():
-        response = False
-        response['Access-Control-Allow-Origin'] = '*'
         return False
 
     # Implement data validations
@@ -111,7 +107,7 @@ def login(request):
                 or ord(i) == 64): #Checks if the character is a '@'
                     specialCharExists = True
                 else:
-                    specialCharExists = False
+                    specialCharExists = False or specialCharExists
                 
             if not len(passwordAttempt) >= 8 \
             or not all(ord(c) < 128 for c in passwordAttempt) or not specialCharExists:
@@ -372,7 +368,7 @@ def orderHistory(request):
   
 def updateOrder(request):
     orderID = request.GET.get('order')
-    newStatus = request.GET.get('status')
+    newStatus = int(request.GET.get('status'))
     acctID = request.GET.get('id')
 
     account = Account.objects.all().get(id=acctID)
@@ -409,7 +405,7 @@ def updateOrder(request):
         order.status = newStatus
         order.save()
 
-    response = JsonResponse({'status': ValidUpdate})
+    response = JsonResponse({'status': validUpdate})
     response['Access-Control-Allow-Origin'] = '*'
     return response
 

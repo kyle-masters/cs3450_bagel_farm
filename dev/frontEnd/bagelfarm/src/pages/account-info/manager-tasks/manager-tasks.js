@@ -40,7 +40,7 @@ class ManagerTasks extends Component {
 
     moveToInProgressHandler = (id) => {
         this.setState({detailsOpen: null, spinner: true})
-        axios.get("/update?order=" + id + "&status=2")
+        axios.get("/update?order=" + id + "&status=2&id=" + this.props.getID())
             .then((response) => {
                 this.resetState()
                 this.setState({spinner: false})
@@ -49,7 +49,7 @@ class ManagerTasks extends Component {
 
     moveToReadyHandler = (id) => {
         this.setState({detailsOpen: null, spinner: true})
-        axios.get("/update?order=" + id + "&status=3")
+        axios.get("/update?order=" + id + "&status=3&id=" + this.props.getID())
             .then((response) => {
                 this.resetState()
                 this.setState({spinner: false})
@@ -58,7 +58,7 @@ class ManagerTasks extends Component {
 
     moveToCompleteHandler = (id) => {
         this.setState({detailsOpen: null, spinner: true})
-        axios.get("/update?order=" + id + "&status=4")
+        axios.get("/update?order=" + id + "&status=4&id=" + this.props.getID())
             .then((response) => {
                 this.resetState()
                 this.setState({spinner: false})
@@ -67,7 +67,7 @@ class ManagerTasks extends Component {
 
     moveToDonatedHandler = (id) => {
         this.setState({detailsOpen: null, spinner: true})
-        axios.get("/update?order=" + id + "&status=5")
+        axios.get("/update?order=" + id + "&status=5&id=" + this.props.getID())
             .then((response) => {
                 this.resetState()
                 this.setState({spinner: false})
