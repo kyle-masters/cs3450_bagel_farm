@@ -240,7 +240,7 @@ def placeOrder(request):
 
             order.price = float(totalPrice) - redeemedPoints/1000
 
-    order.price = totalPrice - redeemedPoints/1000
+    order.price = float(totalPrice) - redeemedPoints/1000
 
     # Rewards for the order
     order.rewardPoints = totalPrice * random.randint(100, 500)
@@ -326,7 +326,7 @@ def orderHistory(request):
     for order in orders:
         itemlist = order.fullitem_set.all()
         itemInfoList = []
-        for item in items:
+        for item in itemlist:
             ingredientlist = item.orderitem_set.all()
             itemInfo = {
                 'itemNum': item.itemInOrder,
