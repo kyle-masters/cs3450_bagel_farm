@@ -202,7 +202,7 @@ def getOrderByStatus(request):
 def placeOrder(request):
     # totalPrice = request.GET.get("cost", 0)
     redeemedPoints = request.GET.get("points", 0)
-    discount = int(redeemedPoints % 100)
+    discount = int(int(redeemedPoints) % 100)
 
     # validate if enough points/balance
 
@@ -216,6 +216,7 @@ def placeOrder(request):
         rewards=0
     )
 
+    totalPrice = Decimal(0.0)
     for k, v in request.GET.items():
         if k.startswith("item"):
             fullItemVar = k.split("_")[1]
@@ -239,7 +240,7 @@ def placeOrder(request):
 
             order.price = float(totalPrice)
 
-    order.price = float(totalPrice)
+    order.price = float(totalPrice) - discount
 
     # Rewards for the order
     order.rewards = float(totalPrice) * random.randint(100, 500)
