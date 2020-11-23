@@ -20,7 +20,8 @@ const orderSummary = (props) => {
                 discountSelected={props.discountSelected}
                 userRewards={props.userRewards}
                 updatePointsUsed={props.updatePointsUsed}
-                pointsTotal={props.pointsTotal}/>
+                pointsTotal={props.pointsTotal}
+                discountError={props.discountError}/>
             <OrderConfirmation 
                 pickupTimeForm={props.pickupTimeForm}
                 changed={props.pickupTimeChanged}

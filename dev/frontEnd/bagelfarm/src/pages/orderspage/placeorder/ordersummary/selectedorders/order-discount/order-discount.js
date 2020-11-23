@@ -16,7 +16,12 @@ const orderDiscount = (props) => {
             <div className={classes.Input}>
                 <h3>Apply Rewards: (100 points = $1.00 off)</h3>
                 <h3>You currently have {props.userRewards} rewards points</h3>
-                <input type="number" value={props.pointsTotal} min="0" max={props.userRewards} step="100" onChange={event => props.updatePointsUsed(event.target.value)}/>
+                <input type="number" value={props.pointsTotal} min="0" max="90000000" step="100" onChange={event => props.updatePointsUsed(event.target.value)}/>
+            </div>
+            : <></>}
+            {props.discountError ?
+            <div className={classes.Error}>
+                <h4>ERROR: You are trying to use more rewards points than you have or are trying to apply a discount larger than the subtotal.</h4>
             </div>
             : <></>}
         </div>

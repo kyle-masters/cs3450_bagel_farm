@@ -34,7 +34,8 @@ const selectedOrders = (props) => {
                     discountSelected={props.discountSelected}
                     userRewards={props.userRewards}
                     updatePointsUsed={props.updatePointsUsed}
-                    pointsTotal={props.pointsTotal}/>
+                    pointsTotal={props.pointsTotal}
+                    discountError={props.discountError}/>
                 <h2>Total: {money.format(props.totalAmount - 0)}</h2>
             </div>
         </div>

@@ -46,7 +46,8 @@ class OrdersPage extends Component {
         updateItems: false,
         spinner: false,
         selectedItemExtrasActive: null,
-        discountSelected: false
+        discountSelected: false,
+        discountError: false
     }
 
     componentDidUpdate() {
@@ -292,17 +293,20 @@ class OrdersPage extends Component {
                 userData: {
                     'balance': data['balance'],
                     'rewardPoints': data['rewards']},
-                discountSelected: ds
+                discountSelected: ds,
+                discountError: false
                 })
             })
     }
 
     updatePointsUsed = (points) => {
         var itemSelections = [...this.state.itemSelections]
-        if(points / 100 <= this.state.subTotal) {
-            this.setState({pointsTotal: points}, function () {
+        if(points / 100 <= this.state.subTotal && points < parseFloat(this.state.userData['rewardPoints'])) {
+            this.setState({pointsTotal: points, discountError: false}, function () {
                 this.setState({orderTotal: this.getOrderTotal(itemSelections)});
             });
+        } else {
+            this.setState({discountError: true})
         }
     }
 
@@ -398,6 +402,7 @@ class OrdersPage extends Component {
                 displayConfirmOrder: false,
                 updateItems: false,
                 discountSelected: false,
+                discountError: false,
                 spinner: false})
                 this.getData();
             })
@@ -437,7 +442,8 @@ class OrdersPage extends Component {
                     userBalance={this.state.userData['balance']}
                     userRewards={this.state.userData['rewardPoints']}
                     updatePointsUsed={this.updatePointsUsed}
-                    pointsTotal={this.state.pointsTotal}/>
+                    pointsTotal={this.state.pointsTotal}
+                    discountError={this.state.discountError}/>
                 <History 
                     currentData={this.state.currentOrders}
                     data={this.state.orderHistory} 

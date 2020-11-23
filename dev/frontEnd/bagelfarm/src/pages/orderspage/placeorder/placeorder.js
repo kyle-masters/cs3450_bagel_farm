@@ -36,7 +36,8 @@ const orderPlacement = (props) => {
                     userBalance={props.userBalance}
                     userRewards={props.userRewards}
                     updatePointsUsed={props.updatePointsUsed}
-                    pointsTotal={props.pointsTotal}/>
+                    pointsTotal={props.pointsTotal}
+                    discountError={props.discountError}/>
             </div>
         </div>
     )
