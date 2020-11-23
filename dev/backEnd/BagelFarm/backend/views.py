@@ -238,11 +238,7 @@ def placeOrder(request):
 
             order.price = float(totalPrice)
 
-<<<<<<< HEAD
-    order.price = float(totalPrice) - redeemedPoints/1000
-=======
     order.price = totalPrice
->>>>>>> origin/development
 
     # Rewards for the order
     order.rewards = totalPrice * random.randint(100, 500)
