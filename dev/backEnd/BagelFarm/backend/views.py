@@ -238,10 +238,10 @@ def placeOrder(request):
 
             order.price = float(totalPrice)
 
-    order.price = totalPrice
+    order.price = float(totalPrice)
 
     # Rewards for the order
-    order.rewards = totalPrice * random.randint(100, 500)
+    order.rewards = float(totalPrice) * random.randint(100, 500)
     order.save()
 
     # Rewards for the account
