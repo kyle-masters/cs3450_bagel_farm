@@ -24,10 +24,14 @@ const orderDetails = (props) => {
                     </div>
                 )
             })}
+            <h3>Sub Total: {money.format(props.subTotal)}</h3>
+            <h3>Discount: {money.format(props.discount)}</h3>
             <h3>Total Price: {money.format(props.price)}</h3>
             <h3>Status: {statusMap[props.status]}</h3>
             <h3>Ordered: {dateTime(props.orderTime)}</h3>
             <h3>Pickup Time: <strong>{dateTime(props.pickupTime)}</strong></h3>
+            <h3>Points Redeemed: {props.redeemed}</h3>
+            <h3>Points Gained: {props.rewards}</h3>
         </div>
     )
 }
