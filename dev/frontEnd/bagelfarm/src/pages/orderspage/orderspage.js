@@ -13,6 +13,10 @@ class OrdersPage extends Component {
         orderHistory: null,
         inventory: null,
         detailsOpen: null,
+        userData: {
+            'balance': null,
+            'rewardPoints': null,
+        },
         searchBarForm: {
             elementType: 'input',
             elementConfig: {
@@ -34,12 +38,15 @@ class OrdersPage extends Component {
         itemSelections: null,
         itemSelectionsShown: null,
         orderTotal: 0,
+        subTotal: 0,
+        pointsTotal: 0,
         selectedItems: [],
         errorDisplayText: "",
         displayConfirmOrder: false,
         updateItems: false,
         spinner: false,
-        selectedItemExtrasActive: null
+        selectedItemExtrasActive: null,
+        discountSelected: false
     }
 
     componentDidUpdate() {
@@ -142,6 +149,7 @@ class OrdersPage extends Component {
                 this.state.searchBarForm.value, itemSelections
             ),
             orderTotal: this.getOrderTotal(itemSelections),
+            subTotal: this.getSubTotal(itemSelections),
             selectedItems: this.updateItemSelectedList(itemSelections),
             selectedItemExtrasActive: null
         })
@@ -179,6 +187,7 @@ class OrdersPage extends Component {
                 this.state.searchBarForm.value, itemSelections
             ),
             orderTotal: this.getOrderTotal(itemSelections),
+            subTotal: this.getSubTotal(itemSelections),
             selectedItems: this.updateItemSelectedList(itemSelections),
             selectedItemExtrasActive: null
         })
@@ -239,6 +248,7 @@ class OrdersPage extends Component {
                 this.state.searchBarForm.value, itemSelections
             ),
             orderTotal: this.getOrderTotal(itemSelections),
+            subTotal: this.getSubTotal(itemSelections),
             selectedItems: this.updateItemSelectedList(itemSelections),
         })
     }
@@ -263,7 +273,7 @@ class OrdersPage extends Component {
 
     submitButtonClickedHandler = () => {
         this.setState({spinner: true})
-        axios.get("/order?id=" + this.props.getID() + "&" + this.getItemOrderString())
+        axios.get("/order?id=" + this.props.getID() + "&cost=" + this.state.orderTotal + "&" + this.getItemOrderString() + "&points=" + this.state.pointsTotal)
             .then((response) => {
                 this.setState({updateItems: true})
             })
@@ -271,6 +281,29 @@ class OrdersPage extends Component {
 
     cancelButtonClickedHandler = () => {
         this.setState({displayConfirmOrder: false})
+    }
+
+    discountButtonClicked = () => {
+        var ds = !this.state.discountSelected;
+        axios.get('/account?id=' + this.props.getID())
+        .then((response) => {
+            const data = response.data
+            this.setState({
+                userData: {
+                    'balance': data['balance'],
+                    'rewardPoints': data['rewards']},
+                discountSelected: ds
+                })
+            })
+    }
+
+    updatePointsUsed = (points) => {
+        var itemSelections = [...this.state.itemSelections]
+        if(points / 100 <= this.state.subTotal) {
+            this.setState({pointsTotal: points}, function () {
+                this.setState({orderTotal: this.getOrderTotal(itemSelections)});
+            });
+        }
     }
 
     getItemOrderString = () => {
@@ -290,6 +323,14 @@ class OrdersPage extends Component {
     }
 
     getOrderTotal = (itemSelections) => {
+        var totalAmount = 0.0;
+        itemSelections.forEach(el => {
+            totalAmount += el.qty.length * parseFloat(el.price)
+        })
+        return totalAmount - (this.state.pointsTotal / 100);
+    }
+
+    getSubTotal = (itemSelections) => {
         var totalAmount = 0.0;
         itemSelections.forEach(el => {
             totalAmount += el.qty.length * parseFloat(el.price)
@@ -318,41 +359,52 @@ class OrdersPage extends Component {
     }
 
     resetState = () => {
-        this.setState({
-            currentOrders: null,
-            orderHistory: null,
-            inventory: null,
-            detailsOpen: null,
-            searchBarForm: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Search Items...'
+        axios.get('/account?id=' + this.props.getID())
+        .then((response) => {
+            const data = response.data
+            this.setState({
+                userData: {
+                    'balance': data['balance'],
+                    'rewardPoints': data['rewards'],
                 },
-                value: "",
-                label: 'Search'
-            },
-            pickupTimeForm: {
-                elementType: 'input',
+                currentOrders: null,
+                orderHistory: null,
+                inventory: null,
+                detailsOpen: null,
+                searchBarForm: {
+                    elementType: 'input',
                     elementConfig: {
-                        type: 'datetime-local',
-                        placeholder: 'Pickup time'
+                        type: 'text',
+                        placeholder: 'Search Items...'
                     },
                     value: "",
-                    label: 'Pickup time'
-            },
-            itemSelections: null,
-            itemSelectionsShown: null,
-            orderTotal: 0,
-            selectedItems: [],
-            errorDisplayText: "",
-            displayConfirmOrder: false,
-            updateItems: false,
-            spinner: false})
-            this.getData();
+                    label: 'Search'
+                },
+                pickupTimeForm: {
+                    elementType: 'input',
+                        elementConfig: {
+                            type: 'datetime-local',
+                            placeholder: 'Pickup time'
+                        },
+                        value: "",
+                        label: 'Pickup time'
+                },
+                itemSelections: null,
+                itemSelectionsShown: null,
+                orderTotal: 0,
+                subTotal: 0,
+                selectedItems: [],
+                errorDisplayText: "",
+                displayConfirmOrder: false,
+                updateItems: false,
+                discountSelected: false,
+                spinner: false})
+                this.getData();
+            })
     }
 
     render() {
+        console.log(this.state.subTotal)
         var ordersPage =
             <div className={classes.OrdersPage}>
                 <Current 
@@ -362,6 +414,7 @@ class OrdersPage extends Component {
                     detailsOpen={this.state.detailsOpen}/>
                 <PlaceOrder 
                     data={this.state.inventory}
+                    discountSelected={this.state.discountSelected}
                     itemSelections={this.state.itemSelectionsShown}
                     searchBarForm={this.state.searchBarForm}
                     searchBarChanged={this.searchBarChangedHandler}
@@ -371,6 +424,7 @@ class OrdersPage extends Component {
                     extrasSelected={this.state.selectedItemExtrasActive}
                     addRemoveExtrasButtonClicked={this.addRemoveExtrasButtonClickedHandler}
                     totalOrderAmount={this.state.orderTotal}
+                    subtotal={this.state.subTotal}
                     selectedItems={this.state.selectedItems}
                     pickupTimeForm={this.state.pickupTimeForm}
                     pickupTimeChanged={this.pickupTimeChangedHandler}
@@ -378,7 +432,12 @@ class OrdersPage extends Component {
                     errorDisplayText={this.state.errorDisplayText}
                     displayConfirmOrder={this.state.displayConfirmOrder}
                     submitButtonClicked={this.submitButtonClickedHandler}
-                    cancelButtonClicked={this.cancelButtonClickedHandler}/>
+                    cancelButtonClicked={this.cancelButtonClickedHandler}
+                    discountButtonClicked={this.discountButtonClicked}
+                    userBalance={this.state.userData['balance']}
+                    userRewards={this.state.userData['rewardPoints']}
+                    updatePointsUsed={this.updatePointsUsed}
+                    pointsTotal={this.state.pointsTotal}/>
                 <History 
                     currentData={this.state.currentOrders}
                     data={this.state.orderHistory} 

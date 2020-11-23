@@ -1,0 +1,7 @@
+.Input {
+    margin-top: 30px;
+}
+.Input > input {
+    width: 200px;
+    height: 25px;
+}

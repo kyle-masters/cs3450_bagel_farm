@@ -33,6 +33,15 @@
     width: 200px;
 }
 
+.DiscountButton {
+    color: black;
+    font-weight: bold;
+    width: 200px;
+    height: 50px;
+    margin-top: -20px;
+    margin-bottom: -20px;
+}
+
 .AddExtrasButton {
     width: 150px;
 }

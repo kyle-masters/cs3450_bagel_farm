@@ -6,7 +6,6 @@ import OrderConfirmation from './orderconfirmation/orderconfirmation'
 
 const orderSummary = (props) => {
     var summary = null;
-
     summary =
         <div className={classes.Summary}>
             <SelectedOrders 
@@ -15,7 +14,13 @@ const orderSummary = (props) => {
                 extrasSelected={props.extrasSelected}
                 addExtrasButtonClicked={props.addExtrasButtonClicked}
                 items={props.selectedItems}
-                totalAmount={props.totalAmount}/>
+                totalAmount={props.totalAmount}
+                subtotal={props.subtotal}
+                discountButtonClicked={props.discountButtonClicked}
+                discountSelected={props.discountSelected}
+                userRewards={props.userRewards}
+                updatePointsUsed={props.updatePointsUsed}
+                pointsTotal={props.pointsTotal}/>
             <OrderConfirmation 
                 pickupTimeForm={props.pickupTimeForm}
                 changed={props.pickupTimeChanged}

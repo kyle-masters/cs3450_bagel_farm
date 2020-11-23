@@ -200,7 +200,7 @@ def getOrderByStatus(request):
 
 
 def placeOrder(request):
-
+    totalPrice = request.GET.get("cost", 0)
     redeemedPoints = request.GET.get("points", 0)
 
     # validate if enough points/balance
@@ -215,40 +215,38 @@ def placeOrder(request):
         rewards=0
     )
 
-    totalPrice = Decimal(0.0)
     for k, v in request.GET.items():
         if k.startswith("item"):
             fullItemVar = k.split("_")[1]
             if not order.fullitem_set.all().filter(itemInOrder=fullItemVar):
                 order.fullitem_set.create(
-                    price=0.0,
+                    price=totalPrice,
                     quantity=request.GET.get("qty_"+fullItemVar),
                     itemInOrder=fullItemVar
                 )
             orderitem = OrderItem.objects.all().create(
                 name=Item.objects.all().get(id=v).name,
                 quantity=request.GET.get("qty_"+fullItemVar, 1),
-                price=Item.objects.all().get(id=v).price * Decimal(request.GET.get("qty_"+fullItemVar, 1)),
+                price=totalPrice,
                 orderID=order,
                 itemID=v,
                 fullItem=order.fullitem_set.all().get(itemInOrder=fullItemVar)
             )
             fullItem = order.fullitem_set.all().get(itemInOrder=fullItemVar)
-            fullItem.price = fullItem.price + orderitem.price
+            fullItem.price = float(fullItem.price) + float(orderitem.price)
             fullItem.save()
-            totalPrice = totalPrice + orderitem.price
 
-            order.price = float(totalPrice) - redeemedPoints/1000
+            order.price = float(totalPrice)
 
-    order.price = totalPrice - redeemedPoints/1000
+    order.price = totalPrice
 
     # Rewards for the order
-    order.rewardPoints = totalPrice * random.randint(100, 500)
+    order.rewards = totalPrice * random.randint(100, 500)
     order.save()
 
     # Rewards for the account
     account = Account.objects.all().get(id=request.GET.get("id"))
-    account.rewards = float(account.rewards) + float(order.rewards)
+    account.rewards = float(account.rewards) + float(order.rewards) - float(redeemedPoints)
     account.balance = float(account.balance) - float(order.price)
     account.save()
 
@@ -326,7 +324,7 @@ def orderHistory(request):
     for order in orders:
         itemlist = order.fullitem_set.all()
         itemInfoList = []
-        for item in items:
+        for item in itemlist:
             ingredientlist = item.orderitem_set.all()
             itemInfo = {
                 'itemNum': item.itemInOrder,
