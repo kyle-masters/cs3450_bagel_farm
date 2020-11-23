@@ -16,12 +16,15 @@ const orderPlacement = (props) => {
                     data={props.itemSelections}
                     toggleUp={props.toggleUp}
                     toggleDown={props.toggleDown}/>
-                <OrderSummary 
+                <OrderSummary
+                    discountButtonClicked={props.discountButtonClicked}
+                    discountSelected={props.discountSelected}
                     addRemoveExtrasButtonClicked={props.addRemoveExtrasButtonClicked}
                     itemSelections={props.itemSelections}
                     extrasSelected={props.extrasSelected}
                     addExtrasButtonClicked={props.addExtrasButtonClicked}
                     totalAmount={props.totalOrderAmount}
+                    subtotal={props.subtotal}
                     selectedItems={props.selectedItems}
                     pickupTimeForm={props.pickupTimeForm}
                     pickupTimeChanged={props.pickupTimeChanged}
@@ -29,7 +32,12 @@ const orderPlacement = (props) => {
                     errorDisplayText={props.errorDisplayText}
                     displayConfirmOrder={props.displayConfirmOrder}
                     submitButtonClicked={props.submitButtonClicked}
-                    cancelButtonClicked={props.cancelButtonClicked}/>
+                    cancelButtonClicked={props.cancelButtonClicked}
+                    userBalance={props.userBalance}
+                    userRewards={props.userRewards}
+                    updatePointsUsed={props.updatePointsUsed}
+                    pointsTotal={props.pointsTotal}
+                    discountError={props.discountError}/>
             </div>
         </div>
     )

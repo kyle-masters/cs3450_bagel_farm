@@ -36,6 +36,7 @@ class AccountInfo extends Component {
     componentDidUpdate() {
         if (this.state.fieldUpdating) {
             this.resetState()
+            console.log('change')
         }
     }
 
@@ -317,6 +318,11 @@ class AccountInfo extends Component {
                                             </div>
                                             : 
                                             <h1 className="content-info"> ${this.state.userData['balance']} </h1>}
+                            
+                        </div>
+                        <div className="content-item" id="rewards">
+                            <h1 className="content-header"> Rewards </h1>
+                            <h1 className="content-info"> {this.state.userData['rewards']} points</h1>
                             
                         </div>
                         <Button width={"43%"}
