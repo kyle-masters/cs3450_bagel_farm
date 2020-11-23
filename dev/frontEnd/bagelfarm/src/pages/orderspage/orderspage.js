@@ -30,10 +30,10 @@ class OrdersPage extends Component {
             elementType: 'input',
                 elementConfig: {
                     type: 'datetime-local',
-                    placeholder: 'First Name'
+                    placeholder: 'Pick-up time'
                 },
                 value: "",
-                label: 'First Name'
+                label: 'Pick-up time'
         },
         itemSelections: null,
         itemSelectionsShown: null,

@@ -155,7 +155,10 @@ def orderStatus(request):
             'orderTime': order.orderTime,
             'pickupTime': order.pickupTime,
             'price': order.price,
-            'rewards': order.rewards
+            'rewards': order.rewards,
+            'redeemed': order.redeemed,
+            'subTotal': order.subTotal,
+            'discount': order.discount
         }
         orderInfoList.append(orderInfo)
 
@@ -190,7 +193,10 @@ def getOrderByStatus(request):
             'orderTime': order.orderTime,
             'pickupTime': order.pickupTime,
             'price': order.price,
-            'rewards': order.rewards
+            'rewards': order.rewards,
+            'redeemed': order.redeemed,
+            'subTotal': order.subTotal,
+            'discount': order.discount
         }
         orderInfoList.append(orderInfo)
 
@@ -202,7 +208,7 @@ def getOrderByStatus(request):
 def placeOrder(request):
     # totalPrice = request.GET.get("cost", 0)
     redeemedPoints = request.GET.get("points", 0)
-    discount = int(int(redeemedPoints) % 100)
+    discount = float(float(redeemedPoints) / 100)
 
     # validate if enough points/balance
 
@@ -213,7 +219,10 @@ def placeOrder(request):
         orderTime=timezone.now(),
         pickupTime=request.GET.get("pickup", timezone.now()),
         isFavorite=False,
-        rewards=0
+        rewards=0,
+        redeemed=redeemedPoints,
+        discount=discount,
+        subTotal=0
     )
 
     totalPrice = Decimal(0.0)
@@ -240,10 +249,11 @@ def placeOrder(request):
 
             order.price = float(totalPrice)
 
+    order.subTotal = float(totalPrice)
     order.price = float(totalPrice) - discount
 
     # Rewards for the order
-    order.rewards = float(totalPrice) * random.randint(100, 500)
+    order.rewards = float(totalPrice) * random.randint(10, 50)
     order.save()
 
     # Rewards for the account
@@ -344,7 +354,10 @@ def orderHistory(request):
             'orderTime': order.orderTime,
             'pickupTime': order.pickupTime,
             'price': order.price,
-            'rewards': order.rewards
+            'rewards': order.rewards,
+            'redeemed': order.redeemed,
+            'subTotal': order.subTotal,
+            'discount': order.discount
         }
         orderInfoList.append(orderInfo)
 
@@ -418,7 +431,11 @@ def viewOrder(request):
         'status': order.status,
         'orderTime': order.orderTime,
         'pickupTime': order.pickupTime,
-        'price': order.price
+        'price': order.price,
+        'rewards': order.rewards,
+        'redeemed': order.redeemed,
+        'subTotal': order.subTotal,
+        'discount': order.discount
     }
 
     response = JsonResponse(orderInfo)

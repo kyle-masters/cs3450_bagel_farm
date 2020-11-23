@@ -50,10 +50,13 @@ class Order(models.Model):
     # 5 donated
     accountID = models.IntegerField()
     price = models.DecimalField(decimal_places=2, max_digits=20)
+    discount = models.DecimalField(decimal_places=2, max_digits=20)
     orderTime = models.DateTimeField()
     pickupTime = models.DateTimeField()
     isFavorite = models.BooleanField()
     rewards = models.IntegerField()
+    redeemed = models.IntegerField()
+    subTotal = models.DecimalField(decimal_places=2, max_digits=20)
 
     def __str__(self):
         return self.id
