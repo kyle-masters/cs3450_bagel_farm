@@ -200,8 +200,9 @@ def getOrderByStatus(request):
 
 
 def placeOrder(request):
-    totalPrice = request.GET.get("cost", 0)
+    # totalPrice = request.GET.get("cost", 0)
     redeemedPoints = request.GET.get("points", 0)
+    discount = int(redeemedPoints % 100)
 
     # validate if enough points/balance
 
