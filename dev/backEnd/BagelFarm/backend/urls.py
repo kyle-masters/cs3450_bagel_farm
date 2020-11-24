@@ -18,4 +18,6 @@ urlpatterns = [
     path('mostpurchased', views.mostpurchased, name='mostpurchased'),
     path('manageAccounts', views.manageAccounts, name='manageAccounts'),
     path('deleteAccount', views.deleteAccount, name='deleteAccount'),
+    path('favorite', views.setFavOrder, name='favorite'),
+    path('getFavorite', views.getFavOrder, name='getFavorite')
 ]

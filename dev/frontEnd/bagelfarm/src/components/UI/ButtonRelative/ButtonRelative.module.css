@@ -50,3 +50,9 @@
     background-color: #3d1c17;
     color: white;
 }
+
+.Favorite {
+    width: 100%;
+    height: 50px;
+    margin-top: 4%;
+}
