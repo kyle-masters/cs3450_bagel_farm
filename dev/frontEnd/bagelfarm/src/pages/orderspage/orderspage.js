@@ -279,7 +279,11 @@ class OrdersPage extends Component {
 
     submitButtonClickedHandler = () => {
         this.setState({spinner: true})
-        axios.get("/order?id=" + this.props.getID() + "&cost=" + this.state.orderTotal + "&" + this.getItemOrderString() + "&points=" + this.state.pointsTotal)
+        axios.get("/order?id=" + this.props.getID() +
+                  "&cost=" + this.state.orderTotal + 
+                  "&" + this.getItemOrderString() + 
+                  "&points=" + this.state.pointsTotal +
+                  "&pickup=" + this.state.pickupTimeForm.value)
             .then((response) => {
                 this.setState({updateItems: true})
             })
