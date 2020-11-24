@@ -11,7 +11,10 @@ const order = (props) => {
                 <h2>{getItemList(props.data.items)}</h2>
                 <h2>{date(props.data.orderTime)}</h2>
             </div>
-            {props.showDetailsID ? <Button clicked={props.hideDetails}>Hide Details</Button> : <Button clicked={props.showDetails}>Show Details</Button>}
+            <div className={classes.Buttons}>
+                {props.showDetailsID ? <Button clicked={props.hideDetails}>Hide Details</Button> : <Button clicked={props.showDetails}>Show Details</Button>}
+                <Button clicked={props.makeFavoriteButtonClicked}>Make Favorite</Button>
+            </div>
             {props.showDetailsID ? <OrderDetails {...props.data}/> : null}    
         </div>
     )

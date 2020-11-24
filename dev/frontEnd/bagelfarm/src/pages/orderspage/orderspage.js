@@ -47,7 +47,8 @@ class OrdersPage extends Component {
         spinner: false,
         selectedItemExtrasActive: null,
         discountSelected: false,
-        discountError: false
+        discountError: false,
+        favoriteOrder: [],
     }
 
     componentDidUpdate() {
@@ -73,6 +74,10 @@ class OrdersPage extends Component {
         axios.get('/status?id=' + this.props.getID())
             .then((response) => {
                 this.setState({currentOrders: response.data})
+            })
+        axios.get('/getFavorite?id=' + this.props.getID())
+            .then((response) => {
+                this.setState({favoriteOrder: response.data.orders})
             })
     }
 
@@ -299,6 +304,54 @@ class OrdersPage extends Component {
             })
     }
 
+    makeFavoriteButtonClickedHandler = (id) => {
+        this.setState({spinner: true})
+        axios.get('/favorite?id=' + this.props.getID() + '&orderID=' + id)
+            .then((response) => {
+                this.setState({updateItems: true})
+            })
+    }
+
+    populateFavoriteButtonClickedHandler = () => {
+        const favOrder = {...this.state.favoriteOrder}
+        var itemSelections = [...this.state.itemSelections]
+        itemSelections.forEach((value, idx) => {
+            itemSelections[idx] = {...this.state.itemSelections[idx]}
+        })
+        itemSelections.forEach((el) => {
+            if (el.qty.length > 0) {
+                el.qty = []
+            }
+        })
+
+        favOrder.items.forEach((item) => {
+            const itemID = item.ingredients[0]
+            // this.toggleUpHandler(itemID)
+            item.ingredients.forEach(((ing, idx) => {
+                itemSelections.forEach((element) => {
+                    if (element.id === ing) {
+                        element.qty.push([])
+                    }
+                    
+                    if (element.id === itemID && idx !== 0) {
+                        const copiedEl = {...itemSelections.filter(el => el.id === ing)[0]}
+                        element.qty[0].push(copiedEl)
+                    }
+                })
+            }))
+        })
+
+        this.setState({
+            itemSelections: itemSelections,
+            itemSelectionsShown: this.updateItemSelectionsShown(
+                this.state.searchBarForm.value, itemSelections
+            ),
+            orderTotal: this.getOrderTotal(itemSelections),
+            subTotal: this.getSubTotal(itemSelections),
+            selectedItems: this.updateItemSelectedList(itemSelections),
+        })
+    }
+
     updatePointsUsed = (points) => {
         var itemSelections = [...this.state.itemSelections]
         if(points / 100 <= this.state.subTotal && points < parseFloat(this.state.userData['rewardPoints'])) {
@@ -397,19 +450,20 @@ class OrdersPage extends Component {
                 itemSelectionsShown: null,
                 orderTotal: 0,
                 subTotal: 0,
+                pointsTotal: 0,
                 selectedItems: [],
                 errorDisplayText: "",
                 displayConfirmOrder: false,
                 updateItems: false,
                 discountSelected: false,
                 discountError: false,
-                spinner: false})
+                spinner: false,
+                favoriteOrder: null})
                 this.getData();
             })
     }
 
     render() {
-        console.log(this.state.subTotal)
         var ordersPage =
             <div className={classes.OrdersPage}>
                 <Current 
@@ -443,13 +497,16 @@ class OrdersPage extends Component {
                     userRewards={this.state.userData['rewardPoints']}
                     updatePointsUsed={this.updatePointsUsed}
                     pointsTotal={this.state.pointsTotal}
-                    discountError={this.state.discountError}/>
+                    discountError={this.state.discountError}
+                    populateFavoriteButtonClicked={this.populateFavoriteButtonClickedHandler}
+                    favoriteSet={this.state.favoriteOrder != null}/>
                 <History 
                     currentData={this.state.currentOrders}
                     data={this.state.orderHistory} 
                     showDetails={this.showDetails}
                     hideDetails={this.hideDetails}
-                    detailsOpen={this.state.detailsOpen}/>
+                    detailsOpen={this.state.detailsOpen}
+                    makeFavoriteButtonClicked={this.makeFavoriteButtonClickedHandler}/>
             </div>
         
         if (this.state.spinner) {

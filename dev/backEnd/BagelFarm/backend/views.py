@@ -98,7 +98,7 @@ def login(request):
             response = JsonResponse({'status': 'Invalid Email!'})
             response['Access-Control-Allow-Origin'] = '*'
             return response
-        
+
         else:
             passwordAttempt = request.GET.get('password', 'admin')
 
@@ -207,7 +207,10 @@ def getOrderByStatus(request):
 
 def placeOrder(request):
     redeemedPoints = request.GET.get("points", 0)
-    discount = float(float(redeemedPoints) / 100)
+    try:
+        discount = float(float(redeemedPoints) / 100)
+    except:
+        discount = 0
 
     # validate if enough points/balance
 
@@ -265,21 +268,64 @@ def placeOrder(request):
     return response
 
 def setFavOrder(request):
-    orderID = request.GET.get("id")
-    orderID.isFavorite = request.GET.get("isFavorite")
-    orderID.save()
+    accountID = request.GET.get("id")
+    orderID = request.GET.get("orderID")
+    orders = Order.objects.all().filter(accountID=accountID).filter(isFavorite=True)
+    for order in orders:
+        order.isFavorite = False
+        order.save()
+    favOrder = Order.objects.all().filter(id=orderID)[0]
+    favOrder.isFavorite = True
+    favOrder.save()
     response = JsonResponse({'status': 'success'})
     response['Access-Control-Allow-Origin'] = '*'
     return response
 
 def getFavOrder(request):
-    orderID = request.GET.get("id")
-    if(orderID != None):
+    accountID = request.GET.get("id")
+    if accountID is None:
         response = JsonResponse({'status': 'fail'})
         response['Access-Control-Allow-Origin'] = '*'
         return response
     else:
-        response = JsonResponse(orderID.isFavorite)
+        order = Order.objects.all().filter(accountID=accountID).filter(isFavorite=True)
+        if len(order) < 1:
+            response = JsonResponse({'status': 'none'})
+            response['Access-Control-Allow-Origin'] = '*'
+            return response
+
+        order = order[0]
+
+        itemlist = order.fullitem_set.all()
+        itemInfoList = []
+        for item in itemlist:
+            ingredientlist = item.orderitem_set.all()
+            itemInfo = {
+                'itemNum': item.itemInOrder,
+                'quantity': item.quantity,
+                'price': item.price,
+                'ingredients': []
+            }
+            for ingredient in ingredientlist:
+                itemInfo['ingredients'].append(
+                    ingredient.itemID)
+            itemInfoList.append(itemInfo)
+        orderInfo = {
+            'orderID': int(order.id),
+            'items': itemInfoList,
+            'status': order.status,
+            'orderTime': order.orderTime,
+            'pickupTime': order.pickupTime,
+            'price': order.price,
+            'rewards': order.rewards,
+            'redeemed': order.redeemed,
+            'subTotal': order.subTotal,
+            'discount': order.discount
+        }
+
+
+        response = JsonResponse({'id': int(accountID),
+                                 'orders': orderInfo})
         response['Access-Control-Allow-Origin'] = '*'
         return response
 
@@ -364,7 +410,7 @@ def orderHistory(request):
     response['Access-Control-Allow-Origin'] = '*'
     return response
 
-  
+
 def updateOrder(request):
     orderID = request.GET.get('order')
     newStatus = int(request.GET.get('status'))
@@ -444,7 +490,7 @@ def viewOrder(request):
 def deleteAccount(request):
     acctID = request.GET.get('id')
     Account.objects.filter(id=acctID).delete()
-    
+
     response = JsonResponse({'status': True})
     response['Access-Control-Allow-Origin'] = '*'
     return response
@@ -515,8 +561,8 @@ def findDict(list, key, value):
     for i, dict in enumerate(list):
         if dict[key] == value:
             return i
-          
-          
+
+
 def manageAccounts(request):
     try:
         allAccounts = Account.objects.all()

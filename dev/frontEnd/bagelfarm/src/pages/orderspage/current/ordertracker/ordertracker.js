@@ -4,7 +4,6 @@ import OrderDetails from '../../orderdetails/orderdetails'
 import Button from '../../../../components/UI/ButtonRelative/ButtonRelative'
 
 const orderTracker = (props) => {
-    console.log(props)
     return (
         <div className={classes.Outside}>
             <h2>{getItemList(props.data.items)}</h2>

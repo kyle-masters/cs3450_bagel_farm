@@ -28,6 +28,7 @@ const history = (props) => {
                             <Order
                                 key={index} 
                                 data={data} 
+                                makeFavoriteButtonClicked={() => props.makeFavoriteButtonClicked(data.orderID)}
                                 showDetailsID={props.detailsOpen === data.orderID}
                                 showDetails={() => props.showDetails(data.orderID)}
                                 hideDetails={props.hideDetails}/>

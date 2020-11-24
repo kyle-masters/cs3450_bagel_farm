@@ -27,6 +27,9 @@ const selectedOrders = (props) => {
                     )
                 }): <h3>No Items Selected</h3>}
             </div>
+            <div className={classes.Favorite}>
+                <Button clicked={props.populateFavoriteButtonClicked} disabled={!props.favoriteSet} btnType={'Favorite'}>Populate Favorite</Button>
+            </div>
             <div className={classes.Total}>
                 <h2>Subtotal: {money.format(props.subtotal)}</h2>
                 <OrderDiscount
