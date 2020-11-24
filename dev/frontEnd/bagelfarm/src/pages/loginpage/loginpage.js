@@ -142,7 +142,7 @@ class LoginPage extends Component {
         axios.get('/login?' + this.getLoginQuery())
             .then((response) => {
                 this.props.setID(response.data['id'])
-                if(response.data['status'] != "success") {
+                if(response.data['status'] !== "success") {
                     this.setState({
                         loginError: response.data['status']
                     })
@@ -174,7 +174,7 @@ class LoginPage extends Component {
         axios.get('/register?' + this.getRegisterQuery())
             .then((response) => {
                 this.props.setID(response.data['id'])
-                if(response.data['status'] != "success") {
+                if(response.data['status'] !== "success") {
                     this.setState({
                         registerError: response.data['status']
                     })
