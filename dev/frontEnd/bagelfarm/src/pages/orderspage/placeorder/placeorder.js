@@ -11,7 +11,9 @@ const orderPlacement = (props) => {
             <div className={classes.PlaceOrder}>
                 <SearchBar 
                     searchBarForm={props.searchBarForm}
-                    changed={props.searchBarChanged}/>
+                    changed={props.searchBarChanged}
+                    filterByPopular={props.filterByPopular}
+                    toggleFilter={() => props.toggleFilter()}/>
                 <ItemList 
                     data={props.itemSelections}
                     toggleUp={props.toggleUp}

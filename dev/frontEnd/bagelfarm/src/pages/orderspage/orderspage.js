@@ -49,6 +49,7 @@ class OrdersPage extends Component {
         discountSelected: false,
         discountError: false,
         favoriteOrder: [],
+        inventoryFilter: 'inventory'
     }
 
     componentDidUpdate() {
@@ -59,6 +60,7 @@ class OrdersPage extends Component {
 
     componentDidMount() {
         this.getData();
+        this.toggleFilter();
     }
 
     getData = () => {
@@ -66,7 +68,7 @@ class OrdersPage extends Component {
             .then((response) => {
                 this.setState({orderHistory: response.data})
             })
-        axios.get('/inventory') 
+        axios.get(`/${this.state.inventoryFilter}`)
             .then((response) => {
                 this.setState({inventory: response.data.inventory})
                 this.updateItemSelections(response.data.inventory)
@@ -108,6 +110,20 @@ class OrdersPage extends Component {
             }
         })
         return itemSelectionsShown;
+    }
+
+    toggleFilter = () => {
+        if(this.state.inventoryFilter == 'inventory') {
+            this.setState({inventoryFilter: 'mostpurchased'});
+        } else {
+            this.setState({inventoryFilter: 'inventory'});
+        }
+        axios.get(`/${this.state.inventoryFilter}`)
+        .then((response) => {
+            this.setState({inventory: response.data.inventory})
+            this.updateItemSelections(response.data.inventory)
+        })
+        this.getData();
     }
 
     showDetails = (id) => {
@@ -462,6 +478,7 @@ class OrdersPage extends Component {
                 discountSelected: false,
                 discountError: false,
                 spinner: false,
+                inventoryFilter: 'inventory',
                 favoriteOrder: null})
                 this.getData();
             })
@@ -503,7 +520,9 @@ class OrdersPage extends Component {
                     pointsTotal={this.state.pointsTotal}
                     discountError={this.state.discountError}
                     populateFavoriteButtonClicked={this.populateFavoriteButtonClickedHandler}
-                    favoriteSet={this.state.favoriteOrder != null}/>
+                    favoriteSet={this.state.favoriteOrder != null}
+                    filterByPopular={this.state.inventoryFilter !== 'inventory'}
+                    toggleFilter={this.toggleFilter}/>
                 <History 
                     currentData={this.state.currentOrders}
                     data={this.state.orderHistory} 
