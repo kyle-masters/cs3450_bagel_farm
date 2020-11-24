@@ -27,6 +27,7 @@ const registerForm = (props) => {
                     />
                ))}
             </form>
+            {props.registerError ? <h3 className={classes.Error}>ERROR: {props.registerError}</h3>: <></>}
             <Button
                 height={'50px'}
                 width={'30%'}

@@ -13,12 +13,14 @@ const toggleComponent = (props) => {
             {props.login ? <LoginForm 
                                 changed={props.changedLogin}
                                 formElements={props.formElementsLogin}
-                                submit={props.loginClicked}/>
+                                submit={props.loginClicked}
+                                loginError={props.loginError}/>
                             : 
                             <RegisterForm 
                                 changed={props.changedRegister}
                                 formElements={props.formElementsRegister}
-                                submit={props.createAccountClicked}/>}
+                                submit={props.createAccountClicked}
+                                registerError={props.registerError}/>}
         </div>
 
     return toggleComp

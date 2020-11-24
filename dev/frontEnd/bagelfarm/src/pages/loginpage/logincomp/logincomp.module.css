@@ -5,3 +5,7 @@
 .Form {
     margin-bottom: 20px;
 }
+
+.Error {
+    color: red;
+}

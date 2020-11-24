@@ -33,9 +33,9 @@ def account(request):
 def register(request):
 
     try:
-        valid = validateRegistration([request.GET.get('firstName'),request.GET.get('lastName'),request.GET.get('email'), request.GET.get('phoneNumber'),request.GET.get('password')])
+        valid = validateRegistration([request.GET.get('firstName'),request.GET.get('lastName'),request.GET.get('email'), request.GET.get('phoneNumber'), request.GET.get('password'), request.GET.get('cpassword')])
 
-        if valid:
+        if valid == 'success':
 
             account = Account.objects.all().create(
                 firstName=request.GET.get('firstName'),
@@ -59,35 +59,38 @@ def register(request):
                 'email': newAccount.email,
                 'balance': newAccount.balance,
                 'rewards': newAccount.rewards,
-                'type': newAccount.type
+                'type': newAccount.type,
+                'status': 'success'
             })
             response['Access-Control-Allow-Origin'] = '*'
             return response
 
         else:
-            response =  JsonResponse({'status':False})
+            response =  JsonResponse({'status': valid})
             response['Access-Control-Allow-Origin'] = '*'
             return response
     except ValueError:
         response = False
+        response =  JsonResponse({'status':'One of the fields you have filled out is invalid.'})
         response['Access-Control-Allow-Origin'] = '*'
         return response
 
 def validateRegistration(requestInfo):
     for info in requestInfo:
-        if info is None:
-            response = JsonResponse({'status': False})
-            response['Access-Control-Allow-Origin'] = '*'
-            return False
+        if not info:
+            return 'You are missing a required field.'
 
     if Account.objects.filter(email=requestInfo[2]).exists():
-        response = JsonResponse({'status': False})
-        response['Access-Control-Allow-Origin'] = '*'
-        return False
+        return 'An account with that email address already exists.'
 
-    # Implement data validations
+    #Validate email using a regex
+    if re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", requestInfo[2]) == None:
+        return 'Invalid email format provided.'
 
-    return True
+    if requestInfo[4] != requestInfo[5]:
+        return 'The passwords you have entered do not match.'
+
+    return 'success'
 
 def login(request):
     try:
@@ -95,7 +98,7 @@ def login(request):
 
         #Validate email using a regex
         if re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", emailAttempt) == None:
-            response = JsonResponse({'status': 'Invalid Email!'})
+            response = JsonResponse({'status': 'Invalid email address.'})
             response['Access-Control-Allow-Origin'] = '*'
             return response
 
@@ -114,17 +117,18 @@ def login(request):
                     'email': acctId.email,
                     'balance': acctId.balance,
                     'rewards': acctId.rewards,
-                    'type': acctId.type
+                    'type': acctId.type,
+                    'status': 'success'
                 })
                 response['Access-Control-Allow-Origin'] = '*'
                 return response
             else:
-                response = JsonResponse({'status':False})
+                response = JsonResponse({'status':'Invalid password.'})
                 response['Access-Control-Allow-Origin'] = '*'
                 return response
     except:
 
-        response = JsonResponse({'status':False})
+        response = JsonResponse({'status':'There is no registered account with that email.'})
         response['Access-Control-Allow-Origin'] = '*'
         return response
 

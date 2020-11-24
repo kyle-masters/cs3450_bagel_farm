@@ -9,7 +9,9 @@ class LoginPage extends Component {
     state = {
         isLogin: true,
         formElementsLogin: null,
-        formElementsRegister: null
+        formElementsRegister: null,
+        loginError: null,
+        registerError: null
     }
 
     getFormElementsLogin = () => {
@@ -140,6 +142,11 @@ class LoginPage extends Component {
         axios.get('/login?' + this.getLoginQuery())
             .then((response) => {
                 this.props.setID(response.data['id'])
+                if(response.data['status'] != "success") {
+                    this.setState({
+                        loginError: response.data['status']
+                    })
+                }
             })
     }
 
@@ -149,7 +156,7 @@ class LoginPage extends Component {
         const email = this.state.formElementsRegister.email.value
         const phone = this.state.formElementsRegister.phoneNumber.value
         const password = this.state.formElementsRegister.password.value
-        //const cPassword = this.state.formElementsRegister.confirmPassword.value
+        const cPassword = this.state.formElementsRegister.confirmPassword.value
 
         var queryString = ""
 
@@ -158,6 +165,7 @@ class LoginPage extends Component {
         queryString += '&email=' + email
         queryString += '&phoneNumber=' + phone
         queryString += '&password=' + password
+        queryString += '&cpassword=' + cPassword
         
         return queryString
     }
@@ -166,6 +174,11 @@ class LoginPage extends Component {
         axios.get('/register?' + this.getRegisterQuery())
             .then((response) => {
                 this.props.setID(response.data['id'])
+                if(response.data['status'] != "success") {
+                    this.setState({
+                        registerError: response.data['status']
+                    })
+                }
             })
     }
 
@@ -189,6 +202,8 @@ class LoginPage extends Component {
                     register={this.registerHandler}
                     loginClicked={this.loginClickedHandler}
                     createAccountClicked={this.creatAccountClickedHandler}
+                    loginError={this.state.loginError}
+                    registerError={this.state.registerError}
                     />
             </div>
         )

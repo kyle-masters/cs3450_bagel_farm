@@ -27,6 +27,7 @@ const loginForm = (props) => {
                     />
                ))}
             </form>
+               {props.loginError ? <h3 className={classes.Error}>ERROR: {props.loginError}</h3>: <></>}
             <Button
                 height={'50px'}
                 width={'25%'}
