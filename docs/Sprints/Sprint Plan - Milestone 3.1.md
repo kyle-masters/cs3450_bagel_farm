@@ -13,3 +13,7 @@
 - Create home page
 - Create inventory page
 - Create the order page
+
+### **Sprint Backlog**
+
+![Sprint 1 Backlog](./Sprint_Backlogs/Sprint_1_backlog.png)
