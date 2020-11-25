@@ -57,7 +57,7 @@
 ## Measurement Criteria
 
 #### Overall
-- Overall we had TODO hours of work to do in this sprint
+- Overall we had 18 hours of work to do in this sprint
 
 #### Front-end
 - We measured our work in hours
@@ -65,14 +65,14 @@
 
 #### Back-end
 - We measured our work in hours
-- We had approximately TODO hours of work to do in this sprint
+- We had approximately 11 hours of work to do in this sprint
 
 ## Assign a percentage to each team member based on the metric
 
 #### Front-end
-- Brent: TODO% (3 hours)
-- Dallin: TODO% (4 hours)
+- Brent: 16.67% (3 hours)
+- Dallin: 22.22% (4 hours)
 
 #### Back-end
-- Connor: TODO% (TODO hours)
-- Kyle: TODO% (9 hours)
+- Connor: 11.11% (2 hours)
+- Kyle: 50.0% (9 hours)
