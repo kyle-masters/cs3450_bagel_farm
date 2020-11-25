@@ -27,7 +27,8 @@
 - The quality of the changes were good
 
 #### Back-end
-- TODO
+- We were able to get the base of the back end running well quickly.
+- The database was designed from the beginning and required minimal changes to implement basic features.
 
 ## What didn't go well?
 
@@ -40,7 +41,8 @@
 - We could have worked quicker and more efficiently
 
 #### Back-end
-- TODO
+- We over scheduled ourselves and didn't finish all of our tasks.
+- Some of the ways of writing code was inefficient and had to be changed through the sprint.
 
 ## What specific things you can do to improve
 
@@ -53,12 +55,12 @@
 - The team can work a bit faster to lessen the load closer to Thanksgiving break
 
 #### Back-end
-- TODO
+- Kyle needs to work on his python and django knowledge.
 
 ## Measurement Criteria
 
 #### Overall
-- Overall we had 44 hours of work to do in this sprint
+- Overall we had 36 hours of work to do in this sprint
 
 #### Front-end
 - We measured our work in hours
@@ -66,14 +68,14 @@
 
 #### Back-end
 - We measured our work in hours
-- We had approximately 22 hours of work to do in this sprint
+- We had approximately 14 hours of work to do in this sprint
 
 ## Assign a percentage to each team member based on the metric
 
 #### Front-end
-- Brent: 18.18% (8 hours)
-- Dallin: 31.8% (14 hours)
+- Brent: 22.22% (8 hours)
+- Dallin: 38.89% (14 hours)
 
 #### Back-end
-- Connor: 11.36% (5 hours)
-- Kyle: 38.63% (17 hours)
+- Connor: 13.89% (5 hours)
+- Kyle: 25% (9 hours)

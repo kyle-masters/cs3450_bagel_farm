@@ -29,7 +29,8 @@
 - The quality of the changes were good
 
 #### Back-end
-- TODO
+- We were able to quickly get the majority of things we planned for the sprint done.
+- When problems arose we were able to fix those bugs in an efficient manner.
 
 ## What didn't go well?
 
@@ -42,7 +43,8 @@
 - Keeping up to date with the back-end team a bit more would be good. We didn't do too bad at this, but there were times when the back-end had a feature implemented that we forgot about
 
 #### Back-end
-- TODO
+- We should have planned more, the workload was light.
+- Though we finished a lot, we could have been more organized about the manner in which we did it.
 
 ## What specific things you can do to improve
 
@@ -54,7 +56,7 @@
 - Stay more up to date with the back-ends progress (again, this wasn't horrible, it could just always be better)
 
 #### Back-end
-- TODO
+- Keep in touch with front end more, and plan ahead better so they aren't waiting for us to finish features.
 
 ## Measurement Criteria
 
