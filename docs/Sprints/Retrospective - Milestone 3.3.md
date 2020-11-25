@@ -27,7 +27,8 @@
 - The quality of the changes were good
 
 #### Back-end
-- TODO
+- We communicated with the front end better than in any other sprint and were able to get things done very quickly.
+- Use of git to track changes was better than in other sprints.
 
 ## What didn't go well?
 
@@ -39,7 +40,7 @@
 - Not a whole lot went wrong in this sprint for the front-end team. The changes made were solid and only improved the quality of the website. The front-end team also worked quickly and efficiently throughout the sprint
 
 #### Back-end
-- TODO
+- We could've tested changes better.
 
 ## What specific things you can do to improve
 
@@ -51,7 +52,7 @@
 - Before fixing a bug, check with other team members to see if a fix is already in place and just hasn't been submitted yet
 
 #### Back-end
-- TODO
+- Better tracking of story points and general issues.
 
 ## Measurement Criteria
 
@@ -74,4 +75,4 @@
 
 #### Back-end
 - Connor: TODO% (TODO hours)
-- Kyle: TODO% (TODO hours)
+- Kyle: TODO% (9 hours)
