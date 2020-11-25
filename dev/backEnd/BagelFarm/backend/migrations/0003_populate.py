@@ -38,8 +38,8 @@ def populate_db(apps, schema_editor):
         account = MyModel.objects.all().create(
             firstName=accountInfo[0],
             lastName=accountInfo[1],
-            email='',
-            phoneNumber='',
+            email=accountInfo[3],
+            phoneNumber='1234567890',
             type=theType,
             password='Password',
             balance=100,

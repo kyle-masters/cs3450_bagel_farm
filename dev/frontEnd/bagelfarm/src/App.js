@@ -11,7 +11,7 @@ import ManageAccounts from './pages/manage-accounts/manage-accounts-page'
 
 class App extends Component {
   state = {
-    id: 30,
+    id: null,
   }
 
   getUserID = () => {
