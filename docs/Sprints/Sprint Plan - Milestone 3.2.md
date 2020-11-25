@@ -13,3 +13,7 @@
 - Create customer specific permissions pages
 - Show order history
 - Disable buttons based on account permissions 
+
+### **Sprint Backlog**
+
+![Sprint 2 Backlog](./Sprint_Backlogs/Sprint_2_backlog.png)

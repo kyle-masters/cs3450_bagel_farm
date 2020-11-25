@@ -11,3 +11,7 @@
 - Add error messages on login page
 - Impement most popular items on frontend
 - Fix bugs
+
+### **Sprint Backlog**
+
+![Sprint 3 Backlog](./Sprint_Backlogs/Sprint_3_backlog.png)
