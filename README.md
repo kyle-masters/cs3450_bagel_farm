@@ -75,3 +75,6 @@ The website should now be fully operational. To register an account go to the re
 - Part of our testing has been enlisting the help of non project members to use the software and give feedback on what is working and what isn't. 
 - Our testing procedures have come largely from the requirement description. In order to test a requirement we perform the action that would result in the requirment passing and if it is passing then we move on. 
 - Another form of testing that we have done is following our use case diagrams and trying each possible use case to determine if it is being fulfilled.
+
+## Path To Sprint Documents:
+- `docs/Sprints`
