@@ -40,15 +40,38 @@ All of the following items in our toolstack are fairly light-weight, so each dev
 - **Creately**: Diagram software
 
 ## Build instructions
-- To build the React portion of the project, you can run `npm run build` in the working directory of the React project.
-- After building the React files, you can place the compiled files into the Django project.
-- To finish the build process, you can `cd` into the Django project directory and run `python manage.py runserver` and the build process is complete.
+**Front end build instructions**
+- In order to run this project you need to have node.js installed on your machine with `npm` avalible from the command line.
+- Once node.js is installed run this series of commands in the /dev/frontEnd/bagelfarm directory:
+    - `npm install react`
+    - `npm install react-router`
+    - `npm install axios`
+    - `npm start`
+- The react server should start up and your default browser will pull up the website. Some features of our webiste don't work on browsers other than Chrome, so chrome is the best browser to use in order for all features to work well.
 
-## Unit Testing Instructions
-- We are going to use the built in unit testing framework the Python provides to write unit tests
-- The majority of our tests will involve the test sending fake requests to the database and checking to see if the query returns the expected results
-- To run the unit tests, we will compile all the tests into a single executable which we can run to make sure the tests are passing
+**Back end build instructions**
+- If not already installed install python3 and have it accessible from the commmand line. Then run the following commands while in the /dev/backEnd/BagelFarm directory:
+    - `pip install django`
+    - `python3 manage.py migrate`
+    - `python3 manage.py runserver 127.0.0.1:8080`
 
-## System Testing Instructions
-- For every requirement we have, all the developers will go through and manually test the functionality and look for bugs
-    - If we can find outside users to help test, we will use them to get more viewpoints on each requirement
+**Final instructions**
+
+The website should now be fully operational. To register an account go to the registar tab on the website and fill in your information. You will be then be directed to the home screen. Your default account is a customer. A customer has limited permissions on the website so they won't be able to perform tasks like update orders, update inventory or manage accounts. In order to be able to do these tasks these are some example accounts for the respective roles:
+
+    - A Manager Account has these credentials: 
+        email: dan@theman.com
+        password: Password
+    - A Chef Account has these credentials:
+        email: brad@therad.com
+        password: Password
+    - A Cashier Account has these credentials:
+        email: matt@themoney.net
+        password: Password
+
+## Testing
+- Overall our testing has largely been made up of acceptance testing. As we finish a feature that was outlined in the requirements we test it to ensure the requirement is being met.
+- We have also done regression testing so as to ensure that working features aren't broken by the addition of new ones or bug fixes as we add new features.
+- Part of our testing has been enlisting the help of non project members to use the software and give feedback on what is working and what isn't. 
+- Our testing procedures have come largely from the requirement description. In order to test a requirement we perform the action that would result in the requirment passing and if it is passing then we move on. 
+- Another form of testing that we have done is following our use case diagrams and trying each possible use case to determine if it is being fulfilled.
