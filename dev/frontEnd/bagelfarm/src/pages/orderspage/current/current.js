@@ -14,6 +14,7 @@ const current = (props) => {
                             <OrderTracker 
                                 key={index} 
                                 data={data} 
+                                cancelOrderButton={() => props.cancelOrderButton(data.orderID)}
                                 showDetailsID={props.detailsOpen === data.orderID}
                                 showDetails={() => props.showDetails(data.orderID)}
                                 hideDetails={props.hideDetails}/>

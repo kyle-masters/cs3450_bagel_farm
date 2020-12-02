@@ -20,7 +20,10 @@ const orderTracker = (props) => {
                     <div><p><strong>Ready for Pickup</strong></p></div>
                 </div>
             </div>
-            {props.showDetailsID ? <Button clicked={props.hideDetails}>Hide Details</Button> : <Button clicked={props.showDetails}>Show Details</Button>}
+            <div className={classes.ButtonLayer}>
+                {props.showDetailsID ? <Button clicked={props.hideDetails}>Hide Details</Button> : <Button clicked={props.showDetails}>Show Details</Button>}
+                <Button clicked={props.cancelOrderButton}>Cancel Order</Button>
+            </div>
             <div className={classes.AddOns}>
                 {props.showDetailsID ? <OrderDetails {...props.data}/> : null}   
             </div>
