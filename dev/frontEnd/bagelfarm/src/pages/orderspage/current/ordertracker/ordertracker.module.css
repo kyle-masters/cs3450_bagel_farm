@@ -57,3 +57,8 @@
     background-color: #3d1c17;
     z-index: 1;
 }
+
+.ButtonLayer {
+    display: flex;
+    justify-content: space-between;
+}

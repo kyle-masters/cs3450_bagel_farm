@@ -81,6 +81,16 @@ class OrdersPage extends Component {
             .then((response) => {
                 this.setState({favoriteOrder: response.data.orders})
             })
+            axios.get('/account?id=' + this.props.getID())
+                .then((response) => {
+                    const data = response.data
+                    this.setState({
+                        userData: {
+                            'balance': parseInt(data['balance']),
+                            'rewardPoints': data['rewards'],
+                        },
+                    })
+                })
     }
 
     updateItemSelections = (inventory) => {
@@ -288,6 +298,9 @@ class OrdersPage extends Component {
         if (this.state.selectedItems.length <= 0) {
             errorText = "No items are selected"
         }
+        if (this.state.userData.balance < this.state.orderTotal) {
+            errorText = "Insufficient Funds"
+        }
         if (errorText === "") {
             this.setState({
                 displayConfirmOrder: true,
@@ -332,6 +345,14 @@ class OrdersPage extends Component {
     makeFavoriteButtonClickedHandler = (id) => {
         this.setState({spinner: true})
         axios.get('/favorite?id=' + this.props.getID() + '&orderID=' + id)
+            .then((response) => {
+                this.setState({updateItems: true})
+            })
+    }
+
+    cancelOrderButtonClickedHandler = (id) => {
+        this.setState({spinner: true})
+        axios.get('/update?status=0&id=' + this.props.getID() + "&order=" + id)
             .then((response) => {
                 this.setState({updateItems: true})
             })
@@ -496,7 +517,8 @@ class OrdersPage extends Component {
                     data={this.state.currentOrders} 
                     showDetails={this.showDetails}
                     hideDetails={this.hideDetails}
-                    detailsOpen={this.state.detailsOpen}/>
+                    detailsOpen={this.state.detailsOpen}
+                    cancelOrderButton={this.cancelOrderButtonClickedHandler}/>
                 <PlaceOrder 
                     data={this.state.inventory}
                     discountSelected={this.state.discountSelected}
