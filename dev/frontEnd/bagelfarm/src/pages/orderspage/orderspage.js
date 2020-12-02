@@ -123,7 +123,7 @@ class OrdersPage extends Component {
     }
 
     toggleFilter = () => {
-        if(this.state.inventoryFilter == 'inventory') {
+        if(this.state.inventoryFilter === 'inventory') {
             this.setState({inventoryFilter: 'mostpurchased'});
         } else {
             this.setState({inventoryFilter: 'inventory'});
