@@ -18,7 +18,7 @@ class HomePage extends Component {
                         <div className="order-steps">
                             <div id="first-step">
                                 <h3>Step 1.</h3>
-                                <p>Head on over to the <a href="/order">orders</a> tab.</p>
+                                <p>Head on over to the orders tab.</p>
                             </div>
                             <div id="second-step">
                                 <h3>Step 2.</h3>

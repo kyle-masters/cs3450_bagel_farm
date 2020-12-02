@@ -157,12 +157,17 @@ class OrdersPage extends Component {
 
     toggleUpHandler = (id) => {
         var itemSelections = [...this.state.itemSelections]
+
         itemSelections.forEach((el, idx) => {
             itemSelections[idx] = {...this.state.itemSelections[idx]}
         })
         itemSelections.forEach((el) => {
             if (el.id === id) {
-                el.qty.push([])
+                if(this.state.inventory[id - 1].qty - el.qty.length > 0) {
+                    el.qty.push([]);
+                } else {
+                    alert(`${el.name} needs to be restocked.`);
+                }
             }
         })
         this.setState({
