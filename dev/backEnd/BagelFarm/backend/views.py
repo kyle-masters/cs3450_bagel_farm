@@ -613,5 +613,5 @@ def incrementOrder(order):
 
     for item in itemlist:
         toIncrement = Item.objects.all().get(id=item.itemID)
-        toIncrement.stock = toDecrement.stock + item.quantity
+        toIncrement.stock = toIncrement.stock + item.quantity
         toIncrement.save()
