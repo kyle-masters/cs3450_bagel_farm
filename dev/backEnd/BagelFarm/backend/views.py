@@ -267,6 +267,8 @@ def placeOrder(request):
     account.balance = float(account.balance) - float(order.price)
     account.save()
 
+    decrementOrder(order)
+
     response = JsonResponse({'status': True})
     response['Access-Control-Allow-Origin'] = '*'
     return response
@@ -453,6 +455,9 @@ def updateOrder(request):
     if validUpdate == True:
         order.status = newStatus
         order.save()
+        if newStatus == 0:
+            incrementOrder(order)
+            order.delete()
 
     response = JsonResponse({'status': validUpdate})
     response['Access-Control-Allow-Origin'] = '*'
@@ -592,3 +597,21 @@ def manageAccounts(request):
         response = JsonResponse({'status':False})
         response['Access-Control-Allow-Origin'] = '*'
         return response
+
+
+def decrementOrder(order):
+    itemlist = order.orderitem_set.all()
+
+    for item in itemlist:
+        toDecrement = Item.objects.all().get(id=item.itemID)
+        toDecrement.stock = toDecrement.stock - item.quantity
+        toDecrement.save()
+
+
+def incrementOrder(order):
+    itemlist = order.orderitem_set.all()
+
+    for item in itemlist:
+        toIncrement = Item.objects.all().get(id=item.itemID)
+        toIncrement.stock = toDecrement.stock + item.quantity
+        toIncrement.save()
