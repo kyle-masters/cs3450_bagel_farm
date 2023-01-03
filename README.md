@@ -4,7 +4,7 @@
 @Septimis (Connor Meads) <br>
 @brent-buffenbarger (Brent Buffenbarger) <br>
 @dallinlarsen (Dallin Larsen) <br>
-@nebulohu (Kyle Masters)
+@kyle-masters (Kyle Masters)
 
 ## Organization
 ### Backend Team
